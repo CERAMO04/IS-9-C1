@@ -1,0 +1,94 @@
+@startuml
+
+title Modelo de Dominio - Sistema de Comedor UCV
+
+class Usuario {
+  id
+  nombre
+  correo
+  tipo
+}
+
+class Estudiante {
+  carnet
+}
+
+class Empleado {
+  tipo
+}
+
+class Cocinero {
+}
+class Administrador {
+}
+
+class Menu {
+  id
+  fecha
+  descripcion
+  insumosNecesarios
+  turno
+}
+
+class Plato {
+  id
+  nombre
+  tipo
+}
+
+class Insumo {
+  id
+  nombre
+  cantidadDisponible
+  fechaRecepcion
+  fechaVencimiento
+}
+
+class ReservaTurno {
+  id
+  fecha
+  usuario
+  turno
+  estado
+}
+
+class RegistroConsumo {
+  id
+  fecha
+  turno
+  menuConsumido
+}
+
+class Turno {
+  id
+  horarioInicio
+  horarioFin
+  capacidad
+  usuarioRegistrados
+}
+
+class Reporte {
+  id
+  tipo
+  fechaGeneracion
+  datos
+}
+
+'Relaciones
+Usuario <|-- Estudiante
+Usuario <|-- Empleado
+Empleado <|-- Administrador
+Empleado <|-- Cocinero
+Cocinero --> Menu : prepara
+Cocinero --> Plato : cocina
+
+Usuario "1" --> "0..*" ReservaTurno : reserva
+Usuario "1" --> "0..*" RegistroConsumo : accede
+ReservaTurno "0.." --|> "1" Turno : puede tener
+Menu "1" --> "1..*" Plato : contiene
+Plato "1" --> "0..*" Insumo : requiere
+Administrador "1" --> "0..*" Menu : gestiona
+Administrador "1" --> "0..*" Insumo : administra
+Administrador "1" --> "0..*" Reporte : genera
+
+@enduml

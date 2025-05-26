@@ -1,0 +1,35 @@
+@startuml
+title Diagrama de Actividad - Sistema de Comedor UCV
+
+start
+:Login del usuario (Estudiante / Administrador / Cocinero);
+
+if (¿Es Estudiante?) then (Sí)
+  :Ver menú del día;
+  :Ver turnos disponibles;
+  :Reservar turno de comida;
+  if (¿El estudiante asistió al comedor?) then (Sí)
+    :Registrar consumo;
+  else (No)
+    :No registrar consumo;
+  endif
+elseif (¿Es Administrador?) then (Sí)
+  :Verificar disponibilidad de insumos;
+  if (¿Faltan insumos?) then (Sí)
+    :Solicitar reposición a proveedores;
+    :Registrar insumos recibidos;
+  endif
+  :Gestionar menú semanal;
+  :Asignar comidas a cocineros;
+  :Generar reportes de consumo y planificación;
+elseif (¿Es Cocinero?) then (Sí)
+  :Consultar menú asignado del día;
+  :Ver lista de comidas a preparar;
+  :Verificar disponibilidad de insumos;
+  if (¿Faltan insumos?) then (Sí)
+    :Solicitar insumos al administrador;
+  endif
+  :Confirmar comidas listas;
+endif
+stop
+@enduml
