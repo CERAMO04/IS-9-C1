@@ -1,0 +1,50 @@
+@startuml
+[*] --> PantallaLogin
+
+state PantallaLogin {
+    [*] --> IngresarCredenciales
+    IngresarCredenciales --> VerificarCredenciales
+    VerificarCredenciales --> MenuPrincipal : credenciales válidas
+    VerificarCredenciales --> ErrorLogin : credenciales inválidas
+    ErrorLogin --> IngresarCredenciales
+}
+
+state MenuPrincipal {
+    [*] --> ElegirOpcion
+
+    ElegirOpcion --> ReservarTurno
+    state ReservarTurno {
+        [*] --> MostrarMenu
+        MostrarMenu --> VerDisponibilidad : observa
+        VerDisponibilidad --> ConfirmarReserva : selecciona
+        ConfirmarReserva --> [*]
+        MostrarMenu --> [*] : volver
+    }
+    ReservarTurno --> ElegirOpcion
+
+    ElegirOpcion --> GestionUsuario
+    state GestionUsuario {
+        [*] --> RegistrarUsuario : selecciona "Registrar usuario" [admin]
+        RegistrarUsuario --> [*]
+    }
+    GestionUsuario --> ElegirOpcion
+
+    ElegirOpcion --> GestionarInventario
+    state GestionarInventario {
+        [*] --> InventarioPrincipal
+        InventarioPrincipal --> [*]
+    }
+    GestionarInventario --> ElegirOpcion
+
+    ElegirOpcion --> "GestionarMenu"
+    state GestionarMenu {
+        [*] --> CrearMenu : selecciona "Crear menú" [admin]
+        CrearMenu --> CrearTurno : selecciona "Crear turno" [admin]
+        CrearTurno --> [*]
+    }
+    GestionarMenu --> ElegirOpcion
+}
+
+MenuPrincipal --> [*] : cerrar sesión
+@enduml
+
