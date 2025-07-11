@@ -7,7 +7,7 @@ public class User {
     private boolean isAdmin;
     private Wallet wallet;
     /*Builders. */
-    public User(String name, String lastName,int cedula, String user, String password, String email, 
+    public User(String name, String lastName,int ID, String user, String password, String email, 
                 String userType, boolean isAdmin){
                     this.name = name;
                     this.lastName = lastName;
@@ -21,7 +21,7 @@ public class User {
     /*Setters. */
     public void setName(String name) {this.name = name;}
     public void setLastName(String lastName) {this.lastName = lastName;}
-    public void setID(int cedula) {this.ID = ID;}
+    public void setID(int ID) {this.ID = ID;}
     public void setUser(String user) {this.user = user;}
     public void setPassWord(String password) {this.password = password;}
     public void setEmail(String email) {this.email = email;}
