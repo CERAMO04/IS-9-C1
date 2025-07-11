@@ -2,16 +2,13 @@ package model;
 
 public class User {
     /*Atrib */
-    private String name;
-    private String lastName;
-    private String user;
-    private String password;
-    private String email;
-    private String userType;
+    private String name,lastName,user,password ,email,userType;
     private boolean isAdmin;
+    private Wallet wallet;
     /*Builders. */
     public User(String name, String lastName, String user, String password, String email, 
                 String userType, boolean isAdmin){
+                    this.wallet = new Wallet(this);
                     this.name = name;
                     this.lastName = lastName;
                     this.user = user;
@@ -28,12 +25,14 @@ public class User {
     public void setUserType(String userType) {this.userType = userType;}
     public void setIsAdmin(boolean isAdmin) {this.isAdmin = isAdmin;}
     /*Getters. */
+    public Wallet getWallet() {return this.wallet;}
     public String getName() {return this.name;}
     public String getLastName() {return this.lastName;}
-    public String getPassword() {return password;}
-    public String getEmail() {return password;}
-    public String getUserType() {return userType;}
-    public boolean getIsAdmin() {return isAdmin;}
+    public String getUser() {return this.user;}
+    public String getPassword() {return this.password;}
+    public String getEmail() {return this.email;}
+    public String getUserType() {return this.userType;}
+    public boolean getIsAdmin() {return this.isAdmin;}
     /*Functions */
 
 }
