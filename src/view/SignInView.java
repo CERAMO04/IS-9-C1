@@ -1,6 +1,6 @@
 package view;
 
-public class LoginView {
+public class SignInView {
     public static void main(String[] args) {
         System.out.println("Hola soy la interfaz de login");
     }
