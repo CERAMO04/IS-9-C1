@@ -13,31 +13,37 @@ import java.io.IOException;
 
 public class UserFile {
 
-    public void saveUser(User curretUser){
-        File systemUserFile = new File("data/SystemUser.txt");
-        try {        
-            if (!systemUserFile.exists()) systemUserFile.createNewFile();
+    private File systemUserDataBAse = new File("data/SystemUsers.txt");
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(systemUserFile, true));
-            
-            String line = curretUser.getName() + "," +
-                          curretUser.getLastName() + "," +
-                          curretUser.getID() + "," +
+    public UserFile(){
+        try {
+            if (!systemUserDataBAse.exists()) {
+                systemUserDataBAse.createNewFile(); 
+            }
+        } catch (Exception e) {
+            System.out.println("Error creando el archivo de base de dato del comedor: " + e.getMessage());
+        }
+    }
+
+    public void saveUser(User curretUser){
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(systemUserDataBAse, true))){
+            String line = curretUser.getID() + "," +
+                          curretUser.getUserType() + "," +
                           curretUser.getUser() + "," +
                           curretUser.getPassword() + "," +
+                          curretUser.getName() + "," +
+                          curretUser.getLastName() + "," +
                           curretUser.getEmail() + "," +
-                          curretUser.getUserType() + "," +
-                          curretUser.getIsAdmin() + ".";
+                          curretUser.getIsAdmin();
             writer.write(line);
-            writer.close();
-
-        } catch (Exception e) {
+        }catch (Exception e) {
             System.out.println("Error escribiendo en el archivo: " + e.getMessage());
         }
     }
-    public void IsINSecretaryDataBase(User user){
+    public void checkAndSaveUser(User user){
         SecretaryFile secretaryDataBase = new SecretaryFile();
-        if (secretaryDataBase.readSecretaryDataBase(user.getID())) {
+        if (secretaryDataBase.readSecretaryDataBase(user)) {
             saveUser(user);
         }else{
             System.out.println("El usuario No existe en la base de datos de la secretaria.");

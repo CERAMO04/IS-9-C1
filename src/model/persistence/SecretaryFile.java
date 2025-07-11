@@ -13,24 +13,27 @@ import java.io.IOException;
 
 public class SecretaryFile {
 
-    private File secretaryDataBaseFile = new File("data/SystemUsers.txt");
+    private File secretaryDataBaseFile = new File("data/SecretaryUsers.txt");
 
     public SecretaryFile() {
         try {
             if (!secretaryDataBaseFile.exists()) {
-                secretaryDataBaseFile.createNewFile(); // Asegura existencia del archivo
+                secretaryDataBaseFile.createNewFile();
             }
         } catch (IOException e) {
             System.out.println("Error creando el archivo de Secretaría: " + e.getMessage());
         }
     }
 
-    public boolean readSecretaryDataBase(int ID) {
+    public boolean readSecretaryDataBase(User user) {
+        String hit = user.getID();
         try (BufferedReader reader = new BufferedReader(new FileReader(secretaryDataBaseFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",", 2); // solo separa en dos partes
-                if (fields[0].equals(ID)) {
+                String[] fields = line.split(",",2);
+                if (fields.length == 2 && fields[0].equals(hit)) {
+                    user.setUserType(fields[1]);
+                    user.setIsAdmin(fields[1].equalsIgnoreCase("admin"));
                     return true;
                 }
             }
