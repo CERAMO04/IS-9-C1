@@ -7,8 +7,7 @@ import model.persistence.UserFile;
 
 public class SignInController {
     private SignInView view;
-    public static final int USUARIO_INVALIDO = 0;
-    public static final int SUCCESS = 1;
+    public static final int INVALID_USER = 0, SUCCESS = 1, INVALID_FIELD_USER=2, INVALID_FIELD_PASSWORD=3;
 
     public SignInController(SignInView view){
         this.view=view;
@@ -21,21 +20,29 @@ public class SignInController {
                 case 1: 
                     JOptionPane.showMessageDialog(view, "Bienvenido");
                     break;
+                case 2:
+                    JOptionPane.showMessageDialog(view, "Por favor introduzca su usuario");
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(view, "Por favor introduzca su contrasenia");
                 default:
                     break;
             }
         });
     }
     public int signIn(){
-        String username = view.getUserName().getText().trim();
-        String password = view.getPasswordField().getText().trim();
+        String userName = view.getUserName().getText().trim();
+        String userPassword = view.getPasswordField().getText().trim();
         
         UserFile userFile = new UserFile();
 
-        if(userFile.userExists(username, password)){
+        if (userName.isEmpty() || userName.equals("Nombre de usuario")) { return INVALID_FIELD_USER; }
+        if (userPassword.isEmpty()) { return INVALID_FIELD_PASSWORD; }
+
+        if(userFile.userExists(userName, userPassword)){
             return SUCCESS;
         }else{
-            return USUARIO_INVALIDO;
+            return INVALID_USER;
         }
     }
 }
