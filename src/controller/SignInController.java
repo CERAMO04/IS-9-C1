@@ -12,7 +12,7 @@ public class SignInController {
 
     public SignInController(SignInView view){
         this.view=view;
-        view.getSingInButton().addActionListener(e -> {
+        view.getSignInButton().addActionListener(e -> {
             int result = signIn();
             switch (result) {
                 case 0:
@@ -20,13 +20,14 @@ public class SignInController {
                     break;
                 case 1: 
                     JOptionPane.showMessageDialog(view, "Bienvenido");
+                    break;
                 default:
                     break;
             }
         });
     }
     public int signIn(){
-        String username = view.getUserField().getText().trim();
+        String username = view.getUserName().getText().trim();
         String password = view.getPasswordField().getText().trim();
         
         UserFile userFile = new UserFile();
@@ -37,6 +38,4 @@ public class SignInController {
             return USUARIO_INVALIDO;
         }
     }
-
-
 }
