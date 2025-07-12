@@ -54,4 +54,20 @@ public class UserFile {
         }
         return false;
     }
+    public boolean userExists(String userName, String userPassword){
+        try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",", 8);
+                if (fields.length == 8) {
+                    String userAux = fields[7];
+                    String passWordAux = fields[6];
+                    if(userAux.equals(userName.trim()) && passWordAux.equals(userPassword.trim())) return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error verificando existencia de usuario:" + e.getMessage());
+        }
+        return false;
+    }
 }

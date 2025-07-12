@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,6 +10,7 @@ public class SignUpView extends JFrame {
     private JButton signUpButton;
     /*Probando registro de usuario */
     public SignUpView(){
+        
         setTitle("Registro de Usuario");
         setSize(600,600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
