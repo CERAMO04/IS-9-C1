@@ -1,9 +1,10 @@
 package controller;
 
 public class SignInController {
-    
-    public static void main(String[] args) {
-        System.out.println("Hola soy el controlador de login");
+    public boolean iniciarSesion(String usuario, String contrasena) {
+        // Lógica real de autenticación (base de datos, etc.)
+        return usuario.equals("admin") && contrasena.equals("1234");
     }
-
 }
+
+
