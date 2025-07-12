@@ -1,11 +1,13 @@
 package view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 
 public class SignUpView extends JFrame {
     /*^Componentes */
-    private JTextField idField, userNameField, nameField, lastNameField, emailField;
+    private JTextField idField, userNameField;
     private JPasswordField  passwordField; 
     private JButton signUpButton;
     /*Probando registro de usuario */
@@ -15,10 +17,9 @@ public class SignUpView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Panel de formulario
-        JPanel panel = new JPanel(new GridLayout(7, 2, 10, 10));
+        /*Panel de formulario */
+        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
 
-        // Agregar etiquetas y campos
         panel.add(new JLabel("ID:"));
         idField = new JTextField();
         panel.add(idField);
@@ -31,18 +32,6 @@ public class SignUpView extends JFrame {
         passwordField = new JPasswordField();
         panel.add(passwordField);
 
-        panel.add(new JLabel("Name:"));
-        nameField = new JTextField();
-        panel.add(nameField);
-
-        panel.add(new JLabel("Last Name:"));
-        lastNameField = new JTextField();
-        panel.add(lastNameField);
-
-        panel.add(new JLabel("Email:"));
-        emailField = new JTextField();
-        panel.add(emailField);
-
         signUpButton = new JButton("Register");
         panel.add(signUpButton);
 
@@ -53,8 +42,6 @@ public class SignUpView extends JFrame {
     public JTextField getIDField() { return idField; }
     public JTextField getUsernameField() { return userNameField; }
     public JPasswordField getPasswordField() { return passwordField; }
-    public JTextField getNameField() { return nameField; }
-    public JTextField getLastNameField() { return lastNameField; }
-    public JTextField getEmailField() { return emailField; }
     public JButton getRegisterButton() { return signUpButton; }
+    /*Functions */
 }

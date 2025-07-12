@@ -1,36 +1,53 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import view.SignUpView;
 import model.User;
 import model.persistence.UserFile;
+import model.persistence.SecretaryFile;
 
 public class SignUpController {
+    
     private SignUpView view;
+    public static final int ALREADY_REGISTERED = 0;
+    public static final int SUCCESS = 1;
+    public static final int NOT_IN_SECRETARY = 2;
 
     public SignUpController(SignUpView view){
         this.view = view;
-
-        this.view.getRegisterButton().addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                signUpUser();
+        this.view.getRegisterButton().addActionListener(e -> {
+            int result = signUpUser();
+            switch(result) {
+                case 1:
+                    JOptionPane.showMessageDialog(view, "Registro exitoso.");
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(view, "El usuario ya está registrado en el sistema del comedor.");
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(view, "El usuario no está en la base de datos de la secretaría.");
+                    break;
             }
         });
     }
-    public void signUpUser(){
-        UserFile systemDataFile = new UserFile();
-        
-        String name = view.getNameField().getText();
-        String lastName = view.getLastNameField().getText();
-        String ID = view.getIDField().getText();
-        String username = view.getUsernameField().getText();
-        String password = view.getPasswordField().getText();
-        String email = view.getEmailField().getText();
+    public int signUpUser(){        
+        String ID = view.getIDField().getText().trim();
+        String username = view.getUsernameField().getText().trim();
+        String password = view.getPasswordField().getText().trim();
 
-        User curretUser = new User(name,lastName,ID,username,password,email);
+        User currentUser = new User(username, password, ID);
 
-        systemDataFile.checkAndSaveUser(curretUser);
+        SecretaryFile secretaryDataBase = new SecretaryFile();
+        UserFile userFile = new UserFile();
 
+        if (userFile.userExists(ID)) { return ALREADY_REGISTERED; } 
+
+        if (secretaryDataBase.readSecretaryDataBase(currentUser)) {
+            userFile.saveUser(currentUser);
+            return SUCCESS;
+        } else {
+            return NOT_IN_SECRETARY;
+        }
     }
-}   
+}
+

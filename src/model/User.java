@@ -7,15 +7,26 @@ public class User {
     private Wallet wallet;
     /*Builders. */
     public User(String name, String lastName,String ID, String user, String password, String email){
-                    this.name = name;
-                    this.lastName = lastName;
-                    this.ID = ID;
-                    this.user = user;
-                    this.password = password;
-                    this.userType = "unknown";
-                    this.isAdmin = false;
-                    this.wallet = new Wallet(this);
-                }
+        this.name = name;
+        this.lastName = lastName;
+        this.ID = ID;
+        this.user = user;
+        this.password = password;
+        this.userType = "unknown";
+        this.isAdmin = false;
+        this.wallet = new Wallet(this);
+    }
+    public User(String userName, String password, String ID) {
+        this.ID = ID;
+        this.user = userName;
+        this.password = password;
+        this.name = "";
+        this.lastName = "";
+        this.email = "";
+        this.userType = "unknown";
+        this.isAdmin = false;
+        this.wallet = null; // aún no asignamos Wallet
+    }
     /*Setters. */
     public void setName(String name) {this.name = name;}
     public void setLastName(String lastName) {this.lastName = lastName;}
@@ -36,5 +47,5 @@ public class User {
     public String getUserType() {return this.userType;}
     public boolean getIsAdmin() {return this.isAdmin;}
     /*Functions */
-
+    public void createWallet(){this.wallet = new Wallet(this);}
 }
