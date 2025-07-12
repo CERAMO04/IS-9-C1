@@ -15,17 +15,18 @@ public class SignInController {
             int result = signIn();
             switch (result) {
                 case 0:
-                    JOptionPane.showMessageDialog(view, "Usuario Invalido");
+                    view.setMessageAlert("Usuario Invalido");
                     break;
                 case 1: 
-                    JOptionPane.showMessageDialog(view, "Bienvenido");
+                    view.setMessageAlert("Bienvenido");
                     break;
                 case 2:
-                    JOptionPane.showMessageDialog(view, "Por favor introduzca su usuario");
+                    view.setMessageAlert("Por favor introduzca su usuario");
                     break;
                 case 3:
-                    JOptionPane.showMessageDialog(view, "Por favor introduzca su contrasenia");
+                    view.setMessageAlert("Por favor introduzca su contrasenia");
                 default:
+                    view.setMessageAlert(null);;
                     break;
             }
         });

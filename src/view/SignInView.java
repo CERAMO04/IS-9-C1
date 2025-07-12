@@ -8,6 +8,7 @@ public class SignInView extends JFrame {
     private RoundedTextField userNameField;
     private RoundedPasswordField passwordField;
     private JButton loginButton;
+    private JLabel messageAlert;
 
     public SignInView() {
         setTitle("Inicio de sesión");
@@ -43,6 +44,11 @@ public class SignInView extends JFrame {
         loginButton.setBackground(Color.BLACK);
         loginButton.setForeground(Color.WHITE);
 
+        /* Mensajes de alerta */
+        messageAlert = new JLabel("");
+        messageAlert.setAlignmentX(Component.CENTER_ALIGNMENT);
+        messageAlert.setForeground(Color.RED);
+
         // ¿Olvidó su contraseña?
         JLabel forgotPassword = new JLabel("¿Olvidó su contraseña?");
         forgotPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -58,6 +64,8 @@ public class SignInView extends JFrame {
         centerPanel.add(loginButton);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         centerPanel.add(forgotPassword);
+        centerPanel.add(messageAlert);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         bgPanel.add(centerPanel, new GridBagConstraints());
         setContentPane(bgPanel);
@@ -161,8 +169,10 @@ public class SignInView extends JFrame {
     public JTextField getUserName(){ return userNameField;}
     public JPasswordField  getPasswordField(){ return passwordField;}
     public JButton getSignInButton(){return loginButton;}
-
-
+    /*Setters */
+    public void setMessageAlert(String alert){
+        messageAlert.setText(alert);
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SignInView::new);
     }
