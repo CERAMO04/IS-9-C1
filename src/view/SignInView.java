@@ -49,10 +49,10 @@ public class SignInView extends JFrame {
         messageAlert.setAlignmentX(Component.CENTER_ALIGNMENT);
         messageAlert.setForeground(Color.RED);
 
-        // ¿Olvidó su contraseña?
-        JLabel forgotPassword = new JLabel("¿Olvidó su contraseña?");
-        forgotPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
-        forgotPassword.setForeground(Color.DARK_GRAY);
+        // Registrarse
+        JLabel registrarse = new JLabel("Registrarse");
+        registrarse.setAlignmentX(Component.CENTER_ALIGNMENT);
+        registrarse.setForeground(Color.DARK_GRAY);
 
         // Agregar componentes
         centerPanel.add(logo);
@@ -63,7 +63,7 @@ public class SignInView extends JFrame {
         centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         centerPanel.add(loginButton);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        centerPanel.add(forgotPassword);
+        centerPanel.add(registrarse);
         centerPanel.add(messageAlert);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
