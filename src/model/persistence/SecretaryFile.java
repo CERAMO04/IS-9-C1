@@ -1,12 +1,8 @@
 package model.persistence;
 
 import model.User;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 
@@ -24,7 +20,6 @@ public class SecretaryFile {
             System.out.println("Error creando el archivo de Secretaría: " + e.getMessage());
         }
     }
-
     public boolean readSecretaryDataBase(User user) {
         String hit = user.getID();
         try (BufferedReader reader = new BufferedReader(new FileReader(secretaryDataBaseFile))) {

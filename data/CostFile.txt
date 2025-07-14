@@ -1,0 +1,12 @@
+Fijo,Cocina,Gas,120.0
+Fijo,Instalación,Agua,90.0
+Fijo,Administración,Sueldos,50.45
+Fijo,Equipo,Mantenimiento,75.25
+Fijo,Instalación,Electricidad,88.9
+Variable,Proteína,Pollo,132.5
+Variable,Carbohidratos,Arroz,45.0
+Variable,Lípidos,Aceite,62.3
+Variable,Empaque,Bandejas,20.0
+Variable,Limpieza,Desinfectante,30.0
+Fijo,Cocina,Prueba,54.0
+Fijo,Nely,Prueba,4578.4547

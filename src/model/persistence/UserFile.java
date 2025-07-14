@@ -1,8 +1,6 @@
 package model.persistence;
 
 import model.User;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,12 +8,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-
 public class UserFile {
  
     private File systemUserDataBAse = new File("data/SystemUsers.txt");
-
-
     public UserFile(){
         try {
             if (!systemUserDataBAse.exists()) {

@@ -1,9 +1,7 @@
 package controller;
 
-import javax.swing.JOptionPane;
 import view.SignInView;
 import model.persistence.UserFile;
-
 
 public class SignInController {
     private SignInView view;
