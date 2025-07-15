@@ -6,7 +6,6 @@ import java.awt.*;
 // Se mantiene la estructura de tu clase, pero con el diseño visual integrado.
 public class SignUpView extends JFrame {
 
-    // --- TUS DECLARACIONES ORIGINALES ---
     // Se declaran como JTextField/JPasswordField estándar.
     private JTextField idField, userNameField;
     private JPasswordField passwordField;
@@ -36,7 +35,6 @@ public class SignUpView extends JFrame {
         logo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // --- INICIALIZACIÓN PERSONALIZADA ---
-        // Aquí está la magia: aunque están declarados como JTextField,
         // los inicializamos como nuestra versión con placeholder.
         idField = new PlaceholderTextField("Cédula de Identidad");
         userNameField = new PlaceholderTextField("Nombre de usuario");
@@ -80,7 +78,6 @@ public class SignUpView extends JFrame {
     }
     
     // --- TUS GETTERS ORIGINALES ---
-    // Estos métodos no cambian, por lo que tu controlador seguirá funcionando.
     public JTextField getIDField() { return idField; }
     public JTextField getUsernameField() { return userNameField; }
     public JPasswordField getPasswordField() { return passwordField; }
@@ -94,7 +91,6 @@ public class SignUpView extends JFrame {
     }
     
     // --- CLASES INTERNAS PARA EL DISEÑO ---
-    // (Estas son las mismas de antes, no es necesario copiarlas si ya las tienes en otro lado)
     
     class BackgroundPanel extends JPanel {
         private final Image backgroundImage;
