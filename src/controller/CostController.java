@@ -29,6 +29,9 @@ public class CostController {
                 };
                 model.addRow(rowData);
             }
+
+
+
         }
 
     public CostController(CostManagementView view){
@@ -76,7 +79,18 @@ public class CostController {
 
     }
 
+    /*private double calculateCCB(){
+        double allFixedCost = costFile.getAllFixedCost();
+        double allVariableCost =costFile.getAllVariableCost();
+        double allExtraCost = costFile.getAllExtraCost();
+        double result;
 
+
+
+
+
+
+    }*/
 
 
 

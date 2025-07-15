@@ -9,7 +9,7 @@ import view.SignUpView;
 
 public class SistemaGestionComedorUniversitario {
     public static void main(String[] args) {
-        SignInView prueba = new SignInView();
-        SignInController controller = new SignInController(prueba);
+        CostManagementView prueba = new CostManagementView();
+        CostController controller = new CostController(prueba);
     }
 }

@@ -50,8 +50,6 @@ public class CostManagementView extends JFrame {
         costTable.setRowHeight(30);
         JScrollPane scrollPane = new JScrollPane(costTable);                //Permite el scroll
         
-
-
         add(panelSuperior, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         setVisible(true);

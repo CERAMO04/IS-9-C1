@@ -58,5 +58,50 @@ public class CostFile {
         }
         return costs;
     }
+    public double getAllExtraCost(){
+        double result=0;
+        try(BufferedReader reader = new BufferedReader(new FileReader(costFile))){
+            String line;
+            String hit = "Extra";
+            while ((line = reader.readLine()) != null) {
+                String fields[] = line.split(",", 4);
+                if(fields[0].equals(hit)) result += Double.parseDouble(fields[3]);
+            }
+            return result;
+        }catch(IOException e){
+            System.out.println("Error al guardar los costos: " + e.getMessage());
+        }
+        return result;
+    }
 
+    public double getAllFixedCost(){
+        double result=0;
+        try(BufferedReader reader = new BufferedReader(new FileReader(costFile))){
+            String line;
+            String hit = "Fijo";
+            while ((line = reader.readLine()) != null) {
+                String fields[] = line.split(",", 4);
+                  if(fields[0].equals(hit)) result += Double.parseDouble(fields[3]);
+            }
+            return result;
+        }catch(IOException e){
+            System.out.println("Error al guardar los costos: " + e.getMessage());
+        }
+        return result;
+    }
+    public double getAllVariableCost(){
+        double result=0;
+        try(BufferedReader reader = new BufferedReader(new FileReader(costFile))){
+            String line;
+            String hit = "Variable";
+            while ((line = reader.readLine()) != null) {
+                String fields[] = line.split(",", 4);
+                  if(fields[0].equals(hit)) result += Double.parseDouble(fields[3]);
+            }
+            return result;
+        }catch(IOException e){
+            System.out.println("Error al guardar los costos: " + e.getMessage());
+        }
+        return result;
+    }
 }
