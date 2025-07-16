@@ -14,52 +14,80 @@ public class CostManagementView extends JFrame {
 
     public CostManagementView() {
         setTitle("Resumen de Costos");
-        setSize(520, 300);
+        setSize(900, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
 
-        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT)); // Panel superior con ComboBox y botón    
+        // Panel principal con fondo
+        JPanel contentPane = new JPanel() {
+            Image background = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        contentPane.setLayout(new BorderLayout());
+        setContentPane(contentPane);
+
+        // Panel superior con ComboBox
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topPanel.setOpaque(false); // Transparente
+        JLabel categoryLabel = new JLabel("Categoría:");
+        categoryLabel.setForeground(Color.WHITE); // Texto blanco
+
         String[] category = {"Fijo", "Variable"};
-        comboCcategory = new JComboBox<>(category);                         //Vector de los tipos de categoria
+        comboCcategory = new JComboBox<>(category);
 
-        saveButton = new JButton("Guardar Cambios");
+        topPanel.add(categoryLabel);
+        topPanel.add(comboCcategory);
+
+        // Panel inferior con botones
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        bottomPanel.setOpaque(false); // Transparente
+
         addButton = new JButton("Agregar Costo");
+        saveButton = new JButton("Guardar Cambios");
         refeshButton = new JButton("Actualizar");
 
-        panelSuperior.add(new JLabel("Categoría:"));
-        panelSuperior.add(comboCcategory);
-        panelSuperior.add(addButton);
-        panelSuperior.add(saveButton);
-        panelSuperior.add(refeshButton);   
+        bottomPanel.add(addButton);
+        bottomPanel.add(saveButton);
+        bottomPanel.add(refeshButton);
 
-        String[] columnas = {"Categoría", "Tipo", "Nombre", "Valor"};       // Modelo de la tabla
+        // Tabla
+        String[] columnas = {"Categoría", "Tipo", "Nombre", "Valor"};
         Object[][] datos = {
             {"Fijo", "Cocina", "Gas", "120.00"},
             {"Fijo", "Instalación", "Agua", "90.00"}
         };
 
-        tableModel = new DefaultTableModel(datos, columnas) {               //Funcion para editar los campos de la excel
+        tableModel = new DefaultTableModel(datos, columnas) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return column != 0;
             }
         };
 
-        costTable = new JTable(tableModel);                                 //tabla
+        costTable = new JTable(tableModel);
         costTable.setRowHeight(30);
-        JScrollPane scrollPane = new JScrollPane(costTable);                //Permite el scroll
-        
-        add(panelSuperior, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
+
+        JScrollPane scrollPane = new JScrollPane(costTable);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        contentPane.add(topPanel, BorderLayout.NORTH);
+        contentPane.add(scrollPane, BorderLayout.CENTER);
+        contentPane.add(bottomPanel, BorderLayout.SOUTH);
+
         setVisible(true);
     }
 
-    /*Getters */
-    public JComboBox<String> getComboCategorias() {return comboCcategory;}
-    public JButton getAddButton() {return addButton;}
-    public JTable getCostTable() {return costTable;}
-    public DefaultTableModel getTableModel() {return tableModel;}
-    public JButton getSaveButton(){ return saveButton;}
-    public JButton getRefrechButton(){ return refeshButton;}
+    public JComboBox<String> getComboCategorias() { return comboCcategory; }
+    public JButton getAddButton() { return addButton; }
+    public JTable getCostTable() { return costTable; }
+    public DefaultTableModel getTableModel() { return tableModel; }
+    public JButton getSaveButton() { return saveButton; }
+    public JButton getRefrechButton() { return refeshButton; }
 }
