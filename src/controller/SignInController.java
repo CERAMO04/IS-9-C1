@@ -41,6 +41,7 @@ public class SignInController {
 
         if(userFile.userExists(userName, userPassword)){
             User user = User.getInstance(userName, userPassword, "id");
+            user.createWallet(); //Temporal, hasta que leamos la billetera de la base de datos
             return SUCCESS;
         }else{
             return INVALID_USER;

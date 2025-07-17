@@ -5,6 +5,7 @@ import controller.CostController;
 import controller.SignInController;
 import controller.SignUpController;
 import view.CostManagementView;
+import view.MenuView;
 import view.SignInView;
 import view.SignUpView;
 import view.WalletView;

@@ -32,6 +32,14 @@ public class User {
         this.wallet = null; // aún no asignamos Wallet
     }
 
+    // Empty Singleton
+     public static synchronized User getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("Usuario no inicializado. Llama getInstance() con parametros primero.");
+        }
+        return instance;
+    }
+
     // Singleton sign up
     public static synchronized User getInstance(String name, String lastName, String ID, String user, String password, String email) {
         if (instance == null) {
@@ -48,7 +56,7 @@ public class User {
         return instance;
     }
 
-    // Clear instance (for logout)
+    // Clear instance (logout)
     public static synchronized void clearInstance() {
         instance = null;
     }
