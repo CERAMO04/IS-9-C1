@@ -12,7 +12,7 @@ public class SignInView extends JFrame {
     private RoundedTextField userNameField;
     private RoundedPasswordField passwordField;
     private JButton loginButton, signUpButton;
-    private JLabel messageAlert;
+    private JLabel messageAlert, signUpLabel;
 
     public SignInView() {
         setTitle("Inicio de sesión");
@@ -53,17 +53,17 @@ public class SignInView extends JFrame {
         messageAlert.setAlignmentX(Component.CENTER_ALIGNMENT);
         messageAlert.setForeground(Color.RED);
 
-        // Registrarse
-        JLabel registrarse = new JLabel("¿No estas registrado?");
-        registrarse.setAlignmentX(Component.CENTER_ALIGNMENT);
-        registrarse.setForeground(Color.DARK_GRAY);
-
         /* Boton Registrarse */
-        signUpButton = new JButton("Registrarse");
-        signUpButton.setMaximumSize(new Dimension(120,20));
-        signUpButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        signUpButton.setBackground(Color.BLACK);
-        signUpButton.setForeground(Color.WHITE);
+        signUpLabel = new JLabel("Registrate");
+        signUpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        signUpLabel.setForeground(Color.DARK_GRAY);
+        signUpLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        // Registrarse
+        JLabel signUpText = new JLabel("¿No estas registrado?");
+        signUpText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        signUpText.setForeground(Color.DARK_GRAY);
+
 
         // Agregar componentes
         centerPanel.add(logo);
@@ -74,9 +74,8 @@ public class SignInView extends JFrame {
         centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         centerPanel.add(loginButton);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        centerPanel.add(registrarse);
-        centerPanel.add(signUpButton);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        centerPanel.add(signUpText);
+        centerPanel.add(signUpLabel);
         centerPanel.add(messageAlert);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
@@ -229,7 +228,7 @@ public class SignInView extends JFrame {
     public JTextField getUserName(){ return userNameField;}
     public JPasswordField  getPasswordField(){ return passwordField;}
     public JButton getSignInButton(){return loginButton;}
-    public JButton getSignUpButton(){return signUpButton;}
+    public JLabel getSingUpLabel(){return signUpLabel;}
     /*Setters */
     public void setMessageAlert(String alert){
         messageAlert.setText(alert);

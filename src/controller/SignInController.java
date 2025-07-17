@@ -1,5 +1,9 @@
 package controller;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
+
 import view.SignInView;
 import model.User;
 import model.persistence.UserFile;
@@ -35,9 +39,12 @@ public class SignInController {
                     break;
             }
         });
-        view.getSignUpButton().addActionListener(e -> {
-            mainController.exitFrame(view);
-            mainController.ShowSignUp();
+        view.getSingUpLabel().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mainController.exitFrame(view);
+                mainController.ShowSignUp();
+            }
         });
     }
     public int signIn(){
