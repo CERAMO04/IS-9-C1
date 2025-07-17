@@ -6,11 +6,15 @@ import java.awt.*;
 
 public class MenuView extends JFrame {
 
+    private WalletView walletView;
+
     public MenuView() {
+        // La configuración de la ventana debe ir primero
         setTitle("Gestor de Comedor");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        // Luego, la configuración de los paneles y componentes
         Image bgImage = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
         BackgroundPanel mainPanel = new BackgroundPanel(bgImage);
         mainPanel.setLayout(new BorderLayout());
@@ -19,7 +23,9 @@ public class MenuView extends JFrame {
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
         setContentPane(mainPanel);
-        setVisible(true);
+        // Es mejor que setVisible(true) lo llame el controlador o el main,
+        // pero por ahora lo dejamos para que funcione.
+        // setVisible(true); 
     }
 
     private JComponent createTopNavBar() {
@@ -32,19 +38,31 @@ public class MenuView extends JFrame {
         JLabel logoLabel = new JLabel(new ImageIcon(logoImg));
         navBar.add(logoLabel, BorderLayout.WEST);
 
-        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 25, 0));
-        buttonsPanel.setOpaque(false);
-        buttonsPanel.add(createNavButton("Perfil"));
-        buttonsPanel.add(createNavButton("Mis reservas"));
-        buttonsPanel.add(createNavButton("Página principal"));
-        buttonsPanel.add(createNavButton("Cerrar sesión"));
-        navBar.add(buttonsPanel, BorderLayout.CENTER);
+        // Panel para los botones y el monedero
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 25, 0));
+        rightPanel.setOpaque(false);
+
+        // ¡Aquí integramos la vista del monedero!
+        walletView = new WalletView();
+        rightPanel.add(walletView); // Lo añadimos primero a la derecha
+
+        // Añadimos los botones de navegación después
+        rightPanel.add(createNavButton("Perfil"));
+        rightPanel.add(createNavButton("Mis reservas"));
+        rightPanel.add(createNavButton("Página principal"));
+        rightPanel.add(createNavButton("Cerrar sesión"));
+
+        navBar.add(rightPanel, BorderLayout.CENTER);
 
         JPanel container = new JPanel(new FlowLayout());
         container.setOpaque(false);
         container.setBorder(new EmptyBorder(10, 10, 10, 10));
         container.add(navBar);
         return container;
+    }
+
+    public WalletView getWalletStatusView() {
+        return walletView;
     }
 
     private JComponent createMainContentPanel() {
@@ -261,6 +279,13 @@ public class MenuView extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(MenuView::new);
+        SwingUtilities.invokeLater(() -> {
+            MenuView view = new MenuView();
+            view.setVisible(true);
+
+            // Ejemplo de cómo un controlador actualizaría el saldo
+            // Puedes probar con valores positivos y negativos
+            view.getWalletStatusView().updateBalance(100); 
+        });
     }
 }
