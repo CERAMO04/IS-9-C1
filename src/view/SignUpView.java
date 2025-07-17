@@ -21,7 +21,7 @@ public class SignUpView extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Usamos pantalla completa como en las otras vistas
 
         // --- ESTRUCTURA VISUAL MODERNA ---
-        Image bgImage = new ImageIcon(getClass().getResource("/images/comedor.jpeg")).getImage();
+        Image bgImage = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
         BackgroundPanel bgPanel = new BackgroundPanel(bgImage);
         bgPanel.setLayout(new GridBagLayout());
 
@@ -31,7 +31,7 @@ public class SignUpView extends JFrame {
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel logo = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/images/logo.png")).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+        JLabel logo = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/assets/logo.png")).getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
         logo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // --- INICIALIZACIÓN PERSONALIZADA ---
