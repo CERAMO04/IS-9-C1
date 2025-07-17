@@ -1,15 +1,16 @@
 package view; // O el paquete que estés usando, ej: com.comedor.app
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import model.User;
 
 /**
  * Un componente visual que muestra el estado del monedero del usuario.
  * Está diseñado para ser integrado en otras vistas, como la barra de navegación.
  */
 public class WalletView extends JPanel {
-
+    User user = User.getInstance(); //Referencia a Singleton creado durante inicio de sesion
     private JLabel balanceLabel; // Etiqueta que muestra el monto del saldo
 
     public WalletView() {
