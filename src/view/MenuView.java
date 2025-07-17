@@ -11,7 +11,7 @@ public class MenuView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        Image bgImage = new ImageIcon(getClass().getResource("/images/comedor.jpeg")).getImage();
+        Image bgImage = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
         BackgroundPanel mainPanel = new BackgroundPanel(bgImage);
         mainPanel.setLayout(new BorderLayout());
 
@@ -28,7 +28,7 @@ public class MenuView extends JFrame {
         navBar.setLayout(new BorderLayout(20, 0));
         navBar.setBorder(new EmptyBorder(10, 20, 10, 20));
 
-        Image logoImg = new ImageIcon(getClass().getResource("/images/logo.png")).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        Image logoImg = new ImageIcon(getClass().getResource("/assets/logo.png")).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JLabel logoLabel = new JLabel(new ImageIcon(logoImg));
         navBar.add(logoLabel, BorderLayout.WEST);
 
@@ -99,7 +99,7 @@ public class MenuView extends JFrame {
             setBorder(new EmptyBorder(20, 20, 20, 20));
             setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            Image userImg = new ImageIcon(getClass().getResource("/images/user.png")).getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            Image userImg = new ImageIcon(getClass().getResource("/assets/user.png")).getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
             JLabel userIconLabel = new JLabel(new ImageIcon(userImg));
             userIconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -189,7 +189,7 @@ public class MenuView extends JFrame {
         public CircularButton(String text) {
             super(text);
             try {
-                ImageIcon originalIcon = new ImageIcon(getClass().getResource("/images/engranaje.png"));
+                ImageIcon originalIcon = new ImageIcon(getClass().getResource("/assets/engranaje.png"));
                 // Reducimos el tamaño del icono
                 Image scaledImage = originalIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH); 
                 setIcon(new ImageIcon(scaledImage));
