@@ -1,2 +1,3 @@
-10000002,admin,Supervisor,Sistema,supervisor@gmail.com,Prueba01,1234,true
-22113457,comensal,Victor,Gomez,victor@gmail.com,prueba02,12344,false
+21234567,comensal,Martin,Fernandez,martin@gmail.com,prueba01,1234,false,0.0
+19765432,comensal,Eduardo,Rojas,eduardo@gmail.com,wilker,1234,false,0.0
+10000001,admin,Admin,Principal,admin@gmail.com,prueba02,1234,true,0.0

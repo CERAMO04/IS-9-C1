@@ -9,4 +9,3 @@ Variable,Lípidos,Aceite,62.3
 Variable,Empaque,Bandejas,20.0
 Variable,Limpieza,Desinfectante,30.0
 Fijo,Cocina,Prueba,54.0
-Fijo,Nely,Prueba,4578.4547

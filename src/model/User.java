@@ -6,23 +6,25 @@ public class User {
     private static User instance;
 
     /*Atrib */
-    private String name,lastName,user,password ,email,userType, ID;
+    private String name,lastName,userName,password,email,userType,ID;
     private boolean isAdmin;
     private Wallet wallet;
+
     /*Builders. */
-    public User(String name, String lastName,String ID, String user, String password, String email){
+    private User(String name, String lastName,String ID, String email,String password, String userName, double value, String userType){
         this.name = name;
         this.lastName = lastName;
         this.ID = ID;
-        this.user = user;
+        this.userName = userName;
         this.password = password;
-        this.userType = "unknown";
+        this.userType = userType;
         this.isAdmin = false;
-        this.wallet = new Wallet(this);
+        this.wallet = new Wallet(this, value);
+
     }
-    public User(String userName, String password, String ID) {
+    private User(String userName, String password, String ID) {
         this.ID = ID;
-        this.user = userName;
+        this.userName = userName;
         this.password = password;
         this.name = "";
         this.lastName = "";
@@ -32,30 +34,22 @@ public class User {
         this.wallet = null; // aún no asignamos Wallet
     }
 
-    // Empty Singleton
-     public static synchronized User getInstance() {
+    public static synchronized void init(String name, String lastName,String ID, String email, String password, String username, double value,String userType) {
         if (instance == null) {
-            throw new IllegalStateException("Usuario no inicializado. Llama getInstance() con parametros primero.");
+            instance = new User(name, lastName, ID, email,password,username,value,userType);
+        }
+    }
+    public static synchronized void init(String user, String password, String ID) {
+        if (instance == null) {
+            instance = new User(user,password,ID);
+        }
+    }
+    public static synchronized User getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("Usuario no inicializado. Llama a init(...) primero.");
         }
         return instance;
     }
-
-    // Singleton sign up
-    public static synchronized User getInstance(String name, String lastName, String ID, String user, String password, String email) {
-        if (instance == null) {
-            instance = new User(name, lastName, ID, user, password, email);
-        }
-        return instance;
-    }
-
-    // For sign in
-    public static synchronized User getInstance(String user, String password, String ID) {
-        if (instance == null) {
-            instance = new User("", "", ID, user, password, "");
-        }
-        return instance;
-    }
-
     // Clear instance (logout)
     public static synchronized void clearInstance() {
         instance = null;
@@ -65,7 +59,7 @@ public class User {
     public void setName(String name) {this.name = name;}
     public void setLastName(String lastName) {this.lastName = lastName;}
     public void setID(String ID) {this.ID = ID;}
-    public void setUser(String user) {this.user = user;}
+    public void setUser(String user) {this.userName = user;}
     public void setPassWord(String password) {this.password = password;}
     public void setEmail(String email) {this.email = email;}
     public void setUserType(String userType) {this.userType = userType;}
@@ -75,7 +69,7 @@ public class User {
     public String getName() {return this.name;}
     public String getLastName() {return this.lastName;}
     public String getID() {return this.ID;}
-    public String getUser() {return this.user;}
+    public String getUser() {return this.userName;}
     public String getPassword() {return this.password;}
     public String getEmail() {return this.email;}
     public String getUserType() {return this.userType;}

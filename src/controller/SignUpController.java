@@ -49,7 +49,8 @@ public class SignUpController {
         String username = view.getUsernameField().getText().trim();
         String password = view.getPasswordField().getText().trim();
 
-        User currentUser = new User(username, password, ID);
+        User.init(username, password, ID);
+        User currentUser = User.getInstance();
 
         SecretaryFile secretaryDataBase = new SecretaryFile();
         UserFile userFile = new UserFile();
@@ -64,4 +65,3 @@ public class SignUpController {
         }
     }
 }
-

@@ -90,7 +90,6 @@ public class CostManagementView extends JFrame {
                 g2.dispose();
             }
         };
-
         comboCcategory.setOpaque(false);
         comboCcategory.setForeground(Color.BLACK);
         comboCcategory.setBackground(Color.WHITE);
@@ -137,18 +136,7 @@ public class CostManagementView extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
 
         String[] columnas = {"Categoría", "Tipo", "Nombre", "Valor"};
-        Object[][] datos = {
-            {"Fijo", "Cocina", "Gas", "120.00"},
-            {"Fijo", "Instalación", "Agua", "90.00"},
-            {"Fijo", "Administración", "Sueldos", "50.45"},
-            {"Fijo", "Equipo", "Mantenimiento", "75.25"},
-            {"Fijo", "Instalación", "Electricidad", "88.9"},
-            {"Variable", "Proteína", "Pollo", "132.5"},
-            {"Variable", "Carbohidratos", "Arroz", "45.0"},
-            {"Variable", "Lípidos", "Aceite", "62.3"},
-            {"Variable", "Empaque", "Bandejas", "20.0"},
-            {"Variable", "Limpieza", "Desinfectante", "30.0"},
-        };
+        Object[][] datos = {};
 
         tableModel = new DefaultTableModel(datos, columnas) {
             @Override
@@ -156,7 +144,6 @@ public class CostManagementView extends JFrame {
                 return column != 0;
             }
         };
-
         costTable = new JTable(tableModel);
         costTable.setFont(new Font("Arial", Font.PLAIN, 14));
         costTable.setRowHeight(32);
@@ -232,7 +219,6 @@ public class CostManagementView extends JFrame {
                 
                 g2.dispose();
             }
-            
             @Override
             protected void paintBorder(Graphics g) {
             }

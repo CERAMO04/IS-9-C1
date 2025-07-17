@@ -29,7 +29,8 @@ public class UserFile {
                           curretUser.getEmail() + "," +
                           curretUser.getUser() + "," +
                           curretUser.getPassword() + "," +                          
-                          curretUser.getIsAdmin() + "\n";
+                          curretUser.getIsAdmin() + "," +
+                          curretUser.getWallet().getBalance() + "\n"; 
             writer.write(line);
         }catch (Exception e) {
             System.out.println("Error escribiendo en el archivo: " + e.getMessage());
@@ -53,11 +54,27 @@ public class UserFile {
         try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",", 8);
-                if (fields.length == 8) {
+                 String[] fields = line.split(",", 9);
+                if (fields.length == 9) {
                     String userAux = fields[5];
                     String passWordAux = fields[6];
-                    if(userAux.equals(userName.trim()) && passWordAux.equals(userPassword.trim())) return true;
+                    if(userAux.equals(userName.trim()) && passWordAux.equals(userPassword.trim())) {
+                        String ID = fields[0];
+                        String userType = fields[1];
+                        String name = fields[2];
+                        String lastName = fields[3];
+                        String email = fields[4];
+                        String isAdmin = fields[7];
+                        String value = fields[8];
+                        double cash = Double.parseDouble(value);
+
+                        User.clearInstance();
+                        User.init(name, lastName, ID, email, passWordAux, userAux, cash, userType);
+                        User curretUser = User.getInstance();
+                        curretUser.setIsAdmin(isAdmin.equals("true"));
+
+                        return true;
+                    }
                 }
             }
         } catch (IOException e) {

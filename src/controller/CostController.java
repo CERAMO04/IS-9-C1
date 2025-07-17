@@ -40,11 +40,7 @@ public class CostController {
             DefaultTableModel model = view.getTableModel();
             model.addRow(new Object[]{selectedCategory, "", "", ""});
         });
-        /*view.getDeleteButton().addActionListener(e -> {                                               Debo pensar la logica de borrar
-            String selectedCategory = view.getComboCategorias().getSelectedItem().toString();
-            DefaultTableModel model = view.getTableModel();
-            model.kick(new Object[]{selectedCategory, "", "", ""});
-        });*/
+
         view.getSaveButton().addActionListener(e -> {
             if (view.getCostTable().isEditing()) {
                 view.getCostTable().getCellEditor().stopCellEditing();
@@ -74,19 +70,14 @@ public class CostController {
         });
 
     }
-
-    /*private double calculateCCB(){
+    private double calculateCCB(){
         double allFixedCost = costFile.getAllFixedCost();
         double allVariableCost =costFile.getAllVariableCost();
         double allExtraCost = costFile.getAllExtraCost();
-        double result;
+        double NB = 300;
 
-
-
-
-
-
-    }*/
+        return (( allFixedCost+ allVariableCost)/NB * (1 %allExtraCost));
+    }
 
 
 

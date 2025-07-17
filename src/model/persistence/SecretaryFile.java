@@ -10,7 +10,6 @@ import java.io.IOException;
 public class SecretaryFile {
 
     private File secretaryDataBaseFile = new File("data/SecretaryUsers.txt");
-
     public SecretaryFile() {
         try {
             if (!secretaryDataBaseFile.exists()) {

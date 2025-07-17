@@ -9,6 +9,10 @@ public class Wallet {
         this.ownerUser = ownUser;
         this.balance = 0.0;
     }
+    public Wallet(User ownUse, double cash){
+        this.ownerUser = ownUse;
+        this.balance = cash;
+    }
     /*Getters */
     public double getBalance() {return this.balance;}
     public User getOUser() {return this.ownerUser;}
@@ -16,7 +20,6 @@ public class Wallet {
     public void deposit(double amount) {
         if (amount <= 0) this.balance += amount;
     }
-
     public boolean withdraw(double amount) {
         if (balance < 0) return false;
         else {

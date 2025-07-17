@@ -2,6 +2,9 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import model.User;
+
 import java.awt.*;
 
 public class MenuView extends JFrame {
@@ -47,9 +50,16 @@ public class MenuView extends JFrame {
         rightPanel.add(walletView); // Lo añadimos primero a la derecha
 
         // Añadimos los botones de navegación después
-        rightPanel.add(createNavButton("Perfil"));
-        rightPanel.add(createNavButton("Mis reservas"));
-        rightPanel.add(createNavButton("Página principal"));
+        User user = User.getInstance();
+        
+        
+        if (user.getIsAdmin()){
+            rightPanel.add(createNavButton("Página principal"));
+            rightPanel.add(createNavButton("Gestión de costos"));
+        }else {
+            rightPanel.add(createNavButton("Página principal"));     
+        }
+
         rightPanel.add(createNavButton("Cerrar sesión"));
 
         navBar.add(rightPanel, BorderLayout.CENTER);
@@ -64,7 +74,6 @@ public class MenuView extends JFrame {
     public WalletView getWalletStatusView() {
         return walletView;
     }
-
     private JComponent createMainContentPanel() {
         JPanel contentPanel = new JPanel(new BorderLayout(30, 0));
         contentPanel.setOpaque(false);
