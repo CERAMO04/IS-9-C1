@@ -1,4 +1,4 @@
-package com.comedor.app; // Asegúrate de que el paquete sea el correcto para tu proyecto
+package view; // Asegúrate de que el paquete sea el correcto para tu proyecto
 
 import javax.swing.*;
 import java.awt.*;

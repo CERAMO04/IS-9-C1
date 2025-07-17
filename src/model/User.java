@@ -1,6 +1,10 @@
 package model;
 
 public class User {
+
+    // Singleton instance
+    private static User instance;
+
     /*Atrib */
     private String name,lastName,user,password ,email,userType, ID;
     private boolean isAdmin;
@@ -27,6 +31,28 @@ public class User {
         this.isAdmin = false;
         this.wallet = null; // aún no asignamos Wallet
     }
+
+    // Singleton sign up
+    public static synchronized User getInstance(String name, String lastName, String ID, String user, String password, String email) {
+        if (instance == null) {
+            instance = new User(name, lastName, ID, user, password, email);
+        }
+        return instance;
+    }
+
+    // For sign in
+    public static synchronized User getInstance(String user, String password, String ID) {
+        if (instance == null) {
+            instance = new User("", "", ID, user, password, "");
+        }
+        return instance;
+    }
+
+    // Clear instance (for logout)
+    public static synchronized void clearInstance() {
+        instance = null;
+    }
+
     /*Setters. */
     public void setName(String name) {this.name = name;}
     public void setLastName(String lastName) {this.lastName = lastName;}

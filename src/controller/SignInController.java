@@ -1,6 +1,7 @@
 package controller;
 
 import view.SignInView;
+import model.User;
 import model.persistence.UserFile;
 
 public class SignInController {
@@ -39,6 +40,7 @@ public class SignInController {
         if (userPassword.isEmpty()) { return INVALID_FIELD_PASSWORD; }
 
         if(userFile.userExists(userName, userPassword)){
+            User user = User.getInstance(userName, userPassword, "id");
             return SUCCESS;
         }else{
             return INVALID_USER;
