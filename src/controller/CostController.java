@@ -29,11 +29,7 @@ public class CostController {
                 };
                 model.addRow(rowData);
             }
-
-
-
         }
-
     public CostController(CostManagementView view){
         this.view = view;
 

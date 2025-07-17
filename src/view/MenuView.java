@@ -285,7 +285,7 @@ public class MenuView extends JFrame {
 
             // Ejemplo de cómo un controlador actualizaría el saldo
             // Puedes probar con valores positivos y negativos
-            view.getWalletStatusView().updateBalance(100); 
+            view.getWalletStatusView().updateBalance(-100); 
         });
     }
 }

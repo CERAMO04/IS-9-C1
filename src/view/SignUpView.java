@@ -82,14 +82,14 @@ public class SignUpView extends JFrame {
     public JTextField getUsernameField() { return userNameField; }
     public JPasswordField getPasswordField() { return passwordField; }
     public JButton getRegisterButton() { return signUpButton; }
-    
-    // Getters para los nuevos componentes (útiles para el controlador)
     public JLabel getBackToLoginLink() { return backToLoginLink; }
-    public void setMessageAlert(String message, Color color) {
-        messageAlert.setText(message);
-        messageAlert.setForeground(color);
-    }
+
     
+    /*Setters */
+    public void setMessageAlert(String text){
+        messageAlert.setText(text);
+    }
+
     // --- CLASES INTERNAS PARA EL DISEÑO ---
     
     class BackgroundPanel extends JPanel {

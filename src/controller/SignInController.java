@@ -6,18 +6,24 @@ import model.persistence.UserFile;
 
 public class SignInController {
     private SignInView view;
+    private MainController mainController;
+
     public static final int INVALID_USER = 0, SUCCESS = 1, INVALID_FIELD_USER=2, INVALID_FIELD_PASSWORD=3;
 
-    public SignInController(SignInView view){
+    public SignInController(SignInView view, MainController mainController){
         this.view=view;
+        this.mainController=mainController;
+
         view.getSignInButton().addActionListener(e -> {
             int result = signIn();
             switch (result) {
-                case 0:
+                case INVALID_USER:
                     view.setMessageAlert("Usuario Invalido");
                     break;
-                case 1: 
+                case SUCCESS: 
                     view.setMessageAlert("Bienvenido");
+                    mainController.exitFrame(view);
+                    mainController.showMenu();
                     break;
                 case 2:
                     view.setMessageAlert("Por favor introduzca su usuario");
@@ -28,6 +34,10 @@ public class SignInController {
                     view.setMessageAlert(null);;
                     break;
             }
+        });
+        view.getSignUpButton().addActionListener(e -> {
+            mainController.exitFrame(view);
+            mainController.ShowSignUp();
         });
     }
     public int signIn(){
@@ -41,7 +51,7 @@ public class SignInController {
 
         if(userFile.userExists(userName, userPassword)){
             User user = User.getInstance(userName, userPassword, "id");
-            user.createWallet(); //Temporal, hasta que leamos la billetera de la base de datos
+            user.createWallet();
             return SUCCESS;
         }else{
             return INVALID_USER;

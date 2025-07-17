@@ -55,7 +55,7 @@ public class UserFile {
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",", 8);
                 if (fields.length == 8) {
-                    String userAux = fields[7];
+                    String userAux = fields[5];
                     String passWordAux = fields[6];
                     if(userAux.equals(userName.trim()) && passWordAux.equals(userPassword.trim())) return true;
                 }

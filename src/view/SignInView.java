@@ -1,13 +1,17 @@
 package view;
 
 import javax.swing.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import view.SignUpView.PlaceholderTextField;
+
 import java.awt.*;
 
 public class SignInView extends JFrame {
 
     private RoundedTextField userNameField;
     private RoundedPasswordField passwordField;
-    private JButton loginButton;
+    private JButton loginButton, signUpButton;
     private JLabel messageAlert;
 
     public SignInView() {
@@ -50,9 +54,16 @@ public class SignInView extends JFrame {
         messageAlert.setForeground(Color.RED);
 
         // Registrarse
-        JLabel registrarse = new JLabel("Registrarse");
+        JLabel registrarse = new JLabel("¿No estas registrado?");
         registrarse.setAlignmentX(Component.CENTER_ALIGNMENT);
         registrarse.setForeground(Color.DARK_GRAY);
+
+        /* Boton Registrarse */
+        signUpButton = new JButton("Registrarse");
+        signUpButton.setMaximumSize(new Dimension(120,20));
+        signUpButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        signUpButton.setBackground(Color.BLACK);
+        signUpButton.setForeground(Color.WHITE);
 
         // Agregar componentes
         centerPanel.add(logo);
@@ -64,12 +75,13 @@ public class SignInView extends JFrame {
         centerPanel.add(loginButton);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         centerPanel.add(registrarse);
+        centerPanel.add(signUpButton);
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         centerPanel.add(messageAlert);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         bgPanel.add(centerPanel, new GridBagConstraints());
         setContentPane(bgPanel);
-        setVisible(true);
     }
 
     // Panel de fondo con imagen
@@ -109,15 +121,40 @@ public class SignInView extends JFrame {
 
     // Campo de texto redondeado
     class RoundedTextField extends JTextField {
-        private final int radius = 20;
+    private final int radius = 20;
+    private final String placeHolder;
+    private boolean showingPlaceholder = true;
 
-        public RoundedTextField(String text) {
-            super(text);
-            setOpaque(false);
-            setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+    public RoundedTextField(String placeHolder) {
+        super(placeHolder);
+        this.placeHolder = placeHolder;
+        setOpaque(false);
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        setForeground(Color.GRAY);
+
+        addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (showingPlaceholder) {
+                    setText("");
+                    setForeground(Color.BLACK);
+                    showingPlaceholder = false;
+                }
+            }
+        @Override
+        public void focusLost(FocusEvent e) {
+            if (getText().isEmpty()) {
+                setText(placeHolder);
+                setForeground(Color.GRAY);
+                showingPlaceholder = true;
+                }
+                }
+            });
         }
-
+        public boolean isShowingPlaceholder() {
+            return showingPlaceholder;
+        }
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
@@ -135,16 +172,46 @@ public class SignInView extends JFrame {
             g2.dispose();
         }
     }
-
     // Campo de contraseña redondeado
     class RoundedPasswordField extends JPasswordField {
         private final int radius = 20;
+        private final String placeHolder;
+        private boolean showingPlaceholder = true;
 
-        public RoundedPasswordField(String text) {
-            super(text);
+        public RoundedPasswordField(String placeHolder) {
+            super(placeHolder);
+            this.placeHolder = placeHolder;
             setOpaque(false);
             setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+            setForeground(Color.GRAY);
+            setEchoChar((char) 0); // Mostrar texto como plano al inicio
+
+        addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (showingPlaceholder) {
+                    setText("");
+                    setForeground(Color.BLACK);
+                    setEchoChar('•'); // Activar ocultamiento
+                    showingPlaceholder = false;
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (getPassword().length == 0) {
+                    setText(placeHolder);
+                    setForeground(Color.GRAY);
+                    setEchoChar((char) 0); // Mostrar texto plano
+                    showingPlaceholder = true;
+                    }
+                }
+            });
+        }
+
+        public boolean isShowingPlaceholder() {
+            return showingPlaceholder;
         }
 
         @Override
@@ -156,19 +223,13 @@ public class SignInView extends JFrame {
             g2.dispose();
         }
 
-        @Override
-        protected void paintBorder(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setColor(Color.LIGHT_GRAY);
-            g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);
-            g2.dispose();
-        }
     }
 
     /*Getters */
     public JTextField getUserName(){ return userNameField;}
     public JPasswordField  getPasswordField(){ return passwordField;}
     public JButton getSignInButton(){return loginButton;}
+    public JButton getSignUpButton(){return signUpButton;}
     /*Setters */
     public void setMessageAlert(String alert){
         messageAlert.setText(alert);

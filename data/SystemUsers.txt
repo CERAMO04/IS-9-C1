@@ -1,1 +1,2 @@
-21234567,comensal,Martin,Fernandez,martin@gmail.com,false,1234,Gez1314
+10000002,admin,Supervisor,Sistema,supervisor@gmail.com,Prueba01,1234,true
+22113457,comensal,Victor,Gomez,victor@gmail.com,prueba02,12344,false
