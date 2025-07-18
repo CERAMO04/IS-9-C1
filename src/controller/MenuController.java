@@ -6,10 +6,10 @@ import model.User;
 import view.MenuView;
 
 public class MenuController {
-    private MenuView menuView;
+    private MenuView view;
     private MainController mainController;
 
-    /*public MenuController(MenuView menuView, MainController mainControllet){
+    public MenuController(MenuView menuView, MainController mainController){
         this.view = menuView;
         this.mainController = mainController;
 
@@ -19,11 +19,11 @@ public class MenuController {
             mainController.exitFrame(view);
             mainController.showLogIn();
         });
-        view.getCostManagementButton().addActionListener(e->{
+        view.getCostButton().addActionListener(e->{
             mainController.exitFrame(view);
-            maincontroller.showCostManagementView();
+            mainController.showCostManagementView();
         });
     }
-*/
+
 
 }

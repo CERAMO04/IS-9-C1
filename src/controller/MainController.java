@@ -15,6 +15,7 @@ public class MainController {
     }
     public void showMenu(){
         MenuView menuView = new MenuView();
+        new MenuController(menuView,this);
         menuView.setVisible(true);
     }
     public void ShowSignUp(){
@@ -22,9 +23,10 @@ public class MainController {
         new SignUpController(SignUpView,this);
         SignUpView.setVisible(true);
     }
-    public void CostManagementView(){
+    public void showCostManagementView(){
         CostManagementView costView = new CostManagementView();
         new CostController(costView,this);
+        costView.setVisible(true);
     }
     public void exitFrame(javax.swing.JFrame view){
         view.dispose();
