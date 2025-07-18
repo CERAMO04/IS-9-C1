@@ -19,11 +19,11 @@ public class MenuController {
             mainController.exitFrame(view);
             mainController.showLogIn();
         });
-        view.getCostButton().addActionListener(e->{
-            mainController.exitFrame(view);
-            mainController.showCostManagementView();
-        });
+        if (view.getCostButton() != null) {
+            view.getCostButton().addActionListener(e -> {
+                mainController.exitFrame(view);
+                mainController.showCostManagementView();
+            });
+        }
     }
-
-
 }

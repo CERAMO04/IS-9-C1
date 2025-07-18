@@ -1,16 +1,17 @@
 package view;
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import controller.MenuController;
 import model.User;
-import java.awt.*;
+
 
 public class MenuView extends JFrame {
 
     private WalletView walletView;
     public JButton mainPageButton, costButton, logButton;
+    User user = User.getInstance();
 
     public MenuView() {
         setTitle("Menú del Comedor");
@@ -52,6 +53,8 @@ public class MenuView extends JFrame {
             rightPanel.add(costButton);
         } else {
             mainPageButton = createNavButton("Pagina Principal");
+            rightPanel.add(mainPageButton);
+            costButton = null;
         }
         logButton = createNavButton("Cerra sesion");
         rightPanel.add(logButton);
@@ -111,25 +114,26 @@ public class MenuView extends JFrame {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setBorder(new EmptyBorder(20, 20, 20, 20));
             setAlignmentX(Component.CENTER_ALIGNMENT);
+
             Image userImg = new ImageIcon(getClass().getResource("/assets/user.png")).getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
             JLabel userIconLabel = new JLabel(new ImageIcon(userImg));
             userIconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            JLabel name = new JLabel("Nombre Apellido");
+
+            String fullName = user.getName() + " " + user.getLastName();
+            JLabel name = new JLabel(fullName);
             name.setFont(new Font("SansSerif", Font.BOLD, 16));
             name.setAlignmentX(Component.CENTER_ALIGNMENT);
-            JLabel occupation = new JLabel("Ocupación");
+            
+            JLabel occupation = new JLabel(user.getUserType());
             occupation.setForeground(Color.GRAY);
             occupation.setAlignmentX(Component.CENTER_ALIGNMENT);
-            JLabel dependency = new JLabel("Dependencia");
-            dependency.setForeground(Color.GRAY);
-            dependency.setAlignmentX(Component.CENTER_ALIGNMENT);
+
             add(userIconLabel);
             add(Box.createRigidArea(new Dimension(0, 20)));
             add(name);
             add(Box.createRigidArea(new Dimension(0, 5)));
             add(occupation);
             add(Box.createRigidArea(new Dimension(0, 5)));
-            add(dependency);
         }
     }
     
@@ -283,7 +287,7 @@ public class MenuView extends JFrame {
 
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         try {
             User.init("28300189", "Carlos Estudiante", "passwordDePrueba123");
         } catch (Exception e) {
@@ -296,5 +300,5 @@ public class MenuView extends JFrame {
             view.setVisible(true);
             view.getWalletStatusView().updateBalance(250.75); 
         });
-    }
+    }*/
 }
