@@ -42,7 +42,7 @@ public class MenuView extends JFrame {
         navBar.add(logoLabel, BorderLayout.WEST);
 
         // Panel para los botones y el monedero
-        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 25, 0));
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 0));
         rightPanel.setOpaque(false);
 
         // ¡Aquí integramos la vista del monedero!
@@ -286,6 +286,11 @@ public class MenuView extends JFrame {
             super.paintComponent(g);
         }
     }
+
+
+    //public JButton logOutButton(){return }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

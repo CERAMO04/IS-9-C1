@@ -11,6 +11,7 @@ import model.persistence.CostFile;
 
 public class CostController {
     private CostManagementView view;
+    private MainController mainController;
     private CostFile costFile = new CostFile();
     
     private void refreshTable(){
@@ -30,8 +31,9 @@ public class CostController {
                 model.addRow(rowData);
             }
         }
-    public CostController(CostManagementView view){
+    public CostController(CostManagementView view, MainController mainController){
         this.view = view;
+        this.mainController = mainController;
 
         refreshTable();
 
@@ -83,10 +85,10 @@ public class CostController {
     private double calculateCCB(double trayNumber){
         double CF = costFile.getAllFixedCost();
         double CV = costFile.getAllVariableCost();
-        double extraCost = costFile.getAllExtraCost();
+        double extraCost = 0.1;
         double nt = trayNumber;
 
-        return ((CF+ CV)/nt * (1 %extraCost));
+        return ((CF+ CV)/nt * (1 + extraCost));
     }
 
 

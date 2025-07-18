@@ -22,6 +22,10 @@ public class MainController {
         new SignUpController(SignUpView,this);
         SignUpView.setVisible(true);
     }
+    public void CostManagementView(){
+        CostManagementView costView = new CostManagementView();
+        new CostController(costView,this);
+    }
     public void exitFrame(javax.swing.JFrame view){
         view.dispose();
     }
