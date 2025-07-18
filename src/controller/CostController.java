@@ -13,7 +13,7 @@ public class CostController {
     private CostManagementView view;
     private MainController mainController;
     private CostFile costFile = new CostFile();
-    
+
     private void refreshTable(){
             List<Cost> updatedCosts = costFile.readData();
 

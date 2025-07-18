@@ -117,7 +117,6 @@ public class SignInView extends JFrame {
             super.paintComponent(g);
         }
     }
-
     // Campo de texto redondeado
     class RoundedTextField extends JTextField {
     private final int radius = 20;
@@ -223,7 +222,6 @@ public class SignInView extends JFrame {
         }
 
     }
-
     /*Getters */
     public JTextField getUserName(){ return userNameField;}
     public JPasswordField  getPasswordField(){ return passwordField;}
