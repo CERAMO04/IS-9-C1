@@ -56,7 +56,7 @@ public class MenuView extends JFrame {
             rightPanel.add(mainPageButton);
             costButton = null;
         }
-        logButton = createNavButton("Cerra sesion");
+        logButton = createNavButton("Cerrar sesion");
         rightPanel.add(logButton);
 
         navBar.add(rightPanel, BorderLayout.CENTER);

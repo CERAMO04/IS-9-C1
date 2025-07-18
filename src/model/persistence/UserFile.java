@@ -11,6 +11,11 @@ import java.io.IOException;
 public class UserFile {
  
     private File systemUserDataBAse = new File("data/SystemUsers.txt");
+
+    protected void setSystemUserDatabase(File file) {
+    this.systemUserDataBAse = file;
+    }
+    
     public UserFile(){
         try {
             if (!systemUserDataBAse.exists()) {
