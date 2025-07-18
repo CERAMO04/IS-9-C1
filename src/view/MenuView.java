@@ -2,12 +2,15 @@ package view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import controller.MenuController;
 import model.User;
 import java.awt.*;
 
 public class MenuView extends JFrame {
 
     private WalletView walletView;
+    public JButton mainPageButton, costButton, logButton;
 
     public MenuView() {
         setTitle("Menú del Comedor");
@@ -43,12 +46,15 @@ public class MenuView extends JFrame {
         User user = User.getInstance();
         
         if (user.getIsAdmin()){
-            rightPanel.add(createNavButton("Página principal"));
-            rightPanel.add(createNavButton("Gestión de costos"));
+            mainPageButton = createNavButton("Pagina Principal");
+            costButton = createNavButton("Gestion de costos");
+            rightPanel.add(mainPageButton);
+            rightPanel.add(costButton);
         } else {
-            rightPanel.add(createNavButton("Página principal"));     
+            mainPageButton = createNavButton("Pagina Principal");
         }
-        rightPanel.add(createNavButton("Cerrar sesión"));
+        logButton = createNavButton("Cerra sesion");
+        rightPanel.add(logButton);
 
         navBar.add(rightPanel, BorderLayout.CENTER);
 
@@ -268,6 +274,11 @@ public class MenuView extends JFrame {
     }
 
 
+
+    /*Getters */
+    public JButton getMaiButton(){return mainPageButton;}
+    public JButton getLogOutButton(){return logButton;}
+    public JButton getCostButton(){return costButton;}
     //public JButton logOutButton(){return }
 
 
