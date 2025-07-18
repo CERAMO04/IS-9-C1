@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Cost;
+import model.User;
 import model.persistence.CostFile;
 
 public class CostController {
@@ -42,7 +43,6 @@ public class CostController {
             DefaultTableModel model = view.getTableModel();
             model.addRow(new Object[]{selectedCategory, "", "", ""});
         });
-
         view.getSaveButton().addActionListener(e -> {
             if (view.getCostTable().isEditing()) {
                 view.getCostTable().getCellEditor().stopCellEditing();
@@ -80,7 +80,16 @@ public class CostController {
                 JOptionPane.showMessageDialog(view, "Por favor, ingresa un número válido de bandejas.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-
+        view.getLogOutButton().addActionListener(e -> {
+            User.clearInstance();
+            JOptionPane.showMessageDialog(view, "Nos vemos pronto!");
+            mainController.exitFrame(view);
+            mainController.showLogIn();
+        });
+        view.getMainButton().addActionListener(e -> {
+            mainController.exitFrame(view);
+            mainController.showMenu();
+        });
     }
     private double calculateCCB(double trayNumber){
         double CF = costFile.getAllFixedCost();

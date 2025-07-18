@@ -10,7 +10,7 @@ public class CostManagementView extends JFrame {
 
     // --- Atributos de la clase ---
     private JComboBox<String> comboCcategory;
-    private JButton addButton, saveButton, refeshButton,calcButton;
+    private JButton addButton, saveButton, refeshButton,calcButton, mainPageButton, costButton, logOutButton;
     private JTable costTable;
     private JLabel ccbValueLabel;
     private JTextField traysField, mermaField;
@@ -244,12 +244,16 @@ public class CostManagementView extends JFrame {
         User user = User.getInstance();
         
         if (user.getIsAdmin()){
-            rightPanel.add(createNavButton("Página principal"));
-            rightPanel.add(createNavButton("Gestión de costos"));
+            mainPageButton = createNavButton("Pagina Principal");
+            costButton = createNavButton("Gestion de Costos");
+            rightPanel.add(mainPageButton);
+            rightPanel.add(costButton);
         } else {
-            rightPanel.add(createNavButton("Página principal"));     
+            rightPanel.add(createNavButton("Página principal"));
+            costButton = null;     
         }
-        rightPanel.add(createNavButton("Cerrar sesión"));
+        logOutButton = createNavButton("Cerrar sesión");
+        rightPanel.add(logOutButton);
 
         navBar.add(rightPanel, BorderLayout.CENTER);
 
@@ -317,13 +321,16 @@ public class CostManagementView extends JFrame {
     public JButton getcalcButton() {return calcButton;}
     public JTextField getstraysField() {return traysField;}
     public JTextField getMermaField() { return mermaField;}
-    
+    public JButton getMainButton(){return mainPageButton;}
+    public JButton getLogOutButton(){return logOutButton;}
+
+
+
     /*Setters */
     public void setCalculatedCCB(double newValue){
         ccbValueLabel.setText(String.format("%.2f", newValue));
     }
-
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         try {
             User.init("001", "Admin User", "adminpass");
             User.getInstance().setIsAdmin(true); 
@@ -341,5 +348,5 @@ public class CostManagementView extends JFrame {
                 view.getWalletStatusView().updateBalance(999.99);
             }
         });
-    }
+    }*/
 }
