@@ -1,43 +1,54 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import model.User; 
 import java.awt.*;
 
 public class CostManagementView extends JFrame {
 
+    // --- Atributos de la clase ---
     private JComboBox<String> comboCcategory;
     private JButton addButton, saveButton, refeshButton,calcButton;
     private JTable costTable;
     private JLabel ccbValueLabel;
     private JTextField traysField, mermaField;
     private DefaultTableModel tableModel;
+    private WalletView walletView;
 
     public CostManagementView() {
-        setTitle("Resumen de Costos");
-        setSize(1000, 1000);
+        setTitle("Gestión y Resumen de Costos");
+        setSize(1200, 800);
+        setMinimumSize(new Dimension(1100, 750));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel contentPane = new JPanel() {
+        JPanel contentPane = new JPanel(new GridBagLayout()) {
             Image background = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
-
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        contentPane.setLayout(new GridBagLayout());
         setContentPane(contentPane);
 
         GridBagConstraints gbc = new GridBagConstraints();
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        contentPane.add(createTopNavBar(), gbc);
+
+        gbc.weightx = 0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
 
-        // ===== CONTENEDOR SUPERIOR =====
-        gbc.gridy = 0;
-        gbc.gridx = 0;
+        gbc.gridy = 1; 
         gbc.insets = new Insets(20, 0, 30, 0); 
 
         JPanel topContainerPanel = new JPanel(new GridBagLayout());
@@ -46,8 +57,6 @@ public class CostManagementView extends JFrame {
 
         GridBagConstraints gbcTop = new GridBagConstraints();
         gbcTop.gridy = 0;
-
-        // ===== PANEL IZQUIERDO =====
         gbcTop.gridx = 0;
         gbcTop.insets = new Insets(0, 0, 0, 30); 
         JPanel topLeftPanel = new JPanel(new GridBagLayout()) {
@@ -81,7 +90,6 @@ public class CostManagementView extends JFrame {
 
         topContainerPanel.add(topLeftPanel, gbcTop);
 
-        // ===== PANEL DERECHO =====
         gbcTop.gridx = 1;
         gbcTop.insets = new Insets(0, 30, 0, 0); 
         JPanel topRightPanel = new JPanel(new GridBagLayout()) {
@@ -95,6 +103,7 @@ public class CostManagementView extends JFrame {
             }
         };
         topRightPanel.setOpaque(false);
+        // <<< CORRECCIÓN 1: Se restaura el tamaño original del panel para mantener el layout.
         topRightPanel.setPreferredSize(new Dimension(480, 50));
 
         GridBagConstraints gbcRight = new GridBagConstraints();
@@ -110,70 +119,40 @@ public class CostManagementView extends JFrame {
         ccbValueLabel.setForeground(Color.WHITE);
         ccbValueLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-        // merma
         JLabel mermaLabel = new JLabel("% de merma:");
         mermaLabel.setForeground(Color.WHITE);
         mermaLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         mermaField = new JTextField();
-        mermaField.setPreferredSize(new Dimension(100, 30)); // Aumentado el ancho
+        mermaField.setPreferredSize(new Dimension(100, 30));
 
         JLabel traysLabel = new JLabel("# de bandejas:");
         traysLabel.setForeground(Color.WHITE);
         traysLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         traysField = new JTextField();
-        traysField.setPreferredSize(new Dimension(120, 30)); // Aumentado el ancho
+        traysField.setPreferredSize(new Dimension(120, 30));
 
         calcButton = new JButton("Calcular");
         calcButton.setPreferredSize(new Dimension(100, 30));
         calcButton.setFocusPainted(false);
         calcButton.setFont(new Font("Arial", Font.BOLD, 13));
 
-        
-        gbcRight.gridx = 0;
-        gbcRight.fill = GridBagConstraints.NONE; 
-        gbcRight.weightx = 0; 
-        topRightPanel.add(ccbLabel, gbcRight);
-
-        gbcRight.gridx = 1;
-        gbcRight.fill = GridBagConstraints.NONE; 
-        gbcRight.weightx = 0; 
-        topRightPanel.add(ccbValueLabel, gbcRight);
-
-        gbcRight.gridx = 2;
-        gbcRight.fill = GridBagConstraints.NONE; 
-        gbcRight.weightx = 0; 
-        topRightPanel.add(mermaLabel, gbcRight);
-
-        gbcRight.gridx = 3;
-        gbcRight.fill = GridBagConstraints.HORIZONTAL; 
-        gbcRight.weightx = 0.5; 
-        topRightPanel.add(mermaField, gbcRight);
-
-        gbcRight.gridx = 4;
-        gbcRight.fill = GridBagConstraints.NONE; 
-        gbcRight.weightx = 0; 
-        topRightPanel.add(traysLabel, gbcRight);
-
-        gbcRight.gridx = 5;
-        gbcRight.fill = GridBagConstraints.HORIZONTAL; 
-        gbcRight.weightx = 0.5; 
-        topRightPanel.add(traysField, gbcRight);
-
-        gbcRight.gridx = 6;
-        gbcRight.fill = GridBagConstraints.NONE; 
-        gbcRight.weightx = 0; 
-        topRightPanel.add(calcButton, gbcRight);
-
+        gbcRight.gridx = 0; gbcRight.fill = GridBagConstraints.NONE; gbcRight.weightx = 0; topRightPanel.add(ccbLabel, gbcRight);
+        gbcRight.gridx = 1; topRightPanel.add(ccbValueLabel, gbcRight);
+        gbcRight.gridx = 2; topRightPanel.add(mermaLabel, gbcRight);
+        gbcRight.gridx = 3; gbcRight.fill = GridBagConstraints.HORIZONTAL; gbcRight.weightx = 0.5; topRightPanel.add(mermaField, gbcRight);
+        gbcRight.gridx = 4; gbcRight.fill = GridBagConstraints.NONE; gbcRight.weightx = 0; topRightPanel.add(traysLabel, gbcRight);
+        gbcRight.gridx = 5; gbcRight.fill = GridBagConstraints.HORIZONTAL; gbcRight.weightx = 0.5; topRightPanel.add(traysField, gbcRight);
+        gbcRight.gridx = 6; gbcRight.fill = GridBagConstraints.NONE; gbcRight.weightx = 0; topRightPanel.add(calcButton, gbcRight);
 
         topContainerPanel.add(topRightPanel, gbcTop);
-
         contentPane.add(topContainerPanel, gbc);
 
-        // ===== TABLA =====
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.insets = new Insets(0, 0, 30, 0);
 
         String[] columnas = {"Categoría", "Tipo", "Nombre", "Valor"};
+        
+        // <<< CORRECCIÓN 2: Se restauran todos los datos originales de la tabla.
         Object[][] datos = {
                 {"Fijo", "Cocina", "Gas", "120.00"},
                 {"Fijo", "Instalación", "Agua", "90.00"},
@@ -206,27 +185,82 @@ public class CostManagementView extends JFrame {
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-
         contentPane.add(scrollPane, gbc);
 
-        // ===== BOTONES INFERIORES =====
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.insets = new Insets(0, 0, 20, 0);
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
         bottomPanel.setOpaque(false);
-
         addButton = createStyledButton("Agregar Costo");
         saveButton = createStyledButton("Guardar Cambios");
         refeshButton = createStyledButton("Actualizar");
-
         bottomPanel.add(addButton);
         bottomPanel.add(saveButton);
         bottomPanel.add(refeshButton);
-
         contentPane.add(bottomPanel, gbc);
+    }
+    
+    class RoundedPanel extends JPanel {
+        private final int radius;
+        public RoundedPanel(int radius) { super(); this.radius = radius; setOpaque(false); }
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(getBackground());
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
+            g2.dispose();
+            super.paintComponent(g);
+        }
+    }
 
-        setVisible(true);
+    private JButton createNavButton(String text) {
+        JButton button = new JButton(text);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setForeground(Color.DARK_GRAY);
+        button.setFont(new Font("SansSerif", Font.BOLD, 16));
+        return button;
+    }
+
+    private JComponent createTopNavBar() {
+        RoundedPanel navBar = new RoundedPanel(30);
+        navBar.setBackground(new Color(255, 255, 255, 180));
+        navBar.setLayout(new BorderLayout(20, 0));
+        navBar.setBorder(new EmptyBorder(10, 20, 10, 20));
+
+        Image logoImg = new ImageIcon(getClass().getResource("/assets/logo.png")).getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        JLabel logoLabel = new JLabel(new ImageIcon(logoImg));
+        navBar.add(logoLabel, BorderLayout.WEST);
+
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 25, 0));
+        rightPanel.setOpaque(false);
+
+        walletView = new WalletView();
+        rightPanel.add(walletView);
+
+        User user = User.getInstance();
+        
+        if (user.getIsAdmin()){
+            rightPanel.add(createNavButton("Página principal"));
+            rightPanel.add(createNavButton("Gestión de costos"));
+        } else {
+            rightPanel.add(createNavButton("Página principal"));     
+        }
+        rightPanel.add(createNavButton("Cerrar sesión"));
+
+        navBar.add(rightPanel, BorderLayout.CENTER);
+
+        JPanel container = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
+        container.setOpaque(false);
+        container.add(navBar);
+        return container;
+    }
+
+    public WalletView getWalletStatusView() {
+        return walletView;
     }
 
     private JButton createStyledButton(String text) {
@@ -272,6 +306,7 @@ public class CostManagementView extends JFrame {
 
         return button;
     }
+    
     /*Getters */
     public JComboBox<String> getComboCategorias() { return comboCcategory; }
     public JButton getAddButton() { return addButton; }
@@ -282,11 +317,29 @@ public class CostManagementView extends JFrame {
     public JButton getcalcButton() {return calcButton;}
     public JTextField getstraysField() {return traysField;}
     public JTextField getMermaField() { return mermaField;}
+    
     /*Setters */
-
     public void setCalculatedCCB(double newValue){
         ccbValueLabel.setText(String.format("%.2f", newValue));
     }
 
-    public static void main(String[] args) { new CostManagementView(); } // Descomenta 
+    public static void main(String[] args) {
+        try {
+            User.init("001", "Admin User", "adminpass");
+            User.getInstance().setIsAdmin(true); 
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error crítico al inicializar el usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        SwingUtilities.invokeLater(() -> {
+            CostManagementView view = new CostManagementView();
+            view.setVisible(true);
+
+            if (view.getWalletStatusView() != null) {
+                view.getWalletStatusView().updateBalance(999.99);
+            }
+        });
+    }
 }
