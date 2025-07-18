@@ -1,4 +1,4 @@
- package view;
+package view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,7 +10,7 @@ public class CostManagementView extends JFrame {
     private JButton addButton, saveButton, refeshButton,calcButton;
     private JTable costTable;
     private JLabel ccbValueLabel;
-    private JTextField traysField, mermaField; 
+    private JTextField traysField, mermaField;
     private DefaultTableModel tableModel;
 
     public CostManagementView() {
@@ -38,7 +38,7 @@ public class CostManagementView extends JFrame {
         // ===== CONTENEDOR SUPERIOR =====
         gbc.gridy = 0;
         gbc.gridx = 0;
-        gbc.insets = new Insets(20, 0, 30, 0); // espacio superior
+        gbc.insets = new Insets(20, 0, 30, 0); 
 
         JPanel topContainerPanel = new JPanel(new GridBagLayout());
         topContainerPanel.setOpaque(false);
@@ -49,7 +49,7 @@ public class CostManagementView extends JFrame {
 
         // ===== PANEL IZQUIERDO =====
         gbcTop.gridx = 0;
-        gbcTop.insets = new Insets(0, 0, 0, 30); // espacio a la derecha
+        gbcTop.insets = new Insets(0, 0, 0, 30); 
         JPanel topLeftPanel = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -83,7 +83,7 @@ public class CostManagementView extends JFrame {
 
         // ===== PANEL DERECHO =====
         gbcTop.gridx = 1;
-        gbcTop.insets = new Insets(0, 30, 0, 0); // espacio a la izquierda
+        gbcTop.insets = new Insets(0, 30, 0, 0); 
         JPanel topRightPanel = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -110,35 +110,58 @@ public class CostManagementView extends JFrame {
         ccbValueLabel.setForeground(Color.WHITE);
         ccbValueLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-        // merma 
+        // merma
         JLabel mermaLabel = new JLabel("% de merma:");
         mermaLabel.setForeground(Color.WHITE);
         mermaLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        mermaField = new JTextField(4);
+        mermaField = new JTextField();
+        mermaField.setPreferredSize(new Dimension(100, 30)); // Aumentado el ancho
 
         JLabel traysLabel = new JLabel("# de bandejas:");
         traysLabel.setForeground(Color.WHITE);
         traysLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        traysField = new JTextField(6);
+        traysField = new JTextField();
+        traysField.setPreferredSize(new Dimension(120, 30)); // Aumentado el ancho
 
         calcButton = new JButton("Calcular");
         calcButton.setPreferredSize(new Dimension(100, 30));
         calcButton.setFocusPainted(false);
         calcButton.setFont(new Font("Arial", Font.BOLD, 13));
 
+        
         gbcRight.gridx = 0;
+        gbcRight.fill = GridBagConstraints.NONE; 
+        gbcRight.weightx = 0; 
         topRightPanel.add(ccbLabel, gbcRight);
+
         gbcRight.gridx = 1;
+        gbcRight.fill = GridBagConstraints.NONE; 
+        gbcRight.weightx = 0; 
         topRightPanel.add(ccbValueLabel, gbcRight);
+
         gbcRight.gridx = 2;
+        gbcRight.fill = GridBagConstraints.NONE; 
+        gbcRight.weightx = 0; 
         topRightPanel.add(mermaLabel, gbcRight);
+
         gbcRight.gridx = 3;
+        gbcRight.fill = GridBagConstraints.HORIZONTAL; 
+        gbcRight.weightx = 0.5; 
         topRightPanel.add(mermaField, gbcRight);
+
         gbcRight.gridx = 4;
+        gbcRight.fill = GridBagConstraints.NONE; 
+        gbcRight.weightx = 0; 
         topRightPanel.add(traysLabel, gbcRight);
+
         gbcRight.gridx = 5;
+        gbcRight.fill = GridBagConstraints.HORIZONTAL; 
+        gbcRight.weightx = 0.5; 
         topRightPanel.add(traysField, gbcRight);
+
         gbcRight.gridx = 6;
+        gbcRight.fill = GridBagConstraints.NONE; 
+        gbcRight.weightx = 0; 
         topRightPanel.add(calcButton, gbcRight);
 
 
@@ -263,7 +286,7 @@ public class CostManagementView extends JFrame {
 
     public void setCalculatedCCB(double newValue){
         ccbValueLabel.setText(String.format("%.2f", newValue));
-    }    
+    }
 
-    public static void main(String[] args) { new CostManagementView(); } // Descomenta para probar
+    public static void main(String[] args) { new CostManagementView(); } // Descomenta 
 }

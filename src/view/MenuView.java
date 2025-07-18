@@ -267,6 +267,11 @@ public class MenuView extends JFrame {
         }
     }
 
+
+    //public JButton logOutButton(){return }
+
+
+
     public static void main(String[] args) {
         try {
             User.init("28300189", "Carlos Estudiante", "passwordDePrueba123");

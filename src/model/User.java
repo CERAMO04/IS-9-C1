@@ -33,7 +33,6 @@ public class User {
         this.isAdmin = false;
         this.wallet = null; // aún no asignamos Wallet
     }
-
     public static synchronized void init(String name, String lastName,String ID, String email, String password, String username, double value,String userType) {
         if (instance == null) {
             instance = new User(name, lastName, ID, email,password,username,value,userType);
@@ -50,7 +49,7 @@ public class User {
         }
         return instance;
     }
-    // Clear instance (logout)
+    //Clear instance (logout)
     public static synchronized void clearInstance() {
         instance = null;
     }

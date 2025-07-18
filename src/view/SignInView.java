@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import view.SignUpView.PlaceholderTextField;
+
 
 import java.awt.*;
 
@@ -11,7 +11,7 @@ public class SignInView extends JFrame {
 
     private RoundedTextField userNameField;
     private RoundedPasswordField passwordField;
-    private JButton loginButton, signUpButton;
+    private JButton loginButton;
     private JLabel messageAlert, signUpLabel;
 
     public SignInView() {
@@ -117,7 +117,6 @@ public class SignInView extends JFrame {
             super.paintComponent(g);
         }
     }
-
     // Campo de texto redondeado
     class RoundedTextField extends JTextField {
     private final int radius = 20;
@@ -223,7 +222,6 @@ public class SignInView extends JFrame {
         }
 
     }
-
     /*Getters */
     public JTextField getUserName(){ return userNameField;}
     public JPasswordField  getPasswordField(){ return passwordField;}
