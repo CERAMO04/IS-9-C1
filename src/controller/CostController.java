@@ -1,10 +1,10 @@
 package controller;
 
-
 import view.CostManagementView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Cost;
 import model.persistence.CostFile;
@@ -68,15 +68,25 @@ public class CostController {
         view.getRefrechButton().addActionListener(e ->{
             refreshTable();
         });
+        view.getcalcButton().addActionListener(e ->{
+            try {
+                String text = view.getstraysField().getText().trim();
+                double trayNumber = Double.parseDouble(text);
+                double costPerTray = calculateCCB(trayNumber);
+                view.setCalculatedCCB(costPerTray);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(view, "Por favor, ingresa un número válido de bandejas.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
     }
-    private double calculateCCB(){
-        double allFixedCost = costFile.getAllFixedCost();
-        double allVariableCost =costFile.getAllVariableCost();
-        double allExtraCost = costFile.getAllExtraCost();
-        double NB = 300;
+    private double calculateCCB(double trayNumber){
+        double CF = costFile.getAllFixedCost();
+        double CV = costFile.getAllVariableCost();
+        double extraCost = costFile.getAllExtraCost();
+        double nt = trayNumber;
 
-        return (( allFixedCost+ allVariableCost)/NB * (1 %allExtraCost));
+        return ((CF+ CV)/nt * (1 %extraCost));
     }
 
 

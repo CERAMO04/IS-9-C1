@@ -7,9 +7,10 @@ import java.awt.*;
 public class CostManagementView extends JFrame {
 
     private JComboBox<String> comboCcategory;
-    private JButton addButton;
-    private JButton saveButton, refeshButton;
+    private JButton addButton, saveButton, refeshButton,calcButton;
     private JTable costTable;
+    private JLabel ccbValueLabel;
+    private JTextField traysField, mermaField; 
     private DefaultTableModel tableModel;
 
     public CostManagementView() {
@@ -94,7 +95,7 @@ public class CostManagementView extends JFrame {
             }
         };
         topRightPanel.setOpaque(false);
-        topRightPanel.setPreferredSize(new Dimension(540, 50));
+        topRightPanel.setPreferredSize(new Dimension(480, 50));
 
         GridBagConstraints gbcRight = new GridBagConstraints();
         gbcRight.insets = new Insets(0, 8, 0, 8);
@@ -104,14 +105,23 @@ public class CostManagementView extends JFrame {
         JLabel ccbLabel = new JLabel("CCB:");
         ccbLabel.setForeground(Color.WHITE);
         ccbLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        JTextField ccbField = new JTextField(6);
 
-        JLabel traysLabel = new JLabel("Número de bandejas:");
+        ccbValueLabel = new JLabel("0.0");
+        ccbValueLabel.setForeground(Color.WHITE);
+        ccbValueLabel.setFont(new Font("Arial", Font.BOLD, 14));
+
+        // merma 
+        JLabel mermaLabel = new JLabel("% de merma:");
+        mermaLabel.setForeground(Color.WHITE);
+        mermaLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        mermaField = new JTextField(4);
+
+        JLabel traysLabel = new JLabel("# de bandejas:");
         traysLabel.setForeground(Color.WHITE);
         traysLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        JTextField traysField = new JTextField(6);
+        traysField = new JTextField(6);
 
-        JButton calcButton = new JButton("Calcular");
+        calcButton = new JButton("Calcular");
         calcButton.setPreferredSize(new Dimension(100, 30));
         calcButton.setFocusPainted(false);
         calcButton.setFont(new Font("Arial", Font.BOLD, 13));
@@ -119,13 +129,18 @@ public class CostManagementView extends JFrame {
         gbcRight.gridx = 0;
         topRightPanel.add(ccbLabel, gbcRight);
         gbcRight.gridx = 1;
-        topRightPanel.add(ccbField, gbcRight);
+        topRightPanel.add(ccbValueLabel, gbcRight);
         gbcRight.gridx = 2;
-        topRightPanel.add(traysLabel, gbcRight);
+        topRightPanel.add(mermaLabel, gbcRight);
         gbcRight.gridx = 3;
-        topRightPanel.add(traysField, gbcRight);
+        topRightPanel.add(mermaField, gbcRight);
         gbcRight.gridx = 4;
+        topRightPanel.add(traysLabel, gbcRight);
+        gbcRight.gridx = 5;
+        topRightPanel.add(traysField, gbcRight);
+        gbcRight.gridx = 6;
         topRightPanel.add(calcButton, gbcRight);
+
 
         topContainerPanel.add(topRightPanel, gbcTop);
 
@@ -137,16 +152,16 @@ public class CostManagementView extends JFrame {
 
         String[] columnas = {"Categoría", "Tipo", "Nombre", "Valor"};
         Object[][] datos = {
-            {"Fijo", "Cocina", "Gas", "120.00"},
-            {"Fijo", "Instalación", "Agua", "90.00"},
-            {"Fijo", "Administración", "Sueldos", "50.45"},
-            {"Fijo", "Equipo", "Mantenimiento", "75.25"},
-            {"Fijo", "Instalación", "Electricidad", "88.9"},
-            {"Variable", "Proteína", "Pollo", "132.5"},
-            {"Variable", "Carbohidratos", "Arroz", "45.0"},
-            {"Variable", "Lípidos", "Aceite", "62.3"},
-            {"Variable", "Empaque", "Bandejas", "20.0"},
-            {"Variable", "Limpieza", "Desinfectante", "30.0"},
+                {"Fijo", "Cocina", "Gas", "120.00"},
+                {"Fijo", "Instalación", "Agua", "90.00"},
+                {"Fijo", "Administración", "Sueldos", "50.45"},
+                {"Fijo", "Equipo", "Mantenimiento", "75.25"},
+                {"Fijo", "Instalación", "Electricidad", "88.9"},
+                {"Variable", "Proteína", "Pollo", "132.5"},
+                {"Variable", "Carbohidratos", "Arroz", "45.0"},
+                {"Variable", "Lípidos", "Aceite", "62.3"},
+                {"Variable", "Empaque", "Bandejas", "20.0"},
+                {"Variable", "Limpieza", "Desinfectante", "30.0"},
         };
 
         tableModel = new DefaultTableModel(datos, columnas) {
@@ -220,7 +235,7 @@ public class CostManagementView extends JFrame {
                 }
                 g2.dispose();
             }
-            
+
             @Override
             protected void paintBorder(Graphics g) {}
         };
@@ -234,13 +249,21 @@ public class CostManagementView extends JFrame {
 
         return button;
     }
-
+    /*Getters */
     public JComboBox<String> getComboCategorias() { return comboCcategory; }
     public JButton getAddButton() { return addButton; }
     public JTable getCostTable() { return costTable; }
     public DefaultTableModel getTableModel() { return tableModel; }
     public JButton getSaveButton() { return saveButton; }
     public JButton getRefrechButton() { return refeshButton; }
+    public JButton getcalcButton() {return calcButton;}
+    public JTextField getstraysField() {return traysField;}
+    public JTextField getMermaField() { return mermaField;}
+    /*Setters */
 
-    // public static void main(String[] args) { new CostManagementView(); } // Descomenta para probar
+    public void setCalculatedCCB(double newValue){
+        ccbValueLabel.setText(String.format("%.2f", newValue));
+    }    
+
+    public static void main(String[] args) { new CostManagementView(); } // Descomenta para probar
 }
