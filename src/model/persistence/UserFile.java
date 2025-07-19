@@ -7,11 +7,13 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.Objects;
 
 public class UserFile {
- 
+    
     private File systemUserDataBAse = new File("data/SystemUsers.txt");
 
+    // Para tests
     protected void setSystemUserDatabase(File file) {
     this.systemUserDataBAse = file;
     }
@@ -55,6 +57,7 @@ public class UserFile {
         }
         return false;
     }
+
     public boolean userExists(String userName, String userPassword){
         try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
             String line;
@@ -86,5 +89,47 @@ public class UserFile {
             System.out.println("Error verificando existencia de usuario:" + e.getMessage());
         }
         return false;
+    }
+
+    // Funcion principalmente usada para tests
+    public boolean validateFullUser(User inputUser) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] fields = line.split(",", -1);
+            if (fields.length == 9) {
+                String email = fields[4].equals("null") ? null : fields[4];
+                
+                User.clearInstance();
+                User.init(
+                    fields[2],  // name
+                    fields[3],  // lastName
+                    fields[0],  // ID
+                    email,      // email
+                    fields[6],  // password
+                    fields[5],  // username
+                    Double.parseDouble(fields[8]), // balance
+                    fields[1]   // userType
+                );
+                User storedUser = User.getInstance();
+                storedUser.setIsAdmin(Boolean.parseBoolean(fields[7]));
+
+                if (Objects.equals(inputUser.getID(), storedUser.getID()) &&
+                    Objects.equals(inputUser.getName(), storedUser.getName()) &&
+                    Objects.equals(inputUser.getLastName(), storedUser.getLastName()) &&
+                    Objects.equals(inputUser.getEmail(), storedUser.getEmail()) && 
+                    Objects.equals(inputUser.getUser(), storedUser.getUser()) &&
+                    Objects.equals(inputUser.getPassword(), storedUser.getPassword()) &&
+                    Objects.equals(inputUser.getUserType(), storedUser.getUserType()) &&
+                    inputUser.getIsAdmin() == storedUser.getIsAdmin() &&
+                    Math.abs(inputUser.getWallet().getBalance() - storedUser.getWallet().getBalance()) < 0.001) {
+                    return true;
+                }
+            }
+        }
+    } catch (IOException | NumberFormatException e) {
+        System.out.println("Error de validacion: " + e.getMessage());
+    }
+    return false;
     }
 }

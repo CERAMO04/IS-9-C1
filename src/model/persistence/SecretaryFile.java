@@ -10,6 +10,16 @@ import java.io.IOException;
 public class SecretaryFile {
 
     private File secretaryDataBaseFile = new File("data/SecretaryUsers.txt");
+
+    protected File getSecretaryDatabaseFile() {
+        return this.secretaryDataBaseFile;
+    }
+
+    // Para tests
+    protected void setSecretaryDataBaseFile(File file) {
+        this.secretaryDataBaseFile = file;
+    }
+
     public SecretaryFile() {
         try {
             if (!secretaryDataBaseFile.exists()) {
