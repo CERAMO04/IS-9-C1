@@ -74,11 +74,49 @@ public class CostController {
             try {
                 String text = view.getstraysField().getText().trim();
                 double trayNumber = Double.parseDouble(text);
-                double costPerTray = calculateCCB(trayNumber);
+                String mermaText = view.getMermaField().getText().trim();
+                double merma = Double.parseDouble(mermaText);
+
+                if (Double.isNaN(trayNumber)) {
+                    throw new NumberFormatException("Número de bandejas no válido");
+                }
+                
+                if (Double.isNaN(merma)) {
+                    throw new NumberFormatException("Porcentaje de merma no válido");
+                }
+
+            if (trayNumber <= 0) {
+                JOptionPane.showMessageDialog(view, 
+                    "El número de bandejas debe ser mayor que cero", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (merma < 0) {
+                JOptionPane.showMessageDialog(view,
+                    "El porcentaje de merma no puede ser negativo",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+                double costPerTray = calculateCCB(trayNumber, merma);
                 view.setCalculatedCCB(costPerTray);
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(view, "Por favor, ingresa un número válido de bandejas.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+                //JOptionPane.showMessageDialog(view, "Por favor, ingresa un número válido de bandejas.", "Error", JOptionPane.ERROR_MESSAGE);
+                String errorMessage;
+                if (ex.getMessage() != null && ex.getMessage().contains("merma")) {
+                    errorMessage = "Porcentaje de merma no válido (debe ser un número)";
+                } else {
+                    errorMessage = "Número de bandejas no válido (debe ser un número)";
+                }
+                
+                JOptionPane.showMessageDialog(view, 
+                    errorMessage, 
+                    "Error en formato", 
+                    JOptionPane.ERROR_MESSAGE);
+                    }
         });
         view.getLogOutButton().addActionListener(e -> {
             User.clearInstance();
@@ -91,14 +129,13 @@ public class CostController {
             mainController.showMenu();
         });
     }
-    private double calculateCCB(double trayNumber){
-        double CF = costFile.getAllFixedCost();
-        double CV = costFile.getAllVariableCost();
-        double extraCost = 0.1;
-        double nt = trayNumber;
-
-        return ((CF+ CV)/nt * (1 + extraCost));
-    }
+    private double calculateCCB(double trayNumber, double merma) {
+    double CF = costFile.getAllFixedCost();
+    double CV = costFile.getAllVariableCost();
+    
+    // Merma is now passed as parameter (0-100 scale)
+    return ((CF + CV) / trayNumber * (1 + (merma/100)));
+}
 
 
 

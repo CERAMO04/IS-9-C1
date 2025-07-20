@@ -244,8 +244,8 @@ public class CostManagementView extends JFrame {
         User user = User.getInstance();
         
         if (user.getIsAdmin()){
-            mainPageButton = createNavButton("Pagina Principal");
-            costButton = createNavButton("Gestion de Costos");
+            mainPageButton = createNavButton("Página Principal");
+            costButton = createNavButton("Gestión de Costos");
             rightPanel.add(mainPageButton);
             rightPanel.add(costButton);
         } else {

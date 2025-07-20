@@ -47,16 +47,16 @@ public class MenuView extends JFrame {
         User user = User.getInstance();
         
         if (user.getIsAdmin()){
-            mainPageButton = createNavButton("Pagina Principal");
-            costButton = createNavButton("Gestion de costos");
+            mainPageButton = createNavButton("Página Principal");
+            costButton = createNavButton("Gestión de costos");
             rightPanel.add(mainPageButton);
             rightPanel.add(costButton);
         } else {
-            mainPageButton = createNavButton("Pagina Principal");
+            mainPageButton = createNavButton("Página Principal");
             rightPanel.add(mainPageButton);
             costButton = null;
         }
-        logButton = createNavButton("Cerrar sesion");
+        logButton = createNavButton("Cerrar sesión");
         rightPanel.add(logButton);
 
         navBar.add(rightPanel, BorderLayout.CENTER);

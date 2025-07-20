@@ -10,9 +10,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class CostFile {
     
     private File costFile = new File("data/CostFile.txt");
+
+    // Test constructor
+    protected CostFile(File customFile) {
+        this.costFile = customFile;
+    }
 
     public CostFile() {
         try {
@@ -26,6 +33,13 @@ public class CostFile {
     public void saveAll(List<Cost> costList){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(costFile))){
             for(Cost cost : costList){
+                // Validate cost value before saving
+                if (cost.getCost() < 0) {
+                    throw new IllegalArgumentException(
+                        String.format("El costo no puede ser negativo (Tipo: %s, Nombre: %s)", 
+                        cost.getType(), cost.getName())
+                    );
+                }
                 String line = cost.getCategory() +","+
                             cost.getType() +","+
                             cost.getName() +","+
@@ -33,9 +47,16 @@ public class CostFile {
                 writer.write(line);
                 writer.newLine();
             }
-        }catch(IOException e){
-            System.out.println("Error al guardar los costos: " + e.getMessage());
-        }
+        } catch (IOException e) {
+        System.out.println("Error al guardar los costos: " + e.getMessage());
+    } catch (IllegalArgumentException e) {
+        System.out.println("Error de validación: " + e.getMessage());
+        // Optionally show this to the user via JOptionPane
+        JOptionPane.showMessageDialog(null, 
+            e.getMessage(), 
+            "Error en costos", 
+            JOptionPane.ERROR_MESSAGE);
+    }
     }
     public List<Cost> readData(){
         List<Cost> costs = new ArrayList<>();

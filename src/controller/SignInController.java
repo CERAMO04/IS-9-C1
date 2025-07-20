@@ -21,7 +21,7 @@ public class SignInController {
             int result = signIn();
             switch (result) {
                 case INVALID_USER:
-                    view.setMessageAlert("Usuario Invalido");
+                    view.setMessageAlert("Usuario Inválido");
                     break;
                 case SUCCESS: 
                     view.setMessageAlert("Bienvenido");
@@ -32,7 +32,7 @@ public class SignInController {
                     view.setMessageAlert("Por favor introduzca su usuario");
                     break;
                 case 3:
-                    view.setMessageAlert("Por favor introduzca su contrasenia");
+                    view.setMessageAlert("Por favor introduzca su contraseña");
                 default:
                     view.setMessageAlert(null);;
                     break;
@@ -53,7 +53,7 @@ public class SignInController {
         UserFile userFile = new UserFile();
 
         if (userName.isEmpty() || userName.equals("Nombre de usuario")) { return INVALID_FIELD_USER; }
-        if (userPassword.isEmpty()) { return INVALID_FIELD_PASSWORD; }
+        if (userPassword.isEmpty() || userPassword == null || userPassword == "Contraseña") { return INVALID_FIELD_PASSWORD; }
 
         if(userFile.userExists(userName, userPassword)){
             return SUCCESS;

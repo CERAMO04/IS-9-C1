@@ -8,4 +8,3 @@ Variable,Carbohidratos,Arroz,45.0
 Variable,Lípidos,Aceite,62.3
 Variable,Empaque,Bandejas,20.0
 Variable,Limpieza,Desinfectante,30.0
-Fijo,Cocina,Prueba,54.0

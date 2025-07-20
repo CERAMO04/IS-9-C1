@@ -54,7 +54,7 @@ public class SignInView extends JFrame {
         messageAlert.setForeground(Color.RED);
 
         /* Boton Registrarse */
-        signUpLabel = new JLabel("Registrate");
+        signUpLabel = new JLabel("Regístrate");
         signUpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         signUpLabel.setForeground(Color.DARK_GRAY);
         signUpLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
