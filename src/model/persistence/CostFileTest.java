@@ -1,22 +1,21 @@
 package model.persistence;
+
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-
-import model.Cost;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
+
+import model.Cost;
 
 
 public class CostFileTest {
     @TempDir
     Path tempDir;
 
-     @Test
+    @Test
     void testNegativeCostPrevention() throws Exception {
         // 1. Create test file
         File testFile = tempDir.resolve("testCosts.txt").toFile();

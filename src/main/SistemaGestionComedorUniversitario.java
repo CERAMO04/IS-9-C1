@@ -5,6 +5,7 @@ import controller.MainController;
 public class SistemaGestionComedorUniversitario {
     public static void main(String[] args) {
         System.setProperty("file.encoding", "UTF-8");
-        MainController start = new MainController();
+        /*e crea la clase MainController que controlla toda la aplicacion en ejecucion*/
+        new MainController();                    
     }
 }

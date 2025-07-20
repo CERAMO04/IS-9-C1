@@ -1,50 +1,59 @@
 package controller;
 
-import view.CostManagementView;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import view.CostManagementView;
 import model.Cost;
 import model.User;
 import model.persistence.CostFile;
 
 public class CostController {
+    //Atrib
     private CostManagementView view;
     private MainController mainController;
     private CostFile costFile = new CostFile();
-
+    //Funcion privada para refrescar la tabla de costos.
     private void refreshTable(){
-            List<Cost> updatedCosts = costFile.readData();
+        List<Cost> updatedCosts = costFile.readData();
 
-            DefaultTableModel model = view.getTableModel();
+        DefaultTableModel model = view.getTableModel();
             
-            model.setRowCount(0);
+        model.setRowCount(0);
 
-            for (Cost cost : updatedCosts) {
-                Object[] rowData = {
-                    cost.getCategory(),
-                    cost.getType(),
-                    cost.getName(),
-                    cost.getCost()
-                };
-                model.addRow(rowData);
-            }
+        for (Cost cost : updatedCosts) {
+             Object[] rowData = {
+                cost.getCategory(),
+                cost.getType(),
+                cost.getName(),
+                cost.getCost()
+            };
+            model.addRow(rowData);
         }
+    }
+    //Funcion para calcular CCB
+    private double calculateCCB(double trayNumber, double merma) {                          
+        double CF = costFile.getAllFixedCost();
+        double CV = costFile.getAllVariableCost();
+        return ((CF + CV) / trayNumber * (1 + (merma/100)));
+    }
+    //COnstructor del controlador, Recibe una vista de cost y el mainController por parametro.
     public CostController(CostManagementView view, MainController mainController){
         this.view = view;
         this.mainController = mainController;
 
-        refreshTable();
+        refreshTable();                                                                         //Se refresca la tabla antes de iniciar.
 
         view.getAddButton().addActionListener(e -> {
-            String selectedCategory = view.getComboCategorias().getSelectedItem().toString();
+            String selectedCategory = view.getComboCategorias().getSelectedItem().toString();   //Escuchamos boton para añadir costos
             DefaultTableModel model = view.getTableModel();
             model.addRow(new Object[]{selectedCategory, "", "", ""});
         });
-        view.getSaveButton().addActionListener(e -> {
-            if (view.getCostTable().isEditing()) {
+        view.getSaveButton().addActionListener(e -> {                                           //Escuchamos boton para guardar la tabla modificada.
+            if (view.getCostTable().isEditing()) {                                              //Funcion para poder guardar aunque el usuario tenga el click en una Celda de la tabla
                 view.getCostTable().getCellEditor().stopCellEditing();
             }
             DefaultTableModel model = view.getTableModel();
@@ -74,11 +83,10 @@ public class CostController {
             }
             costFile.saveAll(costsToSave);
         });
-
-        view.getRefreshButton().addActionListener(e ->{
+        view.getRefreshButton().addActionListener(e ->{                                         //Escuchamos el boton Actualizar
             refreshTable();
         });
-        view.getcalcButton().addActionListener(e ->{
+        view.getcalcButton().addActionListener(e ->{                                            //Escuchamos el boton de calcular CCB
             try {
                 String text = view.getstraysField().getText().trim();
                 double trayNumber = Double.parseDouble(text);
@@ -92,7 +100,6 @@ public class CostController {
                 if (Double.isNaN(merma)) {
                     throw new NumberFormatException("Porcentaje de merma no válido");
                 }
-
             if (trayNumber <= 0) {
                 JOptionPane.showMessageDialog(view, 
                     "El número de bandejas debe ser mayor que cero", 
@@ -100,7 +107,6 @@ public class CostController {
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             if (merma < 0) {
                 JOptionPane.showMessageDialog(view,
                     "El porcentaje de merma no puede ser negativo",
@@ -108,7 +114,6 @@ public class CostController {
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
                 double costPerTray = calculateCCB(trayNumber, merma);
                 view.setCalculatedCCB(costPerTray);
             } catch (NumberFormatException ex) {
@@ -126,27 +131,15 @@ public class CostController {
                     JOptionPane.ERROR_MESSAGE);
                     }
         });
-        view.getLogOutButton().addActionListener(e -> {
+        view.getLogOutButton().addActionListener(e -> {                                         //Esuchcamos boton para cerrar sesion
             User.clearInstance();
             JOptionPane.showMessageDialog(view, "Nos vemos pronto!");
             mainController.exitFrame(view);
             mainController.showLogIn();
         });
-        view.getMainButton().addActionListener(e -> {
+        view.getMainButton().addActionListener(e -> {                                           //Escuchamos boton para regresar al Main Menu
             mainController.exitFrame(view);
             mainController.showMenu();
         });
     }
-    private double calculateCCB(double trayNumber, double merma) {
-    double CF = costFile.getAllFixedCost();
-    double CV = costFile.getAllVariableCost();
-    
-    // Merma is now passed as parameter (0-100 scale)
-    return ((CF + CV) / trayNumber * (1 + (merma/100)));
-}
-
-
-
-
-
 }

@@ -89,7 +89,7 @@ public class CostManagementView extends JFrame {
         topLeftPanel.add(comboCcategory, gbcLeft);
 
         topContainerPanel.add(topLeftPanel, gbcTop);
-
+        topContainerPanel.setVisible(false);
         gbcTop.gridx = 1;
         gbcTop.insets = new Insets(0, 30, 0, 0); 
         JPanel topRightPanel = new JPanel(new GridBagLayout()) {
@@ -330,6 +330,8 @@ public class CostManagementView extends JFrame {
     public void setCalculatedCCB(double newValue){
         ccbValueLabel.setText(String.format("%.2f", newValue));
     }
+
+
     /*public static void main(String[] args) {
         try {
             User.init("001", "Admin User", "adminpass");

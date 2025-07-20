@@ -4,28 +4,27 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import view.SignInView;
-import model.User;
 import model.persistence.UserFile;
 
 public class SignInController {
+    //Atrib 
     private SignInView view;
     private MainController mainController;
-
+    //Valores genericos para informe de errores.
     public static final int INVALID_USER = 0, SUCCESS = 1, INVALID_FIELD_USER=2, INVALID_FIELD_PASSWORD=3;
-
+    //Iniciamos la view de login, recibimos una vista del login de usuario y un main controller   
     public SignInController(SignInView view, MainController mainController){
         this.view=view;
         this.mainController=mainController;
-
-        view.getSignInButton().addActionListener(e -> {
-            int result = signIn();
-            switch (result) {
-                case INVALID_USER:
-                    view.setMessageAlert("Usuario Inválido");
-                    break;
+        view.getSignInButton().addActionListener(e -> {                             //Escuchamos boton de login
+            int result = signIn();                                                  //Invocamos funcion para investigar
+            switch (result) {                                                       //Si el usuario esta en la base de datos 
+                case INVALID_USER:                                                  //Del comedor una vez recibido el resultado 
+                    view.setMessageAlert("Usuario Inválido");                 //El switch nos otorga un mensaje correcto
+                    break;                                                           
                 case SUCCESS: 
-                    view.setMessageAlert("Bienvenido");
-                    mainController.exitFrame(view);
+                    view.setMessageAlert("Bienvenido");                       //Al estar todo "OK" se cierra el login view
+                    mainController.exitFrame(view);                                 //Y se muestra la vista del Menu
                     mainController.showMenu();
                     break;
                 case 2:
@@ -38,27 +37,30 @@ public class SignInController {
                     break;
             }
         });
-        view.getSingUpLabel().addMouseListener(new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        view.getSingUpLabel().addMouseListener(new MouseAdapter(){                  //Escuchamos letras de "Registrar"
+            @Override                                                               //Cerramos login y mostramos
+            public void mouseClicked(MouseEvent e) {                                //Registrar.
                 mainController.exitFrame(view);
                 mainController.ShowSignUp();
             }
         });
     }
+    //Funcion que revisa si el usuario existe.
     public int signIn(){
-        String userName = view.getUserName().getText().trim();
-        String userPassword = view.getPasswordField().getText().trim();
+        String userName = view.getUserName().getText().trim();                       //Recibimos el User y la contraseña de los    
+        String userPassword = view.getPasswordField().getText().trim();              //TextFild de login. 
         
-        UserFile userFile = new UserFile();
+        if (userName.isEmpty() || userName.equals("Nombre de usuario")){    //Si esta vacio el campo o no se ha modificado
+            return INVALID_FIELD_USER; }
+        if (userPassword.isEmpty() || userPassword == null || userPassword == "Contraseña"){ 
+            return INVALID_FIELD_PASSWORD; }                                         //Retornamos un mensaje de error
 
-        if (userName.isEmpty() || userName.equals("Nombre de usuario")) { return INVALID_FIELD_USER; }
-        if (userPassword.isEmpty() || userPassword == null || userPassword == "Contraseña") { return INVALID_FIELD_PASSWORD; }
+        UserFile userFile = new UserFile();                                          //Abrimos la base de datos del comedor.
 
-        if(userFile.userExists(userName, userPassword)){
-            return SUCCESS;
-        }else{
-            return INVALID_USER;
+        if(userFile.userExists(userName, userPassword)){                             //Invocamos a la funcion que se encarga
+            return SUCCESS;                                                          //De leer la base de datos del comedor
+        }else{                                                                       //Y esperamos una respuesta.
+            return INVALID_USER;                                                     //Respondemos con el mensaje correspondiente
         }
     }
 }
