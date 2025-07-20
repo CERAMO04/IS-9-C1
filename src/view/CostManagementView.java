@@ -317,7 +317,7 @@ public class CostManagementView extends JFrame {
     public JTable getCostTable() { return costTable; }
     public DefaultTableModel getTableModel() { return tableModel; }
     public JButton getSaveButton() { return saveButton; }
-    public JButton getRefrechButton() { return refeshButton; }
+    public JButton getRefreshButton() { return refeshButton; }
     public JButton getcalcButton() {return calcButton;}
     public JTextField getstraysField() {return traysField;}
     public JTextField getMermaField() { return mermaField;}

@@ -15,7 +15,7 @@ import java.util.List;
 public class CostFileTest {
     @TempDir
     Path tempDir;
-    
+
      @Test
     void testNegativeCostPrevention() throws Exception {
         // 1. Create test file
@@ -35,5 +35,17 @@ public class CostFileTest {
         );
         
         assertTrue(ex.getMessage().contains("no puede ser negativo"));
+    }
+
+    @Test
+    void testNaNValueRejection() {
+    File testFile = new File("data/CostFile_TEST.txt");
+    CostFile costFile = new CostFile(testFile);
+    
+    List<Cost> costs = List.of(
+        new Cost("Fijo", "Cocina", "Gas", Double.NaN) // Invalid
+    );
+    
+    assertThrows(IllegalArgumentException.class, () -> costFile.saveAll(costs));
     }
 }

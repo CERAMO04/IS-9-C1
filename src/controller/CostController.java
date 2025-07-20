@@ -61,13 +61,21 @@ public class CostController {
                     Cost cost = new Cost(type, category, name, value);
                     costsToSave.add(cost);
                 }catch (NumberFormatException ex) {
-                    System.out.println("Valor inválido en la fila " + (i+1) + ": " + valueText);
+                    //System.out.println("Valor inválido en la fila " + (i+1) + ": " + valueText);
+                    view.getCostTable().setRowSelectionInterval(i, i);
+                    JOptionPane.showMessageDialog(view,
+                        "Valor inválido en fila " + (i+1) + ": " + valueText,
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    
+                    view.getRefreshButton().doClick();
+                    return;
                 }
             }
             costFile.saveAll(costsToSave);
         });
 
-        view.getRefrechButton().addActionListener(e ->{
+        view.getRefreshButton().addActionListener(e ->{
             refreshTable();
         });
         view.getcalcButton().addActionListener(e ->{

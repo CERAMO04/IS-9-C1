@@ -33,7 +33,12 @@ public class CostFile {
     public void saveAll(List<Cost> costList){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(costFile))){
             for(Cost cost : costList){
-                // Validate cost value before saving
+                if (Double.isNaN(cost.getCost())) {
+                throw new IllegalArgumentException(
+                    String.format("El costo debe ser un número válido (Tipo: %s, Nombre: %s)", 
+                    cost.getType(), cost.getName())
+                );
+                }
                 if (cost.getCost() < 0) {
                     throw new IllegalArgumentException(
                         String.format("El costo no puede ser negativo (Tipo: %s, Nombre: %s)", 
