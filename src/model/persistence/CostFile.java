@@ -35,18 +35,6 @@ public class CostFile {
     public void saveAll(List<Cost> costList){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(costFile))){                 //CReamos un bufferedWrite + FileWriter
             for(Cost cost : costList){                                                             //Por cada Elemento de la lista costo vamos a iterar
-                if (Double.isNaN(cost.getCost())) {                                                //Si el costo es menor a 0 arrojamos un error. 
-                    throw new IllegalArgumentException(
-                        String.format("El costo debe ser un número válido (Tipo: %s, Nombre: %s)", 
-                        cost.getType(), cost.getName())
-                    );
-                }
-                if (cost.getCost() < 0) {                                                           
-                    throw new IllegalArgumentException(
-                        String.format("El costo no puede ser negativo (Tipo: %s, Nombre: %s)", 
-                        cost.getType(), cost.getName())
-                    );
-                }
                 String line = cost.getCategory() +","+              //Añadimos el costo con su Categoria
                             cost.getType() +","+                    //Tipo
                             cost.getName() +","+                    //Nombre

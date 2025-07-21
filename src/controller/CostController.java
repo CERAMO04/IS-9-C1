@@ -73,6 +73,9 @@ public class CostController {
             DefaultTableModel model = view.getTableModel();
             int rowCount = model.getRowCount();
             ArrayList<Cost> costsToSave = new ArrayList<>();
+            boolean validationError = false;
+            int errorRow = -1;
+            String errorMessage = "";
 
             for (int i=0; i < rowCount; i++){
                 String category = model.getValueAt(i, 0).toString();
@@ -81,19 +84,42 @@ public class CostController {
                 String valueText = model.getValueAt(i, 3).toString();
                 try {
                     double value = Double.parseDouble(valueText);
+                    if (Double.isNaN(value)) {
+                        throw new IllegalArgumentException(
+                            String.format("El costo debe ser un número válido (Tipo: %s, Nombre: %s)", 
+                            type, name));
+                    }
+                    if (value < 0) {
+                        throw new IllegalArgumentException(
+                            String.format("El costo no puede ser negativo (Tipo: %s, Nombre: %s)", 
+                            type, name));
+                    }
                     Cost cost = new Cost(type, category, name, value);
                     costsToSave.add(cost);
                 }catch (NumberFormatException ex) {
-                    //System.out.println("Valor inválido en la fila " + (i+1) + ": " + valueText);
-                    view.getCostTable().setRowSelectionInterval(i, i);
-                    JOptionPane.showMessageDialog(view,
-                        "Valor inválido en fila " + (i+1) + ": " + valueText,
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                    
-                    view.getRefreshButton().doClick();
-                    return;
+                    validationError = true;
+                    errorRow = i;
+                    errorMessage = "Valor inválido: " + model.getValueAt(i, 3);
+                    break;
+                } catch (IllegalArgumentException ex) {
+                    validationError = true;
+                    errorRow = i;
+                    errorMessage = ex.getMessage();
+                    break;
                 }
+            }
+
+            if (validationError) {
+                // Mostrar fila problematica
+                view.getCostTable().setRowSelectionInterval(errorRow, errorRow);
+                JOptionPane.showMessageDialog(view,
+                    errorMessage + "\nFila: " + (errorRow + 1),
+                    "Error en costos",
+                    JOptionPane.ERROR_MESSAGE);
+                
+                // Refrescar tabla luego de valor invalido
+                refreshTable();
+                return;
             }
             costFile.saveAll(costsToSave);
         });
