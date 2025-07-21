@@ -25,6 +25,7 @@ public class CostManagementView extends JFrame {
         setTitle("Gestión y Resumen de Costos");
         setSize(1200, 800);
         setMinimumSize(new Dimension(1100, 750));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
