@@ -52,4 +52,29 @@ public class SecretaryFileTest {
         assertFalse(secretaryFile.readSecretaryDataBase(User.getInstance()));
         User.clearInstance();
     }
+
+    public static void main(String[] args) {
+        SecretaryFileTest test = new SecretaryFileTest();
+        
+        try {
+            // Set up
+            test.setUp();
+            
+            // Run tests
+            test.testValidUser();
+            test.testInvalidUser();
+            
+            System.out.println("Todas las pruebas pasaron");
+        } catch (Exception e) {
+            System.err.println("Prueba fallida: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                // Clean up
+                test.clean();
+            } catch (IOException e) {
+                System.err.println("Error durante la limpieza: " + e.getMessage());
+            }
+        }
+    }
 }
