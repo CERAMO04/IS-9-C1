@@ -3,37 +3,32 @@ package view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import model.User;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import model.User;
 
 public class CostManagementView extends JFrame {
-
-    private JComboBox<String> comboCcategory;
+    //Atrib
+    private JTextField mermaField, startDateField, endDateField, mermaPercentageField, numberOfTraysField;
     private JButton addButton, saveButton, refeshButton, calcCCBButton, mainPageButton, costButton, logOutButton;
+    private JPanel ccbContainerPanel, calcInputPanel;
+    private JScrollPane scrollPane; 
     private JTable costTable;
-    private JLabel ccbValueLabel;
-    private JTextField traysField, mermaField; 
+    private JLabel ccbValueLabel, ccbStartLabel, ccbEndLabel,ccbLabel;
+    private JComboBox<String> comboCcategory;
     private DefaultTableModel tableModel;
+
     private WalletView walletView; 
 
-    private JPanel ccbContainerPanel;
-
-    private JPanel calcInputPanel; 
-    private JTextField startDateField;
-    private JTextField endDateField;
-    private JTextField mermaPercentageField;
-    private JTextField numberOfTraysField;
-    private JScrollPane scrollPane; 
-
+    //Constructor del costManagement 
     public CostManagementView() {
         setTitle("Gestión y Resumen de Costos");
         setSize(1200, 800);
         setMinimumSize(new Dimension(1100, 750));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
+        //Panel de fondo con imagen
         JPanel contentPane = new JPanel(new GridBagLayout()) {
             Image background = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
             @Override
@@ -54,6 +49,8 @@ public class CostManagementView extends JFrame {
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.insets = new Insets(0, 0, 0, 0);
         contentPane.add(createTopNavBar(), gbc);
+
+        // ---Finaliza bloque de codigo de barra de superior ---
 
         // --- Contenedor superior para categoría y CCB ---
         gbc.weightx = 0;
@@ -104,7 +101,6 @@ public class CostManagementView extends JFrame {
         topLeftPanel.add(comboCcategory, gbcLeft);
 
         topContainerPanel.add(topLeftPanel, gbcTop);
-        topContainerPanel.setVisible(true);
 
         gbcTop.gridx = 1;
         gbcTop.insets = new Insets(0, 30, 0, 0);
@@ -117,36 +113,62 @@ public class CostManagementView extends JFrame {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setColor(new Color(0, 0, 0, 200));
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 35, 25);
                 g2.dispose();
             }
         };
         topRightPanel.setOpaque(false);
-        topRightPanel.setPreferredSize(new Dimension(160, 50));
-
+        topRightPanel.setPreferredSize(new Dimension(300, 70));
+        
+        
+        //Tengo problemas con este grid.
         GridBagConstraints gbcRight = new GridBagConstraints();
-        gbcRight.insets = new Insets(0, 8, 0, 8);
-        gbcRight.gridy = 0;
-        gbcRight.anchor = GridBagConstraints.CENTER;
+        gbcTop.gridx = 1;
+        gbcTop.insets = new Insets(0, 30, 0, 0);
+        gbcTop.weightx = 1.0;
+        gbcTop.fill = GridBagConstraints.HORIZONTAL;
+        gbcTop.anchor = GridBagConstraints.CENTER;
 
-        JLabel ccbLabel = new JLabel("CCB:");
+        // Panel vertical interno
+        JPanel ccbInfoPanel = new JPanel();
+        ccbInfoPanel.setOpaque(false);
+        ccbInfoPanel.setLayout(new BoxLayout(ccbInfoPanel, BoxLayout.Y_AXIS));
+
+        Font labelFont = new Font("Arial", Font.PLAIN, 14);
+        Color labelColor = Color.WHITE;
+
+        ccbLabel = new JLabel("Costo Cubierto por bandeja: ");
+        ccbLabel.setFont(new Font("Arial", Font.BOLD, 14));
         ccbLabel.setForeground(Color.WHITE);
-        ccbLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        ccbLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        ccbValueLabel = new JLabel("0.0");
-        ccbValueLabel.setForeground(Color.WHITE);
+        ccbValueLabel = new JLabel("");
         ccbValueLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        ccbValueLabel.setForeground(Color.WHITE);
+        ccbValueLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        gbcRight.gridx = 0;
-        gbcRight.fill = GridBagConstraints.NONE;
-        gbcRight.weightx = 0;
-        topRightPanel.add(ccbLabel, gbcRight);
+        ccbStartLabel = new JLabel("");
+        ccbStartLabel.setFont(labelFont);
+        ccbStartLabel.setForeground(labelColor);
+        ccbStartLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        gbcRight.gridx = 1;
-        topRightPanel.add(ccbValueLabel, gbcRight);
+        ccbEndLabel = new JLabel("");
+        ccbEndLabel.setFont(labelFont);
+        ccbEndLabel.setForeground(labelColor);
+        ccbEndLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Agregar al panel vertical
+        ccbInfoPanel.add(ccbLabel);
+        ccbInfoPanel.add(ccbValueLabel);
+        ccbInfoPanel.add(Box.createVerticalStrut(4)); 
+        ccbInfoPanel.add(ccbStartLabel);
+        ccbInfoPanel.add(ccbEndLabel);
+
+        topRightPanel.add(ccbInfoPanel, gbcRight);
         topContainerPanel.add(topRightPanel, gbcTop);
+
         contentPane.add(topContainerPanel, gbc);
+        //--- Fin de barras superiores ---
 
         // --- Tabla de costos ---
         gbc.gridy = 2;
@@ -155,18 +177,7 @@ public class CostManagementView extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
 
         String[] columnas = {"Categoría", "Tipo", "Nombre", "Valor"};
-        Object[][] datos = {
-                {"Fijo", "Cocina", "Gas", "120.00"},
-                {"Fijo", "Instalación", "Agua", "90.00"},
-                {"Fijo", "Administración", "Sueldos", "50.45"},
-                {"Fijo", "Equipo", "Mantenimiento", "75.25"},
-                {"Fijo", "Instalación", "Electricidad", "88.9"},
-                {"Variable", "Proteína", "Pollo", "132.5"},
-                {"Variable", "Carbohidratos", "Arroz", "45.0"},
-                {"Variable", "Lípidos", "Aceite", "62.3"},
-                {"Variable", "Empaque", "Bandejas", "20.0"},
-                {"Variable", "Limpieza", "Desinfectante", "30.0"},
-        };
+        Object[][] datos = {};
 
         tableModel = new DefaultTableModel(datos, columnas) {
             @Override
@@ -174,6 +185,7 @@ public class CostManagementView extends JFrame {
                 return column != 0;
             }
         };
+
         costTable = new JTable(tableModel);
         costTable.setFont(new Font("Arial", Font.PLAIN, 14));
         costTable.setRowHeight(32);
@@ -189,14 +201,12 @@ public class CostManagementView extends JFrame {
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
         contentPane.add(scrollPane, gbc);
 
-        
         ccbContainerPanel = new RoundedPanel(40); 
         ccbContainerPanel.setBackground(new Color(255, 255, 255, 180)); 
         ccbContainerPanel.setLayout(new GridBagLayout()); 
         ccbContainerPanel.setPreferredSize(new Dimension(900, 400)); 
         ccbContainerPanel.setVisible(false); 
 
-        
         calcInputPanel = new JPanel(new GridBagLayout());
         calcInputPanel.setOpaque(false); 
 
@@ -276,17 +286,6 @@ public class CostManagementView extends JFrame {
         bottomPanel.add(calcCCBButton);
 
         contentPane.add(bottomPanel, gbc);
-
-        // --- Listener para el botón Calcular CCB ---
-        calcCCBButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Alternar la visibilidad de la tabla y el nuevo panel contenedor de CCB
-                boolean isTableVisible = scrollPane.isVisible();
-                scrollPane.setVisible(!isTableVisible);
-                ccbContainerPanel.setVisible(isTableVisible); 
-            }
-        });
     }
 
     class RoundedPanel extends JPanel {
@@ -411,8 +410,7 @@ public class CostManagementView extends JFrame {
 
         return button;
     }
-
-    
+ 
     private JPanel createInputPanel(String labelText, boolean isDateField) {
         JPanel panel = new JPanel(new GridBagLayout()) {
             @Override
@@ -466,24 +464,32 @@ public class CostManagementView extends JFrame {
     public DefaultTableModel getTableModel() { return tableModel; }
     public JButton getSaveButton() { return saveButton; }
     public JButton getRefreshButton() { return refeshButton; }
-    public JButton getCalculateCCBButton() {return calcCCBButton;}
-    public JTextField getTraysField() {return traysField;} 
+    public JButton getCalculateCCBButton() {return calcCCBButton;} 
     public JTextField getMermaField() { return mermaField;} 
     public JButton getMainButton(){return mainPageButton;}
     public JButton getLogOutButton(){return logOutButton;}
-
-    
+    public JButton calcCCBButton(){return calcCCBButton;}
     public JTextField getStartDateField() { return startDateField; }
     public JTextField getEndDateField() { return endDateField; }
     public JTextField getMermaPercentageField() { return mermaPercentageField; }
     public JTextField getNumberOfTraysField() { return numberOfTraysField; }
 
     /*Setters */
-    public void setCalculatedCCB(double newValue){
+    public void setCCB(double newValue, String startDate, String endDate){
         ccbValueLabel.setText(String.format("%.2f", newValue));
+        ccbStartLabel.setText("Dresde: " + startDate);
+        ccbEndLabel.setText("Hasta: " + endDate);
     }
-
-    
+    public void setVisibleTable(boolean option){
+        scrollPane.setVisible(option);
+    }
+    public void setVisibleCCB(boolean option){
+        ccbContainerPanel.setVisible(option);
+    }
+    public boolean getTableVisible(){
+        return scrollPane.isVisible();
+    }
+/* 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
@@ -503,4 +509,5 @@ public class CostManagementView extends JFrame {
             }
         });
     }
+    */
 }

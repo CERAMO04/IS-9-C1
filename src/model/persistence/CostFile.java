@@ -117,4 +117,9 @@ public class CostFile {
         }
         return result;
     }
+    //Funcion para guardar el CCB
+    public void saveCCB(String fechas){
+        
+    }
+    //Funcion para obtener el CCB guardado.
 }

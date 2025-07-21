@@ -1,7 +1,6 @@
 package controller;
 
 import view.*;
-import controller.*;
 
 public class MainController {
     //Constructor e incializador del programa completo. 
