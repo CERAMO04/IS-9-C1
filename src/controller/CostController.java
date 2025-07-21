@@ -28,7 +28,7 @@ public class CostController {
         model.setRowCount(0);
 
         for (Cost cost : updatedCosts) {
-             Object[] rowData = {
+            Object[] rowData = {
                 cost.getCategory(),
                 cost.getType(),
                 cost.getName(),
