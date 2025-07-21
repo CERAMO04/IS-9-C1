@@ -113,7 +113,7 @@ public class CostManagementView extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(0, 0, 0, 200));
+                g2.setColor(new Color(0, 0, 0, 200)); 
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 35, 25);
                 g2.dispose();
             }
@@ -121,8 +121,6 @@ public class CostManagementView extends JFrame {
         topRightPanel.setOpaque(false);
         topRightPanel.setPreferredSize(new Dimension(300, 70));
         
-        
-        //Tengo problemas con este grid.
         GridBagConstraints gbcRight = new GridBagConstraints();
         gbcTop.gridx = 1;
         gbcTop.insets = new Insets(0, 30, 0, 0);
@@ -130,7 +128,7 @@ public class CostManagementView extends JFrame {
         gbcTop.fill = GridBagConstraints.HORIZONTAL;
         gbcTop.anchor = GridBagConstraints.CENTER;
 
-        // Panel vertical interno
+        // Panel vertical interno 
         JPanel ccbInfoPanel = new JPanel();
         ccbInfoPanel.setOpaque(false);
         ccbInfoPanel.setLayout(new BoxLayout(ccbInfoPanel, BoxLayout.Y_AXIS));
@@ -143,28 +141,33 @@ public class CostManagementView extends JFrame {
         ccbLabel.setForeground(Color.WHITE);
         ccbLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        ccbValueLabel = new JLabel("");
+        ccbValueLabel = new JLabel(""); 
         ccbValueLabel.setFont(new Font("Arial", Font.BOLD, 14));
         ccbValueLabel.setForeground(Color.WHITE);
         ccbValueLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        ccbStartLabel = new JLabel("");
+        ccbStartLabel = new JLabel(""); 
         ccbStartLabel.setFont(labelFont);
         ccbStartLabel.setForeground(labelColor);
-        ccbStartLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ccbStartLabel.setAlignmentX(Component.CENTER_ALIGNMENT); 
 
-        ccbEndLabel = new JLabel("");
+        ccbEndLabel = new JLabel(""); 
         ccbEndLabel.setFont(labelFont);
         ccbEndLabel.setForeground(labelColor);
-        ccbEndLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ccbEndLabel.setAlignmentX(Component.CENTER_ALIGNMENT); 
 
-        // Agregar al panel vertical
+        
+        JPanel dateInfoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0)); 
+        dateInfoPanel.setOpaque(false); 
+        dateInfoPanel.add(ccbStartLabel); 
+        dateInfoPanel.add(ccbEndLabel);   
+
+        // Agregar al panel vertical 
         ccbInfoPanel.add(ccbLabel);
         ccbInfoPanel.add(ccbValueLabel);
         ccbInfoPanel.add(Box.createVerticalStrut(4)); 
-        ccbInfoPanel.add(ccbStartLabel);
-        ccbInfoPanel.add(ccbEndLabel);
-
+        ccbInfoPanel.add(dateInfoPanel); 
+        
         topRightPanel.add(ccbInfoPanel, gbcRight);
         topContainerPanel.add(topRightPanel, gbcTop);
 
@@ -478,7 +481,7 @@ public class CostManagementView extends JFrame {
     /*Setters */
     public void setCCB(double newValue, String startDate, String endDate){
         ccbValueLabel.setText(String.format("%.2f", newValue));
-        ccbStartLabel.setText("Dresde: " + startDate);
+        ccbStartLabel.setText("Desde: " + startDate);
         ccbEndLabel.setText("Hasta: " + endDate);
     }
     public void setVisibleTable(boolean option){
