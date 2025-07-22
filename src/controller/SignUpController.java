@@ -50,7 +50,7 @@ public class SignUpController {
         String username = view.getUsernameField().getText().trim();             //De datos de secretaria + nombre + password
         String password = view.getPasswordField().getText().trim();
 
-        //User.clearInstance();
+        User.clearInstance();
         User.init(username, password, ID);                                      //Inicializamos un usuario con los 3 datos obtenidos
         User currentUser = User.getInstance();
 
