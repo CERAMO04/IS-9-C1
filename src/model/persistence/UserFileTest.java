@@ -68,9 +68,9 @@ public class UserFileTest {
         test.testFullUserValidation();
         test.testUserDoesNotExist();
         
-        System.out.println("All tests passed!");
+        System.out.println("Todas las pruebas pasaron");
     } catch (Exception e) {
-        System.err.println("Test failed: " + e.getMessage());
+        System.err.println("Prueba fallida: " + e.getMessage());
         e.printStackTrace();
     } finally {
         // Clean up
