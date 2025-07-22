@@ -18,7 +18,7 @@ public class Wallet {
     public User getOUser() {return this.ownerUser;}
     /*Function */
     public void deposit(double amount) {
-        if (amount <= 0) this.balance += amount;
+        if (amount >= 0) this.balance += amount;
     }
     public boolean withdraw(double amount) {
         if (balance < 0) return false;
