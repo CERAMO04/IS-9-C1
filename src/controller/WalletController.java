@@ -2,7 +2,6 @@ package controller;
 
 import model.User;
 import model.Wallet;
-import model.persistence.UserFile;
 import view.WalletView;
 
 public class WalletController {

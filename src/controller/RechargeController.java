@@ -35,7 +35,7 @@ public class RechargeController {
                     double currentBalance = user.getWallet().getBalance();
                     double newBalance = currentBalance + value;
 
-                    boolean success = walletController.deposit(value);  
+                    boolean success = walletController.deposit(newBalance);  
 
                     if (success) {
                         user.getWallet().deposit(newBalance); 

@@ -1,5 +1,6 @@
 21234567,comensal,Martín,Fernández,martin@gmail.com,prueba01,1234,false,0.0
 19765432,comensal,Eduardo,Rojas,eduardo@gmail.com,wilker,1234,false,0.0
 10000001,admin,Admin,Principal,admin@gmail.com,prueba02,1234,true,0.0
-10000002,admin,Supervisor,Sistema,supervisor@gmail.com,prueba04,1234,true,114.69999999999999
+10000002,admin,Supervisor,Sistema,supervisor@gmail.com,prueba04,1234,true,8814.7
 30946974,admin,Carlos,Yepez,carloseramo@gmail.com,carlos,1234,true,0.0
+19347210,comensal,Maria,Lopez,maria@gmail.com,wilker,1234,false,0.0

@@ -62,7 +62,7 @@ public class UserFile {
         try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                 String[] fields = line.split(",", 9);
+                String[] fields = line.split(",", 9);
                 if (fields.length == 9) {
                     String userAux = fields[5];
                     String passWordAux = fields[6];

@@ -35,6 +35,8 @@ public class SecretaryFile {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",",5);
+                //Investigar
+                
                 if (fields.length == 5 && fields[0].equals(hit)) {
                     user.setUserType(fields[1]);
                     user.setIsAdmin(fields[1].equalsIgnoreCase("admin"));

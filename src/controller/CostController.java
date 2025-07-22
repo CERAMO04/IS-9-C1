@@ -22,11 +22,8 @@ public class CostController {
     //Funcion privada para refrescar la tabla de costos.
     private void refreshTable(){
         List<Cost> updatedCosts = costFile.readData();
-
         DefaultTableModel model = view.getTableModel();
-            
         model.setRowCount(0);
-
         for (Cost cost : updatedCosts) {
             Object[] rowData = {
                 cost.getCategory(),
@@ -66,10 +63,12 @@ public class CostController {
             DefaultTableModel model = view.getTableModel();
             model.addRow(new Object[]{selectedCategory, "", "", ""});
         });
-        view.getSaveButton().addActionListener(e -> {                                      //Escuchamos boton para guardar la tabla modificada.
-            if (view.getCostTable().isEditing()) {                                              //Funcion para poder guardar aunque el usuario tenga el click en una Celda de la tabla
+        view.getSaveButton().addActionListener(e -> {   
+                                                                          //Escuchamos boton para guardar la tabla modificada.
+            if (view.getCostTable().isEditing()) {                                  //Funcion para poder guardar aunque el usuario tenga el click en una Celda de la tabla
                 view.getCostTable().getCellEditor().stopCellEditing();
             }
+
             DefaultTableModel model = view.getTableModel();
             int rowCount = model.getRowCount();
             ArrayList<Cost> costsToSave = new ArrayList<>();

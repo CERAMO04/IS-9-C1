@@ -201,7 +201,7 @@ public class SignInView extends JFrame {
     
     /*Getters y Setters sin cambios*/
     public JTextField getUserName(){ return userNameField;}
-    public JPasswordField  getPasswordField(){ return passwordField;}
+    public JPasswordField getPasswordField(){ return passwordField;}
     public JButton getSignInButton(){return loginButton;}
     public JLabel getSingUpLabel(){return signUpLabel;}
     public void setMessageAlert(String alert){ messageAlert.setText(alert); }

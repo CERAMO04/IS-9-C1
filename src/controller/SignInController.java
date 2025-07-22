@@ -16,6 +16,7 @@ public class SignInController {
     public SignInController(SignInView view, MainController mainController){
         this.view=view;
         this.mainController=mainController;
+
         view.getSignInButton().addActionListener(e -> {                             //Escuchamos boton de login
             int result = signIn();                                                  //Invocamos funcion para investigar
             switch (result) {                                                       //Si el usuario esta en la base de datos 
@@ -45,6 +46,7 @@ public class SignInController {
             }
         });
     }
+    
     //Funcion que revisa si el usuario existe.
     public int signIn(){
         String userName = view.getUserName().getText().trim();                       //Recibimos el User y la contraseña de los    
