@@ -17,18 +17,17 @@ public class CostManagementView extends JFrame {
     private JLabel ccbValueLabel, ccbStartLabel, ccbEndLabel,ccbLabel;
     private JComboBox<String> comboCcategory;
     private DefaultTableModel tableModel;
-
     private WalletView walletView; 
 
     //Constructor del costManagement 
-    public CostManagementView() {
+    public CostManagementView(WalletView walletView) {
         setTitle("Gestión y Resumen de Costos");
         setSize(1200, 800);
         setMinimumSize(new Dimension(1100, 750));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        this.walletView = walletView;
         //Panel de fondo con imagen
         JPanel contentPane = new JPanel(new GridBagLayout()) {
             Image background = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
@@ -329,8 +328,7 @@ public class CostManagementView extends JFrame {
 
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 25, 0));
         rightPanel.setOpaque(false);
-
-        walletView = new WalletView();
+        
         rightPanel.add(walletView);
 
         User user = null;
@@ -362,10 +360,6 @@ public class CostManagementView extends JFrame {
         container.setOpaque(false);
         container.add(navBar);
         return container;
-    }
-
-    public WalletView getWalletStatusView() {
-        return walletView;
     }
 
     private JButton createStyledButton(String text) {

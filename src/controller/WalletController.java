@@ -2,6 +2,7 @@ package controller;
 
 import model.User;
 import model.Wallet;
+import model.persistence.UserFile;
 import view.WalletView;
 
 public class WalletController {
@@ -12,25 +13,26 @@ public class WalletController {
     }
     // Depositar dinero
     public boolean deposit(double amount) {
-        User user = User.getInstance(); //Referencia a Singleton creado durante inicio de sesion
+        User user = User.getInstance();
         Wallet wallet = user.getWallet();
         if (amount > 0) {
             wallet.deposit(amount);
+            updateView();
             return true;
         }
         return false;
     }
-    // Retirar dinero
     public boolean withdraw(double amount) {
         User user = User.getInstance();
         Wallet wallet = user.getWallet();
-        
         boolean success = wallet.withdraw(amount);
+        if (success) {
+            updateView();
+        }
         return success;
     }
-    // Get current balance
-    public double getBalance() {
-        return User.getInstance().getWallet().getBalance();
+    public void updateView() {
+        walletView.refreshBalance();
     }
 
     //Controlador creado para hacer funcionalidad de botones aqui

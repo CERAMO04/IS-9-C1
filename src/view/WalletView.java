@@ -3,6 +3,7 @@ package view; // O el paquete que estés usando, ej: com.comedor.app
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 import model.User;
 
 /**
@@ -10,8 +11,8 @@ import model.User;
  * Está diseñado para ser integrado en otras vistas, como la barra de navegación.
  */
 public class WalletView extends JPanel {
-    User user = User.getInstance(); //Referencia a Singleton creado durante inicio de sesion
-    private JLabel balanceLabel; // Etiqueta que muestra el monto del saldo
+    User user = User.getInstance(); 
+    private JLabel balanceLabel; 
 
     public WalletView() {
         setOpaque(false); // Hacemos el panel base transparente
@@ -34,27 +35,12 @@ public class WalletView extends JPanel {
         add(textLabel);
 
         // Etiqueta para el valor del saldo (esta es la que se actualizará)
-        balanceLabel = new JLabel("0.00 Bs."); // Valor inicial
+        balanceLabel = new JLabel(String.format("%.2f", user.getWallet().getBalance())); // Valor inicial
         balanceLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         balanceLabel.setForeground(Color.DARK_GRAY); // Color por defecto para saldos positivos
         add(balanceLabel);
     }
-    
-    /**
-     * Método público para que el controlador actualice el saldo mostrado en la vista.
-     * @param newBalance El nuevo saldo a mostrar.
-     */
-    public void updateBalance(double newBalance) {
-        // Formateamos el número a dos decimales y añadimos la moneda
-        String formattedBalance = String.format("%.2f Bs.", newBalance);
-        balanceLabel.setText(formattedBalance);
-
-        // Lógica para cambiar el color si el saldo es negativo
-        if (newBalance < 0) {
-            balanceLabel.setForeground(Color.RED);
-        } else {
-            // Si no es negativo, usamos el color estándar (verde o gris oscuro)
-            balanceLabel.setForeground(new Color(0, 100, 0)); // Un verde oscuro se ve bien
-        }
+    public void refreshBalance() {
+        balanceLabel.setText(String.format("%.2f", User.getInstance().getWallet().getBalance()));
     }
 }

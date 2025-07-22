@@ -8,14 +8,15 @@ import model.User;
 public class RechargeView extends JFrame {
 
     private WalletView walletView;
-    public JButton mainPageButton, costButton, logButton;
+    private JButton mainPageButton, costButton, logButton, confirmButton;
+    private JTextField amountField, refField;
     User user = User.getInstance();
 
-    public RechargeView() {
+    public RechargeView(WalletView walletView) {
         setTitle("Recarga de Saldo");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        this.walletView = walletView;
         Image bgImage = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
         BackgroundPanel mainPanel = new BackgroundPanel(bgImage);
         mainPanel.setLayout(new BorderLayout());
@@ -61,7 +62,6 @@ public class RechargeView extends JFrame {
             Font labelFont = new Font("SansSerif", Font.BOLD, 16); // Fuente para las etiquetas ("Banco:", "Cédula:", etc.)
             Font valueFont = new Font("SansSerif", Font.PLAIN, 16); // Fuente para los valores ("Banesco", etc.)
 
-
             // Banco
             JLabel bankLabel = new JLabel("Banco:");
             bankLabel.setFont(labelFont);
@@ -72,11 +72,11 @@ public class RechargeView extends JFrame {
             formPanel.add(bankValue);
             
             // Cédula
-            JLabel idLabel = new JLabel("Cédula:");
+            JLabel idLabel = new JLabel("RIF:");
             idLabel.setFont(labelFont);
             formPanel.add(idLabel);
 
-            JLabel idValue = new JLabel("V- 30946974");
+            JLabel idValue = new JLabel("J-30946974");
             idValue.setFont(valueFont); 
             formPanel.add(idValue);
 
@@ -96,29 +96,27 @@ public class RechargeView extends JFrame {
             JLabel amountLabel = new JLabel("Monto a Recargar (Bs.):");
             amountLabel.setFont(labelFont);
             formPanel.add(amountLabel);
-            JTextField amountField = new JTextField();
+
+            amountField = new JTextField();
             amountField.setFont(valueFont);
             formPanel.add(amountField);
             
             JLabel refLabel = new JLabel("Número de Referencia (Ultimos 4 digitos):");
             refLabel.setFont(labelFont);
             formPanel.add(refLabel);
-            JTextField refField = new JTextField();
+
+            refField = new JTextField();
             refField.setFont(valueFont);
             formPanel.add(refField);
             
             add(formPanel, BorderLayout.CENTER);
             
-            JButton confirmButton = new JButton("Confirmar Recarga");
+            confirmButton = new JButton("Confirmar Recarga");
             confirmButton.setFont(new Font("SansSerif", Font.BOLD, 18));
             confirmButton.setBackground(new Color(60, 179, 113));
             confirmButton.setForeground(Color.WHITE);
             confirmButton.setFocusPainted(false);
             confirmButton.setBorder(new EmptyBorder(15, 0, 15, 0));
-            
-            confirmButton.addActionListener(e -> {
-                JOptionPane.showMessageDialog(this, "Lógica de confirmación pendiente de implementación.");
-            });
 
             add(confirmButton, BorderLayout.SOUTH);
         }
@@ -136,8 +134,7 @@ public class RechargeView extends JFrame {
 
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 25, 0));
         rightPanel.setOpaque(false);
-
-        walletView = new WalletView();
+        
         rightPanel.add(walletView);
 
         User user = User.getInstance();
@@ -164,10 +161,6 @@ public class RechargeView extends JFrame {
         return container;
     }
 
-    public WalletView getWalletStatusView() {
-        return walletView;
-    }
-
     private JButton createNavButton(String text) {
         JButton button = new JButton(text);
         button.setOpaque(false);
@@ -185,6 +178,11 @@ public class RechargeView extends JFrame {
     class RoundedPanel extends JPanel {
         private final int radius; public RoundedPanel(int radius) { super(); this.radius = radius; setOpaque(false); } @Override protected void paintComponent(Graphics g) { Graphics2D g2 = (Graphics2D) g.create(); g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); g2.setColor(getBackground()); g2.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius); g2.dispose(); super.paintComponent(g); }
     }
-
-
+    /*Getters */
+    public JButton getMainPageButton(){return mainPageButton;}
+    public JButton getLogButton(){return logButton;}
+    public JButton getCostButton(){return costButton;}
+    public JButton getConfirmButton(){return confirmButton;}
+    public JTextField getAmountField(){return amountField;}
+    public JTextField getRefField(){return refField;}
 }

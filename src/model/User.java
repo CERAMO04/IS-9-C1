@@ -22,6 +22,16 @@ public class User {
         this.wallet = new Wallet(this, value);
 
     }
+    private User(){
+        this.name = " ";
+        this.lastName = " ";
+        this.ID = " ";
+        this.userName = " ";
+        this.password = " ";
+        this.userType = " ";
+        this.isAdmin = false;
+        this.wallet = new Wallet(this, 0.0);
+    }
     private User(String userName, String password, String ID) {
         this.ID = ID;
         this.userName = userName;
@@ -41,6 +51,11 @@ public class User {
     public static synchronized void init(String user, String password, String ID) {
         if (instance == null) {
             instance = new User(user,password,ID);
+        }
+    }
+    public static synchronized void init(){
+        if (instance == null){
+            instance = new User();
         }
     }
     public static synchronized User getInstance() {

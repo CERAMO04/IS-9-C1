@@ -90,7 +90,6 @@ public class UserFile {
         }
         return false;
     }
-
     // Funcion principalmente usada para tests
     public boolean validateFullUser(User inputUser) {
     try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
@@ -131,5 +130,36 @@ public class UserFile {
         System.out.println("Error de validacion: " + e.getMessage());
     }
     return false;
+    }
+    public void saveNewBalance(double amount){
+        User user = User.getInstance();
+        File inputFile = systemUserDataBAse;
+        File tempFile = new File(systemUserDataBAse.getPath() + ".tmp");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",", 9);
+                if (fields.length == 9) {
+                    if(fields[5].equals(user.getUser()) && fields[6].equals(user.getPassword())){
+                        fields[8] = String.valueOf(amount);
+                        line = String.join(",", fields);
+                    }
+                }
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error actualizando saldo del usuario: " + e.getMessage());
+        }
+        if (inputFile.delete()) {
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("Error al renombrar archivo temporal.");
+            }
+        } else {
+            System.out.println("Error al eliminar archivo original.");
+        }
     }
 }

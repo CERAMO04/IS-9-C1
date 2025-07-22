@@ -19,6 +19,10 @@ public class MenuController {
             mainController.exitFrame(view);
             mainController.showLogIn();
         });
+        view.getRechargeButton().addActionListener(e ->{
+            mainController.exitFrame(menuView);
+            mainController.showRecarge();
+        });
         if (view.getCostButton() != null) {                       //Se pone un condicional verificando que sea diferente de null
             view.getCostButton().addActionListener(e -> {         //Ya que si lo colocamos de forma normal cuando un
                 mainController.exitFrame(view);                   //Usuario "No Adm" intente logear entonces este boton   

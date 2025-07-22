@@ -1,10 +1,16 @@
 package controller;
 
+import model.User;
 import view.*;
 
 public class MainController {
+    private final WalletView walletView;
+    WalletController walletController;
     //Constructor e incializador del programa completo. 
     public MainController(){
+        User.init();
+        walletView = new WalletView();
+        walletController =new WalletController(walletView);
         showLogIn();
     }
     //Funcion para abrir el LogIn Con su controlador
@@ -15,7 +21,8 @@ public class MainController {
     }
     //Funcion para abrir el Menu Con su controlador
     public void showMenu(){
-        MenuView menuView = new MenuView();
+        walletController.updateView();
+        MenuView menuView = new MenuView(walletView);
         new MenuController(menuView,this);
         menuView.setVisible(true);
     }
@@ -27,9 +34,14 @@ public class MainController {
     }
     //Funcion para abrir la Gestion de costos Con su controlador  
     public void showCostManagementView(){
-        CostManagementView costView = new CostManagementView();
+        CostManagementView costView = new CostManagementView(walletView);
         new CostController(costView,this);
         costView.setVisible(true);
+    }
+    public void showRecarge(){
+        RechargeView recargeView = new RechargeView(walletView);
+        new RechargeController(recargeView,this,walletController);
+        recargeView.setVisible(true);
     }
     //Funcion para cerrar la ventana que se le pase por parametro. 
     public void exitFrame(javax.swing.JFrame view){

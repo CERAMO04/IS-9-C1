@@ -6,19 +6,18 @@ import javax.swing.border.EmptyBorder;
 
 import model.User;
 
-
 public class MenuView extends JFrame {
 
+    private JButton mainPageButton, costButton, logButton;
+    private JButton rechargeButton;
     private WalletView walletView;
-    public JButton mainPageButton, costButton, logButton;
-    private JButton rechargeButton; // <<< CORRECCIÓN 1: Declarar la variable aquí.
     User user = User.getInstance();
 
-    public MenuView() {
+    public MenuView(WalletView walletView) {
         setTitle("Menú del Comedor");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        this.walletView = walletView;
         Image bgImage = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
         BackgroundPanel mainPanel = new BackgroundPanel(bgImage);
         mainPanel.setLayout(new BorderLayout());
@@ -42,7 +41,6 @@ public class MenuView extends JFrame {
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 25, 0));
         rightPanel.setOpaque(false);
 
-        walletView = new WalletView();
         rightPanel.add(walletView);
 
         User user = User.getInstance();
@@ -69,10 +67,6 @@ public class MenuView extends JFrame {
         return container;
     }
 
-    public WalletView getWalletStatusView() {
-        return walletView;
-    }
-
     private JComponent createMainContentPanel() {
         JPanel contentPanel = new JPanel(new BorderLayout(30, 0));
         contentPanel.setOpaque(false);
@@ -81,16 +75,7 @@ public class MenuView extends JFrame {
         //  Crea una instancia del NUEVO LeftSidePanel independiente.
         LeftSidePanel leftPanel = new LeftSidePanel(true);
         
-        //  Le pide el botón de recarga.
-        JButton rechargeBtn = leftPanel.getRechargeButton();
-
-        
-        if (rechargeBtn != null) {
-            rechargeBtn.addActionListener(e -> {
-                new RechargeView().setVisible(true);
-                this.dispose(); // Cierra la ventana actual al abrir la de recarga.
-            });
-        }
+        rechargeButton = leftPanel.getRechargeButton();
 
         contentPanel.add(leftPanel, BorderLayout.WEST);
         contentPanel.add(new DailyMenuPanel(), BorderLayout.CENTER); 
@@ -137,9 +122,8 @@ public class MenuView extends JFrame {
     public JButton getMaiButton(){return mainPageButton;}
     public JButton getLogOutButton(){return logButton;}
     public JButton getCostButton(){return costButton;}
-    public JButton getRechargeButton() { return rechargeButton; }
+    public JButton getRechargeButton() { return rechargeButton;}
     //public JButton logOutButton(){return }
-
 
 
     /*public static void main(String[] args) {
