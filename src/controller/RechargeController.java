@@ -26,7 +26,6 @@ public class RechargeController {
                 JOptionPane.showMessageDialog(view, "Todos los campos son obligatorios.");
                 return;
             }
-
             try {
                 double value = Double.parseDouble(text);
                 int ref = Integer.parseInt(reff);
@@ -67,10 +66,12 @@ public class RechargeController {
             mainController.exitFrame(view);
             mainController.showMenu();
         });
+        if (view.getCostButton() != null){
+            view.getCostButton().addActionListener(e -> {
+                mainController.exitFrame(view);
+                mainController.showCostManagementView();
+            });
+        }
 
-        view.getCostButton().addActionListener(e -> {
-            mainController.exitFrame(view);
-            mainController.showCostManagementView();
-        });
     }
 }
