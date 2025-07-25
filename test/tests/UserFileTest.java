@@ -1,6 +1,7 @@
-package model.persistence;
+package tests;
 
 import model.User;
+import model.persistence.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,15 +15,14 @@ public class UserFileTest {
 
     @BeforeEach
     void setup() throws Exception {
-        // Ensure test directory exists
+        // Se asegura de que el directorio existe
         new File("data").mkdirs();
         
-        // Delete any existing test file
         new File(TEST_FILE).delete();
         
-        // Initialize UserFile and redirect to test file
+        // Inicializar archivo de prueba
         userFile = new UserFile();
-        userFile.setSystemUserDatabase(new File(TEST_FILE)); // 🔑 Key change
+        userFile.setSystemUserDatabase(new File(TEST_FILE));
     }
 
     @AfterEach
@@ -64,7 +64,7 @@ public class UserFileTest {
         // Set up
         test.setup();
         
-        // Run tests
+        // Correr pruebas
         test.testFullUserValidation();
         test.testUserDoesNotExist();
         

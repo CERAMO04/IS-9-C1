@@ -18,7 +18,7 @@ public class CostFile {
     private File costFile = new File("data/CostFile.txt");                         //Abrimos la base de datos
 
     // Test constructor
-    protected CostFile(File customFile) {
+    public CostFile(File customFile) {
         this.costFile = customFile;
     }
     //Constructor del la base de dato de costo.

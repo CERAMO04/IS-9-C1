@@ -11,12 +11,12 @@ public class SecretaryFile {
 
     private File secretaryDataBaseFile = new File("data/SecretaryUsers.txt");
 
-    protected File getSecretaryDatabaseFile() {
+    public File getSecretaryDatabaseFile() {
         return this.secretaryDataBaseFile;
     }
 
     // Para tests
-    protected void setSecretaryDataBaseFile(File file) {
+    public void setSecretaryDataBaseFile(File file) {
         this.secretaryDataBaseFile = file;
     }
 

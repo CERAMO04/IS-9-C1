@@ -1,6 +1,7 @@
-package model.persistence;
+package tests;
 
 import model.User;
+import model.persistence.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ public class SecretaryFileTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        // Setup test file
+        // Setup del archivo de prueba
         Files.write(Paths.get(TEST_FILE), List.of(
             "27564321,comensal,Ana,Gonzalez,ana@gmail.com",
             "10000001,admin,Admin,Principal,admin@gmail.com"
@@ -26,7 +27,7 @@ public class SecretaryFileTest {
     
         secretaryFile = new SecretaryFile() {
             @Override
-            protected File getSecretaryDatabaseFile() {
+            public File getSecretaryDatabaseFile() {
                 return new File(TEST_FILE);
             }
         };

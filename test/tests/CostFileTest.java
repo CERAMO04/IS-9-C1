@@ -1,6 +1,6 @@
-package model.persistence;
+package tests;
 
-
+import model.persistence.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,17 +17,17 @@ public class CostFileTest {
 
     @Test
     void testNegativeCostPrevention() throws Exception {
-        // 1. Create test file
+        // Crea el archivo de prueba
         File testFile = tempDir.resolve("testCosts.txt").toFile();
         CostFile costFile = new CostFile(testFile);
         
-        // 2. Prepare test data (with negative value)
+        // Preparar los datos
         List<Cost> costs = List.of(
             new Cost("Fijo", "Cocina", "Gas", 120.0),
-            new Cost("Variable", "Limpieza", "Desinfectante", -30.0) // Invalid
+            new Cost("Variable", "Limpieza", "Desinfectante", -30.0) // Invalido
         );
         
-        // 3. Verify exception is thrown
+        // Verificar exception 
         IllegalArgumentException ex = assertThrows(
             IllegalArgumentException.class,
             () -> costFile.saveAll(costs)
@@ -42,7 +42,7 @@ public class CostFileTest {
     CostFile costFile = new CostFile(testFile);
     
     List<Cost> costs = List.of(
-        new Cost("Fijo", "Cocina", "Gas", Double.NaN) // Invalid
+        new Cost("Fijo", "Cocina", "Gas", Double.NaN) // Invalido
     );
     
     assertThrows(IllegalArgumentException.class, () -> costFile.saveAll(costs));

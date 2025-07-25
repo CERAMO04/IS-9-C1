@@ -14,7 +14,7 @@ public class UserFile {
     private File systemUserDataBAse = new File("data/SystemUsers.txt");
 
     // Para tests
-    protected void setSystemUserDatabase(File file) {
+    public void setSystemUserDatabase(File file) {
     this.systemUserDataBAse = file;
     }
     
