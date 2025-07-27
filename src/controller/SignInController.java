@@ -45,6 +45,10 @@ public class SignInController {
                 mainController.ShowSignUp();
             }
         });
+        view.getScanButton().addActionListener(e ->{
+            mainController.exitFrame(view);
+            mainController.showComparerView();
+        });
     }
     
     //Funcion que revisa si el usuario existe.

@@ -6,12 +6,12 @@ public class User {
     private static User instance;
 
     /*Atrib */
-    private String name,lastName,userName,password,email,userType,ID;
+    private String name,lastName,userName,password,email,userType,ID, image;
     private boolean isAdmin;
     private Wallet wallet;
 
     /*Builders. */
-    private User(String name, String lastName,String ID, String email,String password, String userName, double value, String userType){
+    private User(String name, String lastName,String ID, String email,String password, String userName, double value, String userType, String image){
         this.name = name;
         this.lastName = lastName;
         this.ID = ID;
@@ -20,6 +20,7 @@ public class User {
         this.userType = userType;
         this.isAdmin = false;
         this.wallet = new Wallet(this, value);
+        this.image = image;
 
     }
     private User(){
@@ -31,6 +32,7 @@ public class User {
         this.userType = " ";
         this.isAdmin = false;
         this.wallet = new Wallet(this, 0.0);
+        this.image = " ";
     }
     private User(String userName, String password, String ID) {
         this.ID = ID;
@@ -43,9 +45,9 @@ public class User {
         this.isAdmin = false;
         this.wallet = null; // aún no asignamos Wallet
     }
-    public static synchronized void init(String name, String lastName,String ID, String email, String password, String username, double value,String userType) {
+    public static synchronized void init(String name, String lastName,String ID, String email, String password, String username, double value,String userType, String image) {
         if (instance == null) {
-            instance = new User(name, lastName, ID, email,password,username,value,userType);
+            instance = new User(name, lastName, ID, email,password,username,value,userType, image);
         }
     }
     public static synchronized void init(String user, String password, String ID) {
@@ -70,6 +72,7 @@ public class User {
     }
 
     /*Setters. */
+    public void setImgae(String image) {this.image = image;}
     public void setName(String name) {this.name = name;}
     public void setLastName(String lastName) {this.lastName = lastName;}
     public void setID(String ID) {this.ID = ID;}
@@ -79,6 +82,7 @@ public class User {
     public void setUserType(String userType) {this.userType = userType;}
     public void setIsAdmin(boolean isAdmin) {this.isAdmin = isAdmin;}
     /*Getters. */
+    public String getImage() {return this.image;}
     public Wallet getWallet() {return this.wallet;}
     public String getName() {return this.name;}
     public String getLastName() {return this.lastName;}

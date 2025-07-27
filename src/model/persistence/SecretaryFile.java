@@ -34,15 +34,16 @@ public class SecretaryFile {
         try (BufferedReader reader = new BufferedReader(new FileReader(secretaryDataBaseFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",",5);
+                String[] fields = line.split(",",7);
                 //Investigar
                 
-                if (fields.length == 5 && fields[0].equals(hit)) {
+                if (fields.length == 6 && fields[0].equals(hit)) {
                     user.setUserType(fields[1]);
                     user.setIsAdmin(fields[1].equalsIgnoreCase("admin"));
                     user.setName(fields[2]);
                     user.setLastName(fields[3]);
                     user.setEmail(fields[4]);
+                    user.setImgae(fields[5]);
                     user.createWallet();
                     return true;
                 }

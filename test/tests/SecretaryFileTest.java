@@ -42,14 +42,14 @@ public class SecretaryFileTest {
 
     @Test
     void testValidUser() {
-        User.init("Ana", "Gonzalez", "27564321", "ana@gmail.com", "pw", "ana", 0.0, "comensal");
+        User.init("Ana", "Gonzalez", "27564321", "ana@gmail.com", "pw", "ana", 0.0, "comensal","image1");
         assertTrue(secretaryFile.readSecretaryDataBase(User.getInstance()));
         User.clearInstance();
     }
 
     @Test 
     void testInvalidUser() {
-        User.init("Test", "User", "99999999", "test@test.com", "pw", "testuser", 0.0, "comensal");
+        User.init("Test", "User", "99999999", "test@test.com", "pw", "testuser", 0.0, "comensal","image1");
         assertFalse(secretaryFile.readSecretaryDataBase(User.getInstance()));
         User.clearInstance();
     }

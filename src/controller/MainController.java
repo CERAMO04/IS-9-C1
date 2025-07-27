@@ -43,6 +43,11 @@ public class MainController {
         new RechargeController(recargeView,this,walletController);
         recargeView.setVisible(true);
     }
+    public void showComparerView() {
+        ComparerFaceView view = new ComparerFaceView();
+        ComparerFaceController controller = new ComparerFaceController(view, this);
+        view.setVisible(true);
+    }
     //Funcion para cerrar la ventana que se le pase por parametro. 
     public void exitFrame(javax.swing.JFrame view){
         view.dispose();

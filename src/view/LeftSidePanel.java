@@ -6,6 +6,7 @@ import model.User;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder; 
 import java.awt.*;
+import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -58,7 +59,17 @@ public class LeftSidePanel extends JPanel {
     private class ProfilePanel extends RoundedPanel {
         public ProfilePanel() {
             super(30); setBackground(new Color(255, 255, 255, 180)); setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); setBorder(new EmptyBorder(20, 20, 20, 20)); setAlignmentX(Component.CENTER_ALIGNMENT);
-            Image userImg = new ImageIcon(getClass().getResource("/assets/user.png")).getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            File imgFile = new File("data/image/" + User.getInstance().getImage() + ".jpg");
+            Image userImg;
+            if (imgFile.exists()) {
+                userImg = new ImageIcon(imgFile.getAbsolutePath())
+                    .getImage()
+                    .getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            } else {
+                userImg = new ImageIcon(getClass().getResource("/assets/user.png"))
+                    .getImage()
+                    .getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            }
             JLabel userIconLabel = new JLabel(new ImageIcon(userImg)); userIconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             JLabel name = new JLabel(user.getName()); name.setFont(new Font("SansSerif", Font.BOLD, 16)); name.setAlignmentX(Component.CENTER_ALIGNMENT);
             JLabel occupation = new JLabel(user.getUserType()); occupation.setForeground(Color.GRAY); occupation.setAlignmentX(Component.CENTER_ALIGNMENT);

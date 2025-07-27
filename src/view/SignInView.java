@@ -9,7 +9,7 @@ public class SignInView extends JFrame {
 
     private RoundedTextField userNameField;
     private RoundedPasswordField passwordField;
-    private JButton loginButton;
+    private JButton loginButton, scanButton;
     private JLabel messageAlert, signUpLabel;
 
     public SignInView() {
@@ -47,6 +47,28 @@ public class SignInView extends JFrame {
         JLabel signUpText = new JLabel("¿No estas registrado?");
         signUpText.setAlignmentX(Component.CENTER_ALIGNMENT);
         signUpText.setForeground(Color.DARK_GRAY);
+
+        //Boton de preuba 
+
+        scanButton = new JButton("⚙");
+        scanButton.setPreferredSize(new Dimension(20, 20));
+        scanButton.setMaximumSize(new Dimension(20, 20));
+        scanButton.setFocusPainted(false);
+        scanButton.setBorderPainted(false);
+        scanButton.setContentAreaFilled(false);
+        scanButton.setForeground(Color.GRAY);
+        scanButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        scanButton.setToolTipText("Botón de prueba");
+
+        //Panel de prueba luego se quita
+        JPanel buttonWrapper = new JPanel();
+        buttonWrapper.setOpaque(false);
+        buttonWrapper.setLayout(new BorderLayout());
+        buttonWrapper.add(scanButton, BorderLayout.EAST);
+        centerPanel.add(buttonWrapper);
+
+
+
         centerPanel.add(logo);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         centerPanel.add(userNameField);
@@ -200,6 +222,7 @@ public class SignInView extends JFrame {
     }
     
     /*Getters y Setters sin cambios*/
+    public JButton getScanButton(){return scanButton;}
     public JTextField getUserName(){ return userNameField;}
     public JPasswordField getPasswordField(){ return passwordField;}
     public JButton getSignInButton(){return loginButton;}

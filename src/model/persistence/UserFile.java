@@ -15,7 +15,7 @@ public class UserFile {
 
     // Para tests
     public void setSystemUserDatabase(File file) {
-    this.systemUserDataBAse = file;
+        this.systemUserDataBAse = file;
     }
     
     public UserFile(){
@@ -37,7 +37,8 @@ public class UserFile {
                           curretUser.getUser() + "," +
                           curretUser.getPassword() + "," +                          
                           curretUser.getIsAdmin() + "," +
-                          curretUser.getWallet().getBalance() + "\n"; 
+                          curretUser.getWallet().getBalance() + "," +
+                          curretUser.getImage() + "\n"; 
             writer.write(line);
         }catch (Exception e) {
             System.out.println("Error escribiendo en el archivo: " + e.getMessage());
@@ -62,8 +63,8 @@ public class UserFile {
         try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",", 9);
-                if (fields.length == 9) {
+                String[] fields = line.split(",", 10);
+                if (fields.length == 10) {
                     String userAux = fields[5];
                     String passWordAux = fields[6];
                     if(userAux.equals(userName.trim()) && passWordAux.equals(userPassword.trim())) {
@@ -74,10 +75,11 @@ public class UserFile {
                         String email = fields[4];
                         String isAdmin = fields[7];
                         String value = fields[8];
+                        String image = fields[9];
                         double cash = Double.parseDouble(value);
 
                         User.clearInstance();
-                        User.init(name, lastName, ID, email, passWordAux, userAux, cash, userType);
+                        User.init(name, lastName, ID, email, passWordAux, userAux, cash, userType,image);
                         User curretUser = User.getInstance();
                         curretUser.setIsAdmin(isAdmin.equals("true"));
 
@@ -96,7 +98,7 @@ public class UserFile {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] fields = line.split(",", -1);
-            if (fields.length == 9) {
+            if (fields.length == 10) {
                 String email = fields[4].equals("null") ? null : fields[4];
                 
                 User.clearInstance();
@@ -108,7 +110,8 @@ public class UserFile {
                     fields[6],  // password
                     fields[5],  // username
                     Double.parseDouble(fields[8]), // balance
-                    fields[1]   // userType
+                    fields[1],   // userType
+                    fields[9]
                 );
                 User storedUser = User.getInstance();
                 storedUser.setIsAdmin(Boolean.parseBoolean(fields[7]));
@@ -120,6 +123,7 @@ public class UserFile {
                     Objects.equals(inputUser.getUser(), storedUser.getUser()) &&
                     Objects.equals(inputUser.getPassword(), storedUser.getPassword()) &&
                     Objects.equals(inputUser.getUserType(), storedUser.getUserType()) &&
+                    Objects.equals(inputUser.getImage(), storedUser.getImage()) &&
                     inputUser.getIsAdmin() == storedUser.getIsAdmin() &&
                     Math.abs(inputUser.getWallet().getBalance() - storedUser.getWallet().getBalance()) < 0.001) {
                     return true;
@@ -141,8 +145,8 @@ public class UserFile {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",", 9);
-                if (fields.length == 9) {
+                String[] fields = line.split(",", 10);
+                if (fields.length == 10) {
                     if(fields[5].equals(user.getUser()) && fields[6].equals(user.getPassword())){
                         fields[8] = String.valueOf(amount);
                         line = String.join(",", fields);
