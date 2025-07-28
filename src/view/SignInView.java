@@ -48,7 +48,7 @@ public class SignInView extends JFrame {
         signUpText.setAlignmentX(Component.CENTER_ALIGNMENT);
         signUpText.setForeground(Color.DARK_GRAY);
 
-        //Boton de preuba 
+        //Boton de preuba Scaner ----------------------
 
         scanButton = new JButton("⚙");
         scanButton.setPreferredSize(new Dimension(20, 20));
@@ -60,7 +60,7 @@ public class SignInView extends JFrame {
         scanButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         scanButton.setToolTipText("Botón de prueba");
 
-        //Panel de prueba luego se quita
+        //Panel de prueba luego se quita ------------------
         JPanel buttonWrapper = new JPanel();
         buttonWrapper.setOpaque(false);
         buttonWrapper.setLayout(new BorderLayout());

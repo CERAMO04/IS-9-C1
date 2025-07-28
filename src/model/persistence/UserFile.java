@@ -1,6 +1,6 @@
 package model.persistence;
 
-import model.User;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,6 +8,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Objects;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
+import model.User;
+import utils.ImageUtils;
 
 public class UserFile {
     
@@ -134,6 +139,39 @@ public class UserFile {
         System.out.println("Error de validacion: " + e.getMessage());
     }
     return false;
+    }
+    public boolean isImageInUserBase(BufferedImage userImage) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length >= 10) {
+                    String imagePath = "data/image/" + fields[9].trim() + ".jpg"; 
+
+                    File imageFile = new File(imagePath);
+                    if (!imageFile.exists()) continue;
+
+                    BufferedImage baseImage = ImageIO.read(imageFile);
+                    if (baseImage != null && ImageUtils.imagesAreEqual(userImage, baseImage)) {
+                        User.init(
+                            fields[2],
+                            fields[3],
+                            fields[0],
+                            fields[4],
+                            fields[6],
+                            fields[5],
+                            Double.parseDouble(fields[8]),
+                            fields[1],
+                            fields[9]
+                        );
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     public void saveNewBalance(double amount){
         User user = User.getInstance();
