@@ -37,7 +37,7 @@ public class SignUpView extends JFrame {
         // --- INICIALIZACIÓN PERSONALIZADA ---
         // los inicializamos como nuestra versión con placeholder.
         idField = new PlaceholderTextField("Cédula de Identidad");
-        userNameField = new PlaceholderTextField("Nombre de usuario");
+        userNameField = new PlaceholderTextField("Alias");
         passwordField = new PlaceholderPasswordField("Contraseña");
 
         // Usamos el nombre de tu variable original para el botón

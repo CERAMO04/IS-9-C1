@@ -28,11 +28,12 @@ public class SignInController {
                     mainController.exitFrame(view);                                 //Y se muestra la vista del Menu
                     mainController.showMenu();
                     break;
-                case 2:
-                    view.setMessageAlert("Por favor introduzca su usuario");
+                case INVALID_FIELD_USER:
+                    view.setMessageAlert("Por favor introduzca su alias");
                     break;
-                case 3:
+                case INVALID_FIELD_PASSWORD:
                     view.setMessageAlert("Por favor introduzca su contraseña");
+                    break;
                 default:
                     view.setMessageAlert(null);;
                     break;
@@ -54,11 +55,11 @@ public class SignInController {
     //Funcion que revisa si el usuario existe.
     public int signIn(){
         String userName = view.getUserName().getText().trim();                       //Recibimos el User y la contraseña de los    
-        String userPassword = view.getPasswordField().getText().trim();              //TextFild de login. 
+        String userPassword = view.getPasswordField().getText().trim();              //TextField de login. 
         
-        if (userName.isEmpty() || userName.equals("Nombre de usuario")){    //Si esta vacio el campo o no se ha modificado
+        if (userName.isEmpty()){    //Si esta vacio el campo o no se ha modificado
             return INVALID_FIELD_USER; }
-        if (userPassword.isEmpty() || userPassword == null || userPassword == "Contraseña"){ 
+        if (userPassword.isEmpty()){ 
             return INVALID_FIELD_PASSWORD; }                                         //Retornamos un mensaje de error
 
         UserFile userFile = new UserFile();                                          //Abrimos la base de datos del comedor.

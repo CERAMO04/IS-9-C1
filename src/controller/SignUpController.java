@@ -14,7 +14,8 @@ public class SignUpController {
     private SignUpView view;
     private MainController mainController;
     //Valores genericos para los mensajes de errores.
-    public static final int ALREADY_REGISTERED = 0, SUCCESS = 1, NOT_IN_SECRETARY = 2;
+    public static final int ALREADY_REGISTERED = 0, SUCCESS = 1, NOT_IN_SECRETARY = 2, EMPTY_FIELD_ID = 3, EMPTY_FIELD_USERNAME = 4, 
+    EMPTY_FIELD_PASSWORD = 5, INVALID_FIELD_PASSWORD = 6;
     //Iniciamos el controlador que recibe una vista del "Registrar" y el maincontroller
     public SignUpController(SignUpView view, MainController mainController){
         this.view = view;
@@ -34,6 +35,18 @@ public class SignUpController {
             case NOT_IN_SECRETARY:
                 view.setMessageAlert("El usuario no se encuentra en la base de dato de Secretaria UCV");
                 break;
+            case EMPTY_FIELD_ID:
+                view.setMessageAlert("Por favor ingresa tu cédula");
+                break;
+            case EMPTY_FIELD_USERNAME:
+                view.setMessageAlert("Por favor ingresa un alias");
+                break;
+            case EMPTY_FIELD_PASSWORD:
+                view.setMessageAlert("Por favor ingresa una contraseña");
+                break;
+            case INVALID_FIELD_PASSWORD:
+                view.setMessageAlert("La contraseña no puede ser menor a 6 caracteres");
+                break;    
         }
         });
         view.getBackToLoginLink().addMouseListener(new MouseAdapter() {                     //Escuchamos las letras de "Iniciar sesion"
@@ -44,11 +57,24 @@ public class SignUpController {
             }
         });
     }
-    //Funcion que se encarga de regsitrar al nuevo usuario.
+    //Funcion que se encarga de registrar al nuevo usuario.
     public int signUpUser(){        
         String ID = view.getIDField().getText().trim();                         //Recibimos el ID para verificarlo con la base
         String username = view.getUsernameField().getText().trim();             //De datos de secretaria + nombre + password
         String password = view.getPasswordField().getText().trim();
+
+        if (ID.isEmpty() || ID.equals("Cédula de Identidad")) {
+            return EMPTY_FIELD_ID;
+        }
+        if (username.isEmpty() || ID.equals("Alias")) {
+            return EMPTY_FIELD_USERNAME;
+        }
+        if (password.isEmpty() || ID.equals("Contraseña")) {
+            return EMPTY_FIELD_PASSWORD;
+        }
+        if (password.length() < 6) {
+            return INVALID_FIELD_PASSWORD;
+        }
 
         User.clearInstance();
         User.init(username, password, ID);                                      //Inicializamos un usuario con los 3 datos obtenidos

@@ -30,7 +30,7 @@ public class SignInView extends JFrame {
         Image logoImg = new ImageIcon(getClass().getResource("/assets/logo.png")).getImage();
         logoImg = logoImg.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         logo.setIcon(new ImageIcon(logoImg));
-        userNameField = new RoundedTextField("Nombre de usuario");
+        userNameField = new RoundedTextField("Alias");
         passwordField = new RoundedPasswordField("Contraseña");
         loginButton = new JButton("Acceder");
         loginButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
