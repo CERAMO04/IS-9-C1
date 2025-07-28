@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.File;
 import java.awt.*;
 
 public class SignInView extends JFrame {
@@ -48,19 +49,30 @@ public class SignInView extends JFrame {
         signUpText.setAlignmentX(Component.CENTER_ALIGNMENT);
         signUpText.setForeground(Color.DARK_GRAY);
 
-        //Boton de preuba Scaner ----------------------
+        //Boton de preuba Scaner listo
 
-        scanButton = new JButton("⚙");
-        scanButton.setPreferredSize(new Dimension(20, 20));
-        scanButton.setMaximumSize(new Dimension(20, 20));
-        scanButton.setFocusPainted(false);
-        scanButton.setBorderPainted(false);
-        scanButton.setContentAreaFilled(false);
-        scanButton.setForeground(Color.GRAY);
-        scanButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        scanButton.setToolTipText("Botón de prueba");
+    scanButton = new JButton();
+    
+    try {
+        File imageFile = new File("src/assets/scan.png");
+        if (imageFile.exists()) {
+            ImageIcon scanIcon = new ImageIcon(imageFile.getAbsolutePath());
+            
+            Image image = scanIcon.getImage();
+            Image scaledImage = image.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+            scanButton.setFocusPainted(false);
+            scanButton.setBorderPainted(false); 
+            scanButton.setContentAreaFilled(false);
+            scanButton.setIcon(new ImageIcon(scaledImage));
+        } else {
+            System.err.println("No se encontró la imagen en la ruta: src/assets/scan.png");
+            scanButton.setText("Scan");
+        }
+    } catch (Exception e) {
+        System.err.println("Error al cargar la imagen scan.png: " + e.getMessage());
+        scanButton.setText("Scan");
+    }
 
-        //Panel de prueba luego se quita ------------------
         JPanel buttonWrapper = new JPanel();
         buttonWrapper.setOpaque(false);
         buttonWrapper.setLayout(new BorderLayout());
