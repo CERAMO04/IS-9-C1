@@ -22,7 +22,6 @@ public class ComparerFaceController {
     public ComparerFaceController(ComparerFaceView view, MainController mainController){
         this.view = view;
         this.mainController = mainController;
-        User user = User.getInstance();
 
         view.getLoadImageButton().addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
@@ -45,7 +44,8 @@ public class ComparerFaceController {
                     UserFile userFile = new UserFile();
                     boolean found = userFile.isImageInUserBase(img);
                     if (found) {
-                        JOptionPane.showMessageDialog(view, "Usuario encontrado");  
+                        JOptionPane.showMessageDialog(view, "Buen provecho!");  
+                        
 
                     } else {
                         JOptionPane.showMessageDialog(view, "Usuario no encontrado");  

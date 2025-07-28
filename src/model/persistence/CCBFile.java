@@ -21,22 +21,21 @@ public class CCBFile {
             System.out.println("Error creando el archivo de Secretaría: " + e.getMessage());
         }
     }
-    public void saveCCB(CCB CCB){
+    public void saveCCB(){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(CCBFile))){         
-            writer.write(CCB.getStartDate());
+            writer.write(CCB.getInstance().getStartDate());
             writer.newLine();
-            writer.write(CCB.getEndDate());
+            writer.write(CCB.getInstance().getEndDate());
             writer.newLine();
-            writer.write(String.valueOf(CCB.getValueCCB()));
+            writer.write(String.valueOf(CCB.getInstance().getValueCCB()));
         } catch (IOException e) {
         System.out.println("Error al guardar el CCB: " + e.getMessage());
         }
     }
-    public CCB readCCB() {
+    public void readCCB() {
         if (!CCBFile.exists() || CCBFile.length() == 0) {
-            return null;
+            return;
         }
-
         try (BufferedReader reader = new BufferedReader(new FileReader(CCBFile))) {
             String startDate = reader.readLine(); 
             String endDate = reader.readLine();    
@@ -44,14 +43,12 @@ public class CCBFile {
 
             if (startDate != null && endDate != null && valueLine != null) {
                 double value = Double.parseDouble(valueLine);
-                CCB currentCCB = new CCB(value, startDate, endDate);
-                return currentCCB;
+                CCB.init(value, startDate, endDate);
             } else {
                 System.out.println("Archivo CCB incompleto o mal formateado.");
             }
         } catch (IOException | NumberFormatException e) {
             System.out.println("Error al leer el CCB: " + e.getMessage());
         }
-        return null; 
     }
 }   

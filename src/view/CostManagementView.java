@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+import model.CCB;
 import model.User;
 
 public class CostManagementView extends JFrame {
@@ -473,10 +474,15 @@ public class CostManagementView extends JFrame {
     public JTextField getNumberOfTraysField() { return numberOfTraysField; }
 
     /*Setters */
-    public void setCCB(double newValue, String startDate, String endDate){
-        ccbValueLabel.setText(String.format("%.2f", newValue));
-        ccbStartLabel.setText("Desde: " + startDate);
-        ccbEndLabel.setText("Hasta: " + endDate);
+    public void setCCB(){
+        ccbValueLabel.setText(String.format("%.2f", CCB.getInstance().getValueCCB()));
+        ccbStartLabel.setText("Desde: " + CCB.getInstance().getStartDate());
+        ccbEndLabel.setText("Hasta: " + CCB.getInstance().getEndDate());
+    }
+    public void setCCB(double value, String startData, String endData){
+        ccbValueLabel.setText(String.format("%.2f", value));
+        ccbStartLabel.setText("Desde: " + startData);
+        ccbEndLabel.setText("Hasta: " + endData);        
     }
     public void setVisibleTable(boolean option){
         scrollPane.setVisible(option);

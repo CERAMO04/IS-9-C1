@@ -42,12 +42,12 @@ public class CostController {
     }
     //Funcion para cargar el CCB al momento de abrir la interfaz
     private void loadCCB(CostManagementView view){
-        CCB currentCCB = ccbFile.readCCB();
+        CCB currentCCB = CCB.getInstance();
 
         if (currentCCB != null) {
-            view.setCCB(currentCCB.getValueCCB(), currentCCB.getStartDate(), currentCCB.getEndDate());
+            view.setCCB();
         } else {
-            view.setCCB(0.0, "N/A", "N/A");
+            view.setCCB(0.0,"0/0/0000","0/0/0000");
         }
     }
     //COnstructor del controlador, Recibe una vista de cost y el mainController por parametro.
@@ -64,7 +64,7 @@ public class CostController {
             model.addRow(new Object[]{selectedCategory, "", "", ""});
         });
         view.getSaveButton().addActionListener(e -> {   
-                                                                          //Escuchamos boton para guardar la tabla modificada.
+                                                                                    //Escuchamos boton para guardar la tabla modificada.
             if (view.getCostTable().isEditing()) {                                  //Funcion para poder guardar aunque el usuario tenga el click en una Celda de la tabla
                 view.getCostTable().getCellEditor().stopCellEditing();
             }
@@ -156,12 +156,15 @@ public class CostController {
                     JOptionPane.ERROR_MESSAGE);
                 return;
                 }
-                double CCB = calculateCCB(trayNumber, merma);
+                double coveredTrayCost = calculateCCB(trayNumber, merma);
                 String startDate = view.getStartDateField().getText().trim();
                 String endDate = view.getEndDateField().getText().trim();
+                
+                CCB.clearInstance();
+                CCB.init(coveredTrayCost, startDate, endDate);
 
-                ccbFile.saveCCB(new CCB(CCB, startDate, endDate));
-                view.setCCB(CCB,startDate,endDate);
+                ccbFile.saveCCB();
+                view.setCCB();
                 
             }catch (NumberFormatException ex) {
                 //JOptionPane.showMessageDialog(view, "Por favor, ingresa un número válido de bandejas.", "Error", JOptionPane.ERROR_MESSAGE);

@@ -1,5 +1,6 @@
 package controller;
 
+import model.CCB;
 import model.User;
 import view.*;
 
@@ -9,6 +10,7 @@ public class MainController {
     //Constructor e incializador del programa completo. 
     public MainController(){
         User.init();
+        CCB.loadFromFile();
         walletView = new WalletView();
         walletController =new WalletController(walletView);
         showLogIn();
