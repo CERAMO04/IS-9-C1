@@ -1,31 +1,63 @@
 package view;
 
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class ComparerFaceView extends JFrame {
 
     private JButton loadImageButton;
     private JLabel imageLabel;
+    private JFileChooser fileChooser;
 
     public ComparerFaceView() {
         setTitle("Comparador de Imágenes");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 500);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+        setSize(800, 600);
+        setLocationRelativeTo(null); 
 
-        // Botón para cargar imagen
-        loadImageButton = new JButton("Cargar Imagen");
-        add(loadImageButton, BorderLayout.NORTH);
+        JPanel contentPane = new JPanel(new GridBagLayout()) {
+            Image background = new ImageIcon(getClass().getResource("/assets/comedor.jpeg")).getImage();
 
-        // Label para mostrar imagen
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (background != null) {
+                    g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                } else {
+                    g.setColor(Color.LIGHT_GRAY);
+                    g.fillRect(0, 0, getWidth(), getHeight());
+                    g.setColor(Color.BLACK);
+                    g.drawString("Imagen de fondo no encontrada: /assets/comedor.jpeg", 20, 20);
+                }
+            }
+        };
+        setContentPane(contentPane);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.CENTER;
+
         imageLabel = new JLabel("No hay imagen cargada", SwingConstants.CENTER);
-        add(imageLabel, BorderLayout.CENTER);
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imageLabel.setVerticalAlignment(SwingConstants.CENTER);
+        imageLabel.setPreferredSize(new Dimension(400, 400));
+        imageLabel.setOpaque(true);
+        imageLabel.setBackground(new Color(255, 255, 255, 180));
+        gbc.gridy = 0;
+        contentPane.add(imageLabel, gbc);
+
+        loadImageButton = new JButton("Cargar Imagen");
+        gbc.gridy = 1;
+        contentPane.add(loadImageButton, gbc);
+
+        fileChooser = new JFileChooser();
+
+        loadImageButton.addActionListener(e -> loadImage());
     }
 
     public JButton getLoadImageButton() {
@@ -40,7 +72,16 @@ public class ComparerFaceView extends JFrame {
                 return;
             }
 
-            ImageIcon icon = new ImageIcon(img.getScaledInstance(400, 400, Image.SCALE_SMOOTH));
+            int labelWidth = imageLabel.getWidth();
+            int labelHeight = imageLabel.getHeight();
+
+            if (labelWidth == 0 || labelHeight == 0) {
+                labelWidth = 400;
+                labelHeight = 400;
+            }
+
+            Image scaledImage = img.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(scaledImage);
             imageLabel.setIcon(icon);
             imageLabel.setText("");
         } catch (IOException e) {
@@ -48,5 +89,12 @@ public class ComparerFaceView extends JFrame {
         }
     }
 
+    private void loadImage() {
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            displayImage(selectedFile);
+        }
+    }
 
 }
