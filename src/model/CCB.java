@@ -37,8 +37,8 @@ public class CCB {
     public double getValueCCB(){return coveredTrayCost;}   
     public String getStartDate(){return startDate;}
     public String getEndDate(){return endDate;}
-    public double getTarifaPorTipo(String tipoUsuario) {
-        switch (tipoUsuario.toLowerCase()) {
+    public double getRateByType(String userType) {
+        switch (userType.toLowerCase()) {
             case "estudiante":
                 return coveredTrayCost * 0.25;                              // rango de 20% a 30%
             case "profesor":

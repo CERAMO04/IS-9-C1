@@ -153,6 +153,7 @@ public class UserFile {
 
                     BufferedImage baseImage = ImageIO.read(imageFile);
                     if (baseImage != null && ImageUtils.imagesAreEqual(userImage, baseImage)) {
+                        User.clearInstance();
                         User.init(
                             fields[2],
                             fields[3],

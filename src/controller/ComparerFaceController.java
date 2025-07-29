@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.image.BufferedImage;
 
+import model.CCB;
 import model.User;
 import model.persistence.UserFile;
 import view.ComparerFaceView;
@@ -44,9 +45,33 @@ public class ComparerFaceController {
                     UserFile userFile = new UserFile();
                     boolean found = userFile.isImageInUserBase(img);
                     if (found) {
-                        JOptionPane.showMessageDialog(view, "Buen provecho!");  
+                        User currentUser = User.getInstance();
+                        double currentCCB = CCB.getInstance().getRateByType(currentUser.getUserType());
                         
+                        if(currentCCB > currentUser.getWallet().getBalance()){
+                            JOptionPane.showMessageDialog(view, "Ops, Lo sentimos " + currentUser.getName() + 
+                                    " Te has quedado sin saldo por favor inicia sesion y recarga tu monedero" );
+                            mainController.exitFrame(view);
+                            mainController.showLogIn();
+                            return;
+                        }
 
+                        switch (view.setConfirmPayView(currentCCB)) {
+                            case 0:
+                                JOptionPane.showMessageDialog(view, "Buen provecho");
+                                currentUser.getWallet().withdraw(currentCCB);
+                                userFile.saveNewBalance(currentUser.getWallet().getBalance());
+                                mainController.exitFrame(view);
+                                mainController.showLogIn();
+                                break;
+                            case 1:
+                                JOptionPane.showMessageDialog(view, "Hasta luego " + currentUser.getName());
+                                mainController.exitFrame(view);
+                                mainController.showLogIn();
+                                break;                        
+                            default:
+                                break;
+                        }
                     } else {
                         JOptionPane.showMessageDialog(view, "Usuario no encontrado");  
                     }

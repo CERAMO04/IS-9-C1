@@ -7,7 +7,7 @@ public class User {
 
     /*Atrib */
     private String name,lastName,userName,password,email,userType,ID, image;
-    private boolean isAdmin;
+    private boolean isAdmin, isSuperAdmin;
     private Wallet wallet;
 
     /*Builders. */
@@ -47,7 +47,7 @@ public class User {
     }
     public static synchronized void init(String name, String lastName,String ID, String email, String password, String username, double value,String userType, String image) {
         if (instance == null) {
-            instance = new User(name, lastName, ID, email,password,username,value,userType, image);
+            instance = new User(name,lastName,ID,email,password,username,value,userType,image);
         }
     }
     public static synchronized void init(String user, String password, String ID) {

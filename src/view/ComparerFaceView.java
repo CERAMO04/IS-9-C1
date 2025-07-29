@@ -28,6 +28,17 @@ public class ComparerFaceView extends JFrame {
         add(imageLabel, BorderLayout.CENTER);
     }
 
+
+    public int setConfirmPayView(double amount) {
+        return JOptionPane.showConfirmDialog(
+            this,
+            "¿Deseas realizar el pago de Bs." + amount + "?",
+            "Confirmar pago",
+            JOptionPane.YES_NO_OPTION
+        );
+    }
+
+
     public JButton getLoadImageButton() {
         return loadImageButton;
     }

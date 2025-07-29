@@ -1,2 +1,1 @@
-27564321,comensal,Ana,Gonzalez,ana@gmail.com,prueba05,1234,false,0.0,image1
-30946974,admin,Carlos,Yepez,carloseramo@gmail.com,prueba01,1234,true,0.0,image4
+27564321,estudiante,Ana,Gonzalez,ana@gmail.com,prueba01,123456,false,0,image1
