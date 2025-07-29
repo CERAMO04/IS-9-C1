@@ -101,8 +101,23 @@ public class MenuView extends JFrame {
             MealCardPanel breakfast = new MealCardPanel("Desayuno", "/assets/desayuno.png", breakfastDesc); MealCardPanel lunch = new MealCardPanel("Almuerzo", "/assets/almuerzo.png", lunchDesc);
             gbc.gridy = 1; gbc.gridwidth = 1; gbc.gridx = 0; gbc.weightx = 0.5; gbc.weighty = 0.9; gbc.fill = GridBagConstraints.NONE; gbc.anchor = GridBagConstraints.CENTER; add(breakfast, gbc);
             gbc.gridx = 1; add(lunch, gbc);
+
+            // Configuración para el JLabel "Precio"
+            gbc.gridy = 2; gbc.gridx = 0; gbc.gridwidth = 2; gbc.weighty = 0.01; 
+            gbc.insets = new Insets(15, 0, 2, 0); 
+
+            JLabel priceLabel = new JLabel("Precio", SwingConstants.CENTER); priceLabel.setFont(new Font("SansSerif", Font.BOLD, 28)); priceLabel.setForeground(Color.DARK_GRAY); add(priceLabel, gbc);
+            RoundedPanel valueRoundedPanel = new RoundedPanel(20); valueRoundedPanel.setBackground(new Color(255, 255, 255, 179)); valueRoundedPanel.setLayout(new GridBagLayout()); 
+
+            JLabel priceCcb = new JLabel("100bs", SwingConstants.CENTER); priceCcb.setFont(new Font("SansSerif", Font.BOLD, 26)); priceCcb.setForeground(new Color(60, 179, 113));
+
+            GridBagConstraints valueGbc = new GridBagConstraints(); valueGbc.gridx = 0; valueGbc.gridy = 0; valueGbc.anchor = GridBagConstraints.CENTER;
+            valueGbc.insets = new Insets(8, 20, 8, 20); valueRoundedPanel.add(priceCcb, valueGbc); 
+            gbc.gridy = 3; gbc.weighty = 0.01; gbc.insets = new Insets(3, 0, 5, 0); add(valueRoundedPanel, gbc); 
+            gbc.gridy = 4; gbc.weighty = 1.0; gbc.fill = GridBagConstraints.BOTH; add(new JPanel() {{ setOpaque(false); }}, gbc);
         }
     }
+
     class MealCardPanel extends RoundedPanel {
         public MealCardPanel(String title, String imagePath, String description) {
             super(30); setBackground(new Color(245, 245, 245, 230)); setLayout(new BorderLayout(0, 15)); setBorder(new EmptyBorder(15, 15, 15, 15)); setPreferredSize(new Dimension(300, 400));
