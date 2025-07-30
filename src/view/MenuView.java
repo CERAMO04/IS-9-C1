@@ -7,7 +7,7 @@ import model.User;
 
 public class MenuView extends JFrame {
 
-    private JButton mainPageButton, costButton, logButton, rechargeButton, editButton;
+    private JButton mainPageButton, costButton, logButton, rechargeButton, editButton, saveButton;
     private WalletView walletView;
     private MealCardPanel breakfastPanel, lunchPanel;
 
@@ -118,8 +118,84 @@ public class MenuView extends JFrame {
             valueGbc.insets = new Insets(8, 20, 8, 20); valueRoundedPanel.add(priceCcb, valueGbc); 
             gbc.gridy = 3; gbc.weighty = 0.01; gbc.insets = new Insets(3, 0, 5, 0); add(valueRoundedPanel, gbc); 
             gbc.gridy = 4; gbc.weighty = 1.0; gbc.fill = GridBagConstraints.BOTH; add(new JPanel() {{ setOpaque(false); }}, gbc);
-        }
-    }
+            priceLabel.setVisible(true);
+            valueRoundedPanel.setVisible(true);
+
+            // Configuración para el botón editar
+            editButton = new JButton();
+
+            try {
+                Image editImg = new ImageIcon(getClass().getResource("/assets/editar.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                editButton.setIcon(new ImageIcon(editImg));
+            } catch (Exception e) {
+                editButton.setText("Edit"); 
+                e.printStackTrace(); 
+            }
+            editButton.setOpaque(false);
+            editButton.setContentAreaFilled(false);
+            editButton.setBorderPainted(false);
+            editButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+
+            GridBagConstraints gbcButton = new GridBagConstraints();
+            gbcButton.gridx = 1; 
+            gbcButton.gridy = 0; 
+            gbcButton.anchor = GridBagConstraints.NORTHEAST; 
+            gbcButton.insets = new Insets(10, 0, 0, 10); 
+            add(editButton, gbcButton);
+            editButton.setVisible(true);
+
+            //botón guardar cambios
+            saveButton = new JButton("Guardar Cambios") {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    if (getModel().isRollover()) {
+                        g2.setColor(new Color(50, 50, 50, 220));
+                    } else {
+                        g2.setColor(new Color(0, 0, 0, 200));
+                    }
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
+                    if (getModel().isRollover()) {
+                        g2.setColor(Color.WHITE);
+                        g2.setStroke(new BasicStroke(2f));
+                        g2.drawRoundRect(1, 1, getWidth() - 3, getHeight() - 3, 25, 25);
+                    }
+                    g2.setColor(new Color(240, 240, 240));
+                    g2.setFont(getFont());
+                    FontMetrics fm = g2.getFontMetrics();
+                    int x = (getWidth() - fm.stringWidth(getText())) / 2;
+                    int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
+                    g2.drawString(getText(), x, y);
+                    if (getModel().isPressed()) {
+                        g2.setColor(new Color(0, 0, 0, 50));
+                        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
+                    }
+                    g2.dispose();
+                }
+
+                @Override
+                protected void paintBorder(Graphics g) {}
+            };
+
+            saveButton.setContentAreaFilled(false);
+            saveButton.setFocusPainted(false);
+            saveButton.setForeground(Color.WHITE);
+            saveButton.setFont(new Font("Arial", Font.BOLD, 18));
+            saveButton.setPreferredSize(new Dimension(260, 55));
+            saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            GridBagConstraints gbcSave = new GridBagConstraints();
+            gbcSave.gridx = 0;
+            gbcSave.gridy = 3;
+            gbcSave.gridwidth = 2;
+            gbcSave.insets = new Insets(20, 0, 10, 0);
+            gbcSave.anchor = GridBagConstraints.CENTER;
+            add(saveButton, gbcSave);
+            saveButton.setVisible(true);
+
+                }
+            }
 
     public class MealCardPanel extends RoundedPanel {
         private JLabel descriptionLabel;
@@ -210,4 +286,5 @@ public class MenuView extends JFrame {
     public MealCardPanel getBreakfastPanel() { return breakfastPanel; }
     public MealCardPanel getLunchPanel() { return lunchPanel; }
     public JButton getEditButton() { return editButton;}
+    public JButton getSaveButton() { return saveButton; }
 }
