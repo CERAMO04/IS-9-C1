@@ -1,33 +1,50 @@
 package controller;
 
 import javax.swing.JOptionPane;
-
 import model.User;
 import view.MenuView;
+import model.persistence.MenuFile;
 
 public class MenuController {
-    //Atrib
     private MenuView view;
     private MainController mainController;
-    //Constructor e inicializador de menuView, recibe una vista de menu y el control principal.
+
     public MenuController(MenuView menuView, MainController mainController){
         this.view = menuView;
         this.mainController = mainController;
-        view.getLogOutButton().addActionListener(e->{              //Escuchamos el boton "Cerrar Sesion"
+
+        MenuFile dataFile = new MenuFile();
+        String[] menuData = dataFile.readMenu(); 
+
+        if (menuData[0] != null) {
+            view.getBreakfastPanel().setDescription(menuData[0]);
+        }
+        if (menuData[1] != null) {
+            view.getLunchPanel().setDescription(menuData[1]);
+        }
+
+        view.getLogOutButton().addActionListener(e -> {
             User.clearInstance();
             JOptionPane.showMessageDialog(view, "Nos vemos pronto!");
             mainController.exitFrame(view);
             mainController.showLogIn();
         });
-        view.getRechargeButton().addActionListener(e ->{
+
+        view.getRechargeButton().addActionListener(e -> {
             mainController.exitFrame(menuView);
             mainController.showRecarge();
         });
-        if (view.getCostButton() != null) {                       //Se pone un condicional verificando que sea diferente de null
-            view.getCostButton().addActionListener(e -> {         //Ya que si lo colocamos de forma normal cuando un
-                mainController.exitFrame(view);                   //Usuario "No Adm" intente logear entonces este boton   
-                mainController.showCostManagementView();          //No existira y por tanto dara error
+
+        view.getEditButton().addActionListener(e -> {
+            view.getBreakfastPanel().setEditMode(true);
+        });
+
+        if (view.getCostButton() != null) {
+            view.getCostButton().addActionListener(e -> {
+                mainController.exitFrame(view);
+                mainController.showCostManagementView();
             });
         }
     }
 }
+       

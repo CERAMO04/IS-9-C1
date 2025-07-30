@@ -56,20 +56,17 @@ public class ComparerFaceView extends JFrame {
         contentPane.add(loadImageButton, gbc);
 
         fileChooser = new JFileChooser();
-
-        loadImageButton.addActionListener(e -> loadImage());
     }
 
-
     public int setConfirmPayView(double amount) {
+        String formatted = String.format("%.2f", amount);
         return JOptionPane.showConfirmDialog(
             this,
-            "¿Deseas realizar el pago de Bs." + amount + "?",
+            "¿Deseas realizar el pago de Bs." + formatted + "?",
             "Confirmar pago",
             JOptionPane.YES_NO_OPTION
         );
     }
-
 
     public JButton getLoadImageButton() {
         return loadImageButton;
@@ -97,14 +94,6 @@ public class ComparerFaceView extends JFrame {
             imageLabel.setText("");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error al cargar la imagen: " + e.getMessage());
-        }
-    }
-
-    private void loadImage() {
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            displayImage(selectedFile);
         }
     }
 

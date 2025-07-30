@@ -50,27 +50,27 @@ public class ComparerFaceController {
                         
                         if(currentCCB > currentUser.getWallet().getBalance()){
                             JOptionPane.showMessageDialog(view, "Ops, Lo sentimos " + currentUser.getName() + 
-                                    " Te has quedado sin saldo por favor inicia sesion y recarga tu monedero" );
+                                    ". Te has quedado sin saldo por favor inicia sesion y recarga tu monedero" );
                             mainController.exitFrame(view);
                             mainController.showLogIn();
                             return;
-                        }
-
-                        switch (view.setConfirmPayView(currentCCB)) {
-                            case 0:
-                                JOptionPane.showMessageDialog(view, "Buen provecho");
-                                currentUser.getWallet().withdraw(currentCCB);
-                                userFile.saveNewBalance(currentUser.getWallet().getBalance());
-                                mainController.exitFrame(view);
-                                mainController.showLogIn();
-                                break;
-                            case 1:
-                                JOptionPane.showMessageDialog(view, "Hasta luego " + currentUser.getName());
-                                mainController.exitFrame(view);
-                                mainController.showLogIn();
-                                break;                        
-                            default:
-                                break;
+                        }else {
+                            switch (view.setConfirmPayView(currentCCB)) {
+                                case 0:
+                                    JOptionPane.showMessageDialog(view, "Buen provecho");
+                                    currentUser.getWallet().withdraw(currentCCB);
+                                    userFile.saveNewBalance(currentUser.getWallet().getBalance());
+                                    mainController.exitFrame(view);
+                                    mainController.showLogIn();
+                                    break;
+                                case 1:
+                                    JOptionPane.showMessageDialog(view, "Hasta luego " + currentUser.getName());
+                                    mainController.exitFrame(view);
+                                    mainController.showLogIn();
+                                    break;                        
+                                default:
+                                    break;
+                            }                            
                         }
                     } else {
                         JOptionPane.showMessageDialog(view, "Usuario no encontrado");  
