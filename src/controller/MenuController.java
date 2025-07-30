@@ -35,9 +35,11 @@ public class MenuController {
             mainController.showRecarge();
         });
 
-        view.getEditButton().addActionListener(e -> {
-            view.getBreakfastPanel().setEditMode(true);
-        });
+        if (User.getInstance().getIsAdmin()){
+            view.getEditButton().addActionListener(e -> {
+                view.getBreakfastPanel().setEditMode(true);
+            });
+        }
 
         if (view.getCostButton() != null) {
             view.getCostButton().addActionListener(e -> {

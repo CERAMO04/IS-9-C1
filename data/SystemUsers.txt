@@ -1,2 +1,2 @@
 27564321,estudiante,Ana,Gonzalez,ana@gmail.com,prueba01,123456,false,0,image1
-27654198,empleado,Pedro,Molina,pedro@gmail.com,prueba02,123456,true,96.2494,image2
+27654198,empleado,Pedro,Molina,pedro@gmail.com,prueba02,123456,true,92.49879999999999,image2
