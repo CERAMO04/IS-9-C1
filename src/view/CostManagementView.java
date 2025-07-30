@@ -11,6 +11,7 @@ import model.User;
 public class CostManagementView extends JFrame {
     //Atrib
     private JTextField mermaField, startDateField, endDateField, mermaPercentageField, numberOfTraysField;
+    private JLabel studentValueLabel, professorValueLabel, employeeValueLabel;
     private JButton addButton, saveButton, refeshButton, calcCCBButton, mainPageButton, costButton, logOutButton;
     private JPanel ccbContainerPanel, calcInputPanel;
     private JScrollPane scrollPane; 
@@ -83,7 +84,8 @@ public class CostManagementView extends JFrame {
             }
         };
         topLeftPanel.setOpaque(false);
-        topLeftPanel.setPreferredSize(new Dimension(300, 50));
+        topLeftPanel.setPreferredSize(new Dimension(350, 70)); 
+        gbc.insets = new Insets(15, 20, 15, 20); 
 
         JLabel categoryLabel = new JLabel("Categoría:");
         categoryLabel.setForeground(Color.WHITE);
@@ -95,16 +97,84 @@ public class CostManagementView extends JFrame {
         comboCcategory.setPreferredSize(new Dimension(120, 30));
 
         GridBagConstraints gbcLeft = new GridBagConstraints();
-        gbcLeft.insets = new Insets(0, 10, 0, 10);
+        gbcLeft.insets = new Insets(10, 10, 10, 10);
         gbcLeft.gridx = 0;
         topLeftPanel.add(categoryLabel, gbcLeft);
         gbcLeft.gridx = 1;
         topLeftPanel.add(comboCcategory, gbcLeft);
 
-        topContainerPanel.add(topLeftPanel, gbcTop);
+        topContainerPanel.add(topLeftPanel, gbcTop); 
+
+    // Panel centrado con información "CBB POR ROL"
+    JPanel ccbByRolePanel = new JPanel(new GridBagLayout()) {
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(new Color(0, 0, 0, 200));
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 35, 25);
+            g2.dispose();
+        }
+    };
+    ccbByRolePanel.setOpaque(false);
+    ccbByRolePanel.setPreferredSize(new Dimension(350, 100));
+
+    JLabel titleRoleLabel = new JLabel("Costo Cubierto por bandeja según rol:");
+    titleRoleLabel.setFont(new Font("Arial", Font.BOLD, 14));
+    titleRoleLabel.setForeground(Color.WHITE);
+
+    JPanel rolesPanel = new JPanel();
+    rolesPanel.setOpaque(false);
+    rolesPanel.setLayout(new BoxLayout(rolesPanel, BoxLayout.X_AXIS));
+
+    JLabel studentLabel = new JLabel("Estudiante:");
+    studentLabel.setForeground(Color.WHITE);
+    studentLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+    studentValueLabel = new JLabel("10bs");
+    studentValueLabel.setForeground(Color.WHITE);
+    studentValueLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+
+    JLabel professorLabel = new JLabel("Profesor:");
+    professorLabel.setForeground(Color.WHITE);
+    professorLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+    professorValueLabel = new JLabel("10bs");
+    professorValueLabel.setForeground(Color.WHITE);
+    professorValueLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+
+    JLabel employeeLabel = new JLabel("Empleado:");
+    employeeLabel.setForeground(Color.WHITE);
+    employeeLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+    employeeValueLabel = new JLabel("10bs");
+    employeeValueLabel.setForeground(Color.WHITE);
+    employeeValueLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+
+    rolesPanel.add(studentLabel);
+    rolesPanel.add(Box.createHorizontalStrut(3));
+    rolesPanel.add(studentValueLabel);
+    rolesPanel.add(Box.createHorizontalStrut(8));
+    rolesPanel.add(professorLabel);
+    rolesPanel.add(Box.createHorizontalStrut(3));
+    rolesPanel.add(professorValueLabel);
+    rolesPanel.add(Box.createHorizontalStrut(8));
+    rolesPanel.add(employeeLabel);
+    rolesPanel.add(Box.createHorizontalStrut(3));
+    rolesPanel.add(employeeValueLabel);
+    rolesPanel.setBorder(new EmptyBorder(9, 15, 10, 15)); 
+    rolesPanel.add(Box.createHorizontalStrut(5)); 
+
+    GridBagConstraints gbcInner = new GridBagConstraints();
+    gbcInner.gridx = 0;
+    gbcInner.gridy = 0;
+    ccbByRolePanel.add(titleRoleLabel, gbcInner);
+    gbcInner.gridy = 1;
+    ccbByRolePanel.add(rolesPanel, gbcInner);
+
+    gbcTop.gridx = 1;
+    gbcTop.insets = new Insets(0, 40, 0, 30); 
+    topContainerPanel.add(ccbByRolePanel, gbcTop);
 
         gbcTop.gridx = 1;
-        gbcTop.insets = new Insets(0, 30, 0, 0);
+        gbcTop.insets = new Insets(15, 0, 10, 0);
         gbcTop.weightx = 0;
         gbcTop.anchor = GridBagConstraints.EAST;
 
@@ -127,8 +197,7 @@ public class CostManagementView extends JFrame {
         gbcTop.weightx = 1.0;
         gbcTop.fill = GridBagConstraints.HORIZONTAL;
         gbcTop.anchor = GridBagConstraints.CENTER;
-
-        // Panel vertical interno 
+ 
         JPanel ccbInfoPanel = new JPanel();
         ccbInfoPanel.setOpaque(false);
         ccbInfoPanel.setLayout(new BoxLayout(ccbInfoPanel, BoxLayout.Y_AXIS));
@@ -169,6 +238,7 @@ public class CostManagementView extends JFrame {
         ccbInfoPanel.add(dateInfoPanel); 
         
         topRightPanel.add(ccbInfoPanel, gbcRight);
+        gbcTop.gridx = 2;
         topContainerPanel.add(topRightPanel, gbcTop);
 
         contentPane.add(topContainerPanel, gbc);
@@ -203,7 +273,7 @@ public class CostManagementView extends JFrame {
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-        contentPane.add(scrollPane, gbc);
+        contentPane.add(scrollPane, gbc);    
 
         ccbContainerPanel = new RoundedPanel(40); 
         ccbContainerPanel.setBackground(new Color(255, 255, 255, 180)); 
