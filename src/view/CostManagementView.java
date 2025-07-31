@@ -341,7 +341,7 @@ public class CostManagementView extends JFrame {
 
         addButton = createStyledButton("Agregar Costo");
         saveButton = createStyledButton("Guardar Cambios");
-        refeshButton = createStyledButton("Actualizar");
+        refeshButton = createStyledButton("Refrescar");
         calcCCBButton = createStyledButton("Calcular CCB");
 
         int panelWidth = 900;

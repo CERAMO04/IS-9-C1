@@ -11,7 +11,7 @@ import java.util.List;
 import model.Cost;
 
 
-public class CostFileTest {
+public class CostFileBlackBoxTest {
     @TempDir
     Path tempDir;
 
