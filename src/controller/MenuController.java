@@ -3,6 +3,7 @@ package controller;
 import javax.swing.JOptionPane;
 import model.User;
 import view.MenuView;
+import view.MenuView.MealCardPanel;
 import model.persistence.MenuFile;
 
 public class MenuController {
@@ -34,13 +35,22 @@ public class MenuController {
             mainController.exitFrame(menuView);
             mainController.showRecarge();
         });
-
         if (User.getInstance().getIsAdmin()){
             view.getEditButton().addActionListener(e -> {
-                view.getBreakfastPanel().setEditMode(true);
+            MealCardPanel breakfastPanel, lunchPanel;   
+            breakfastPanel = view.getBreakfastPanel();
+            lunchPanel = view.getLunchPanel();
+            view.setEditModeOn(breakfastPanel, lunchPanel);
             });
         }
-
+        if (view.getSaveButton() != null){
+            view.getSaveButton().addActionListener(e ->{
+                MealCardPanel breakfastPanel, lunchPanel;   
+                breakfastPanel = view.getBreakfastPanel();
+                lunchPanel = view.getLunchPanel();
+                view.setEditmodeOff(breakfastPanel, lunchPanel);
+            });
+        }
         if (view.getCostButton() != null) {
             view.getCostButton().addActionListener(e -> {
                 mainController.exitFrame(view);

@@ -3,6 +3,8 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import model.CCB;
 import model.User;
 
 public class MenuView extends JFrame {
@@ -10,6 +12,7 @@ public class MenuView extends JFrame {
     private JButton mainPageButton, costButton, logButton, rechargeButton, editButton, saveButton;
     private WalletView walletView;
     private MealCardPanel breakfastPanel, lunchPanel;
+    private JLabel priceCcb;
 
 
     public MenuView(WalletView walletView) {
@@ -48,10 +51,8 @@ public class MenuView extends JFrame {
         if (user.getIsAdmin()){
             mainPageButton = createNavButton("Página Principal");
             costButton = createNavButton("Gestión de costos");
-            editButton = createNavButton("Editar menú");
             rightPanel.add(mainPageButton);
             rightPanel.add(costButton);
-            rightPanel.add(editButton);
         } else {
             mainPageButton = createNavButton("Página Principal");
             rightPanel.add(mainPageButton);
@@ -109,10 +110,30 @@ public class MenuView extends JFrame {
             gbc.gridy = 2; gbc.gridx = 0; gbc.gridwidth = 2; gbc.weighty = 0.01; 
             gbc.insets = new Insets(15, 0, 2, 0); 
 
-            JLabel priceLabel = new JLabel("Precio", SwingConstants.CENTER); priceLabel.setFont(new Font("SansSerif", Font.BOLD, 28)); priceLabel.setForeground(Color.DARK_GRAY); add(priceLabel, gbc);
+            JLabel priceLabel = new JLabel("Precio por la bandeja: ", SwingConstants.CENTER); priceLabel.setFont(new Font("SansSerif", Font.BOLD, 28)); priceLabel.setForeground(Color.DARK_GRAY); add(priceLabel, gbc);
             RoundedPanel valueRoundedPanel = new RoundedPanel(20); valueRoundedPanel.setBackground(new Color(255, 255, 255, 179)); valueRoundedPanel.setLayout(new GridBagLayout()); 
-
-            JLabel priceCcb = new JLabel("100bs", SwingConstants.CENTER); priceCcb.setFont(new Font("SansSerif", Font.BOLD, 26)); priceCcb.setForeground(new Color(60, 179, 113));
+            
+            
+            String userType = User.getInstance().getUserType();
+            double rate = CCB.getInstance().getRateByType(userType);
+            String rateText = String.format("%.2f", rate);
+            switch (userType) {
+                case "estudiante":
+                    priceCcb = new JLabel(rateText, SwingConstants.CENTER); 
+                    priceCcb.setFont(new Font("SansSerif", Font.BOLD, 26)); 
+                    priceCcb.setForeground(new Color(60, 179, 113));
+                    break;
+                case "profesor":
+                    priceCcb = new JLabel(rateText, SwingConstants.CENTER); 
+                    priceCcb.setFont(new Font("SansSerif", Font.BOLD, 26)); 
+                    priceCcb.setForeground(new Color(60, 179, 113));
+                case "empleado":
+                    priceCcb = new JLabel(rateText, SwingConstants.CENTER); 
+                    priceCcb.setFont(new Font("SansSerif", Font.BOLD, 26)); 
+                    priceCcb.setForeground(new Color(60, 179, 113));                            
+                default:
+                    break;
+            }
 
             GridBagConstraints valueGbc = new GridBagConstraints(); valueGbc.gridx = 0; valueGbc.gridy = 0; valueGbc.anchor = GridBagConstraints.CENTER;
             valueGbc.insets = new Insets(8, 20, 8, 20); valueRoundedPanel.add(priceCcb, valueGbc); 
@@ -131,6 +152,7 @@ public class MenuView extends JFrame {
                 editButton.setText("Edit"); 
                 e.printStackTrace(); 
             }
+
             editButton.setOpaque(false);
             editButton.setContentAreaFilled(false);
             editButton.setBorderPainted(false);
@@ -192,8 +214,7 @@ public class MenuView extends JFrame {
             gbcSave.insets = new Insets(20, 0, 10, 0);
             gbcSave.anchor = GridBagConstraints.CENTER;
             add(saveButton, gbcSave);
-            saveButton.setVisible(true);
-
+            saveButton.setVisible(false);
                 }
             }
 
@@ -233,10 +254,10 @@ public class MenuView extends JFrame {
             editTextArea.setFont(new Font("SansSerif", Font.PLAIN, 16));
             editTextArea.setLineWrap(true);
             editTextArea.setWrapStyleWord(true);
-            editTextArea.setVisible(false); // Oculto al inicio
+            editTextArea.setVisible(false);
             add(editTextArea, BorderLayout.SOUTH);
 
-            setDescription(description); // Aplica contenido inicial
+            setDescription(description);
         }
 
         public void setDescription(String newText) {
@@ -262,7 +283,7 @@ public class MenuView extends JFrame {
             } else {
                 remove(editTextArea);
                 add(descriptionLabel, BorderLayout.SOUTH);
-                setDescription(editTextArea.getText()); // Actualiza texto normal
+                setDescription(editTextArea.getText()); 
             }
             revalidate();
             repaint();
@@ -287,4 +308,20 @@ public class MenuView extends JFrame {
     public MealCardPanel getLunchPanel() { return lunchPanel; }
     public JButton getEditButton() { return editButton;}
     public JButton getSaveButton() { return saveButton; }
+    /*Setters */
+    public void setEditModeOn(MealCardPanel breakfastPanel, MealCardPanel lunchPanel){
+        priceCcb.setVisible(false);
+        saveButton.setVisible(true);
+        editButton.setVisible(false);
+        breakfastPanel.setEditMode(true);
+        lunchPanel.setEditMode(true);
+
+    }
+    public void setEditmodeOff(MealCardPanel breakfastPanel, MealCardPanel lunchPanel){
+        priceCcb.setVisible(true);
+        saveButton.setVisible(false);
+        editButton.setVisible(true);
+        breakfastPanel.setEditMode(false);
+        lunchPanel.setEditMode(false);
+    }
 }
