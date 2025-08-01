@@ -1,9 +1,13 @@
 package controller;
 
+import java.io.IOException;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 import model.User;
 import view.MenuView;
 import view.MenuView.MealCardPanel;
+import view.UserManagementView;
 import model.persistence.MenuFile;
 
 public class MenuController {
@@ -43,6 +47,13 @@ public class MenuController {
                 lunchPanel = view.getLunchPanel();
                 view.setEditModeOn(breakfastPanel, lunchPanel);
             });
+
+            // Añade botón de administrar admins
+            if (view.getAdminManagementButton() != null) {
+                view.getAdminManagementButton().addActionListener(e -> {
+                    new UserManagementView().setVisible(true);
+                });
+            }
         }
         
         if (view.getSaveButton() != null){
