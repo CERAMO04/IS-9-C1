@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -230,33 +229,59 @@ public class UserFile {
         return users;
     }
 
-    public void modifyPrivilege(String ID, boolean makeAdmin) {
-        try {
-            // Read all lines
-            List<String> lines = Files.readAllLines(systemUserDataBAse.toPath());
-            
-            // Find and update the user
-            for (int i = 0; i < lines.size(); i++) {
-                String[] fields = lines.get(i).split(",", -1);
+    public void downPrivileg(String ID){
+        File tempFile = new File(systemUserDataBAse.getPath() + ".tmp");
+        try (
+            BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+        ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",", -1); 
+
                 if (fields.length >= 11 && fields[0].trim().equals(ID.trim())) {
-                    fields[7] = String.valueOf(makeAdmin);
-                    lines.set(i, String.join(",", fields));
-                    break;
+                    fields[7] = "false"; 
                 }
+                writer.write(String.join(",", fields));
+                writer.newLine();
             }
-            
-            // Write back to the original file
-            Files.write(systemUserDataBAse.toPath(), lines);
+
+            // Reemplazamos el archivo original por el nuevo
+            if (!systemUserDataBAse.delete()) {
+                System.out.println("No se pudo eliminar el archivo original.");
+            } else if (!tempFile.renameTo(systemUserDataBAse)) {
+                System.out.println("No se pudo renombrar el archivo temporal.");
+            }
         } catch (IOException e) {
-            System.out.println("Error modifying privileges: " + e.getMessage());
+            System.out.println("Error modificando privilegios del usuario: " + e.getMessage());
         }
     }
 
-    public void downPrivileg(String ID) {
-        modifyPrivilege(ID, false);
-    }
-
     public void upPrivileg(String ID) {
-        modifyPrivilege(ID, true);
+        File tempFile = new File(systemUserDataBAse.getPath() + ".tmp");
+        try (
+            BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+        ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",", -1); 
+
+                if (fields.length >= 11 && fields[0].trim().equals(ID.trim())) {
+                    fields[7] = "true"; 
+                }
+                writer.write(String.join(",", fields));
+                writer.newLine();
+            }
+
+            // Reemplazamos el archivo original por el nuevo
+            if (!systemUserDataBAse.delete()) {
+                System.out.println("No se pudo eliminar el archivo original.");
+            } else if (!tempFile.renameTo(systemUserDataBAse)) {
+                System.out.println("No se pudo renombrar el archivo temporal.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error modificando privilegios del usuario: " + e.getMessage());
+        }
     }
 }
