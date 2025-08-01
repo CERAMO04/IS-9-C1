@@ -127,24 +127,32 @@ public class CostManagementView extends JFrame {
     rolesPanel.setOpaque(false);
     rolesPanel.setLayout(new BoxLayout(rolesPanel, BoxLayout.X_AXIS));
 
+    double ccbStudent = CCB.getInstance().getRateByType("estudiante");
+    double ccbProfessor = CCB.getInstance().getRateByType("profesor");
+    double ccbEmployee = CCB.getInstance().getRateByType("empleado");
+    String ccbStudentText = String.format("%.2f", ccbStudent);
+    String ccbProfessorText = String.format("%.2f", ccbProfessor);
+    String ccbEmployeeText = String.format("%.2f", ccbEmployee);
+
+
     JLabel studentLabel = new JLabel("Estudiante:");
     studentLabel.setForeground(Color.WHITE);
     studentLabel.setFont(new Font("Arial", Font.PLAIN, 13));
-    studentValueLabel = new JLabel("10bs");
+    studentValueLabel = new JLabel(ccbStudentText + "bs.");
     studentValueLabel.setForeground(Color.WHITE);
     studentValueLabel.setFont(new Font("Arial", Font.PLAIN, 13));
 
     JLabel professorLabel = new JLabel("Profesor:");
     professorLabel.setForeground(Color.WHITE);
     professorLabel.setFont(new Font("Arial", Font.PLAIN, 13));
-    professorValueLabel = new JLabel("10bs");
+    professorValueLabel = new JLabel(ccbProfessorText + "bs.");
     professorValueLabel.setForeground(Color.WHITE);
     professorValueLabel.setFont(new Font("Arial", Font.PLAIN, 13));
 
     JLabel employeeLabel = new JLabel("Empleado:");
     employeeLabel.setForeground(Color.WHITE);
     employeeLabel.setFont(new Font("Arial", Font.PLAIN, 13));
-    employeeValueLabel = new JLabel("10bs");
+    employeeValueLabel = new JLabel(ccbEmployeeText + "bs.");
     employeeValueLabel.setForeground(Color.WHITE);
     employeeValueLabel.setFont(new Font("Arial", Font.PLAIN, 13));
 
