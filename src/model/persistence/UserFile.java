@@ -232,10 +232,8 @@ public class UserFile {
 
     public void modifyPrivilege(String ID, boolean makeAdmin) {
         try {
-            // Read all lines
             List<String> lines = Files.readAllLines(systemUserDataBAse.toPath());
             
-            // Find and update the user
             for (int i = 0; i < lines.size(); i++) {
                 String[] fields = lines.get(i).split(",", -1);
                 if (fields.length >= 11 && fields[0].trim().equals(ID.trim())) {
@@ -245,7 +243,6 @@ public class UserFile {
                 }
             }
             
-            // Write back to the original file
             Files.write(systemUserDataBAse.toPath(), lines);
         } catch (IOException e) {
             System.out.println("Error modifying privileges: " + e.getMessage());
