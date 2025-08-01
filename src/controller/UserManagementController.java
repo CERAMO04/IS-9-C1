@@ -13,6 +13,7 @@ import controller.MainController;
 import model.UserData;
 import model.User;
 import model.persistence.UserFile;
+import model.persistence.UserService;
 
 
 public class UserManagementController {
@@ -41,7 +42,7 @@ public class UserManagementController {
                 if (userFile.userExists(selectedUser.getID())){
                     userFile.downPrivileg(selectedUser.getID());
                 }
-                JOptionPane.showMessageDialog(view, selectedUser.getName() + " ya no es administrador");
+                JOptionPane.showMessageDialog(view, selectedUser.getName() + " ya no es administrador/a");
                 loadUsers();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, "Error revocando permisos: " + ex.getMessage());
@@ -59,7 +60,7 @@ public class UserManagementController {
                 if (userFile.userExists(selectedUser.getID())){
                     userFile.upPrivileg(selectedUser.getID());
                 }
-                JOptionPane.showMessageDialog(view, selectedUser.getName() + " ahora es administrador");
+                JOptionPane.showMessageDialog(view, selectedUser.getName() + " ahora es administrador/a");
                 loadUsers();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, "Error al promover al usuario: " + ex.getMessage());
@@ -69,20 +70,19 @@ public class UserManagementController {
 
     private void loadUsers() {
         try {
-            users = userFile.readAllUsers();
-
-            view.setUsers(users); 
-
+            users = UserService.getAllUsers();
+            view.setUsers(users);
+            
             DefaultListModel<String> listModel = view.getListModel();
             listModel.clear();
-
+            
             for (UserData user : users) {
-                String adminStatus = user.getIsAdmin() ? " (Es administrador)" : " (No es administrador)";
-                listModel.addElement(user.getName() + " " + user.getLastName() + " (" + user.getID() + ")" + adminStatus);
+                String adminStatus = user.getIsAdmin() ? " (Admin)" : " (No admin)";
+                listModel.addElement(user.getName() + " " + user.getLastName() + 
+                                   " (" + user.getID() + ")" + adminStatus);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(view, "Error cargando usuarios: " + e.getMessage());
+            JOptionPane.showMessageDialog(view, "Error loading users: " + e.getMessage());
         }
     }
-
 }
