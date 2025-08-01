@@ -9,7 +9,7 @@ import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserFileTest {
+public class UserFileBlackBoxTest {
     private static final String TEST_FILE = "data/SystemUsers_TEST.txt";
     private UserFile userFile;
 
@@ -58,7 +58,7 @@ public class UserFileTest {
 
     public static void main(String[] args) {
 
-    UserFileTest test = new UserFileTest();
+    UserFileBlackBoxTest test = new UserFileBlackBoxTest();
     
     try {
         // Set up

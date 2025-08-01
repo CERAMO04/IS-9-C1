@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SecretaryFileTest {
+public class SecretaryFileBlackBoxTest {
     private static final String TEST_FILE = "data/SecretaryUsers_TEST.txt";
     private SecretaryFile secretaryFile;
 
@@ -55,7 +55,7 @@ public class SecretaryFileTest {
     }
 
     public static void main(String[] args) {
-        SecretaryFileTest test = new SecretaryFileTest();
+        SecretaryFileBlackBoxTest test = new SecretaryFileBlackBoxTest();
         
         try {
             // Set up
