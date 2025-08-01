@@ -7,11 +7,14 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import model.User;
+import model.UserData;
 import utils.ImageUtils;
 
 public class UserFile {
@@ -32,18 +35,19 @@ public class UserFile {
             System.out.println("Error creando el archivo de base de dato del comedor: " + e.getMessage());
         }
     }
-    public void saveUser(User curretUser){
+    public void saveUser(User currentUser){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(systemUserDataBAse, true))){
-            String line = curretUser.getID() + "," +
-                          curretUser.getUserType() + "," +
-                          curretUser.getName() + "," +
-                          curretUser.getLastName() + "," +
-                          curretUser.getEmail() + "," +
-                          curretUser.getUser() + "," +
-                          curretUser.getPassword() + "," +                          
-                          curretUser.getIsAdmin() + "," +
-                          curretUser.getWallet().getBalance() + "," +
-                          curretUser.getImage() + "\n"; 
+            String line = currentUser.getID() + "," +
+                          currentUser.getUserType() + "," +
+                          currentUser.getName() + "," +
+                          currentUser.getLastName() + "," +
+                          currentUser.getEmail() + "," +
+                          currentUser.getUser() + "," +
+                          currentUser.getPassword() + "," +                          
+                          currentUser.getIsAdmin() + "," +
+                          currentUser.getIsSuperSu() + "," +
+                          currentUser.getWallet().getBalance() + "," +
+                          currentUser.getImage() + "\n"; 
             writer.write(line);
         }catch (Exception e) {
             System.out.println("Error escribiendo en el archivo: " + e.getMessage());
@@ -63,13 +67,12 @@ public class UserFile {
         }
         return false;
     }
-
     public boolean userExists(String userName, String userPassword){
         try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",", 10);
-                if (fields.length == 10) {
+                String[] fields = line.split(",", 11);
+                if (fields.length == 11) {
                     String userAux = fields[5];
                     String passWordAux = fields[6];
                     if(userAux.equals(userName.trim()) && passWordAux.equals(userPassword.trim())) {
@@ -79,15 +82,15 @@ public class UserFile {
                         String lastName = fields[3];
                         String email = fields[4];
                         String isAdmin = fields[7];
-                        String value = fields[8];
-                        String image = fields[9];
+                        String isSuperSu = fields[8];
+                        String value = fields[9];
+                        String image = fields[10];
                         double cash = Double.parseDouble(value);
 
                         User.clearInstance();
-                        User.init(name, lastName, ID, email, passWordAux, userAux, cash, userType,image);
-                        User curretUser = User.getInstance();
-                        curretUser.setIsAdmin(isAdmin.equals("true"));
-
+                        User.init(name, lastName, ID, email, passWordAux, 
+                                    userAux, cash, userType,image,Boolean.parseBoolean(isSuperSu),
+                                    Boolean.parseBoolean(isAdmin));
                         return true;
                     }
                 }
@@ -97,79 +100,34 @@ public class UserFile {
         }
         return false;
     }
-    // Funcion principalmente usada para tests
-    public boolean validateFullUser(User inputUser) {
-    try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] fields = line.split(",", -1);
-            if (fields.length == 10) {
-                String email = fields[4].equals("null") ? null : fields[4];
-                
-                User.clearInstance();
-                User.init(
-                    fields[2],  // name
-                    fields[3],  // lastName
-                    fields[0],  // ID
-                    email,      // email
-                    fields[6],  // password
-                    fields[5],  // username
-                    Double.parseDouble(fields[8]), // balance
-                    fields[1],   // userType
-                    fields[9]
-                );
-                User storedUser = User.getInstance();
-                storedUser.setIsAdmin(Boolean.parseBoolean(fields[7]));
-
-                if (Objects.equals(inputUser.getID(), storedUser.getID()) &&
-                    Objects.equals(inputUser.getName(), storedUser.getName()) &&
-                    Objects.equals(inputUser.getLastName(), storedUser.getLastName()) &&
-                    Objects.equals(inputUser.getEmail(), storedUser.getEmail()) && 
-                    Objects.equals(inputUser.getUser(), storedUser.getUser()) &&
-                    Objects.equals(inputUser.getPassword(), storedUser.getPassword()) &&
-                    Objects.equals(inputUser.getUserType(), storedUser.getUserType()) &&
-                    Objects.equals(inputUser.getImage(), storedUser.getImage()) &&
-                    inputUser.getIsAdmin() == storedUser.getIsAdmin() &&
-                    Math.abs(inputUser.getWallet().getBalance() - storedUser.getWallet().getBalance()) < 0.001) {
-                    return true;
-                }
-            }
-        }
-    } catch (IOException | NumberFormatException e) {
-        System.out.println("Error de validacion: " + e.getMessage());
-    }
-    return false;
-    }
     public boolean isImageInUserBase(BufferedImage userImage) {
         try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length >= 10) {
-                    String imagePath = "data/image/" + fields[9].trim() + ".jpg"; 
+                if (fields.length < 11) continue;
 
-                    File imageFile = new File(imagePath);
+                String imageName = fields[10].trim();
+                String[] extensions = {".jpg", ".png"};
+
+                for (String ext : extensions) {
+                    File imageFile = new File("data/image/" + imageName + ext);
                     if (!imageFile.exists()) continue;
 
                     BufferedImage baseImage = ImageIO.read(imageFile);
                     if (baseImage != null && ImageUtils.imagesAreEqual(userImage, baseImage)) {
                         User.clearInstance();
                         User.init(
-                            fields[2],
-                            fields[3],
-                            fields[0],
-                            fields[4],
-                            fields[6],
-                            fields[5],
-                            Double.parseDouble(fields[8]),
-                            fields[1],
-                            fields[9]
+                            fields[2], fields[3], fields[0], fields[4],
+                            fields[6], fields[5], Double.parseDouble(fields[9]),
+                            fields[1], imageName, Boolean.parseBoolean(fields[7]),  
+                            Boolean.parseBoolean(fields[6])
                         );
                         return true;
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
         return false;
@@ -203,6 +161,127 @@ public class UserFile {
             }
         } else {
             System.out.println("Error al eliminar archivo original.");
+        }
+    }
+    // Funcion principalmente usada para tests
+    public boolean validateFullUser(User inputUser) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] fields = line.split(",", -1);
+            if (fields.length == 10) {
+                String email = fields[4].equals("null") ? null : fields[4];
+                
+                User.clearInstance();
+                User.init(
+                    fields[2],  // name
+                    fields[3],  // lastName
+                    fields[0],  // ID
+                    email,      // email
+                    fields[6],  // password
+                    fields[5],  // username
+                    Double.parseDouble(fields[8]), // balance
+                    fields[1],   // userType
+                    fields[9],
+                    Boolean.parseBoolean(fields[7]),
+                    Boolean.parseBoolean(fields[8])
+                );
+                User storedUser = User.getInstance();
+                storedUser.setIsAdmin(Boolean.parseBoolean(fields[7]));
+
+                if (Objects.equals(inputUser.getID(), storedUser.getID()) &&
+                    Objects.equals(inputUser.getName(), storedUser.getName()) &&
+                    Objects.equals(inputUser.getLastName(), storedUser.getLastName()) &&
+                    Objects.equals(inputUser.getEmail(), storedUser.getEmail()) && 
+                    Objects.equals(inputUser.getUser(), storedUser.getUser()) &&
+                    Objects.equals(inputUser.getPassword(), storedUser.getPassword()) &&
+                    Objects.equals(inputUser.getUserType(), storedUser.getUserType()) &&
+                    Objects.equals(inputUser.getImage(), storedUser.getImage()) &&
+                    inputUser.getIsAdmin() == storedUser.getIsAdmin() &&
+                    Math.abs(inputUser.getWallet().getBalance() - storedUser.getWallet().getBalance()) < 0.001) {
+                    return true;
+                }
+            }
+        }
+    } catch (IOException | NumberFormatException e) {
+        System.out.println("Error de validacion: " + e.getMessage());
+    }
+    return false;
+    }
+    public List<UserData> readAllUsers() {
+        List<UserData> users = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(";",11);
+                if (fields.length == 11) {
+                    String ID = fields[0];
+                    String name = fields[2];
+                    String lastname = fields[3];
+                    String userName = fields[5];
+                    boolean isAdmin = Boolean.parseBoolean(fields[7]);
+                    users.add(new UserData(name, lastname, userName, isAdmin, ID));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public void downPrivileg(String ID){
+        File tempFile = new File(systemUserDataBAse.getPath() + ".tmp");
+        try (
+            BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+        ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",", -1); 
+
+                if (fields.length >= 11 && fields[0].trim().equals(ID.trim())) {
+                    fields[7] = "false"; 
+                }
+                writer.write(String.join(",", fields));
+                writer.newLine();
+            }
+
+            // Reemplazamos el archivo original por el nuevo
+            if (!systemUserDataBAse.delete()) {
+                System.out.println("No se pudo eliminar el archivo original.");
+            } else if (!tempFile.renameTo(systemUserDataBAse)) {
+                System.out.println("No se pudo renombrar el archivo temporal.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error modificando privilegios del usuario: " + e.getMessage());
+        }
+    }
+
+    public void upPrivileg(String ID) {
+        File tempFile = new File(systemUserDataBAse.getPath() + ".tmp");
+        try (
+            BufferedReader reader = new BufferedReader(new FileReader(systemUserDataBAse));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+        ) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(",", -1); 
+
+                if (fields.length >= 11 && fields[0].trim().equals(ID.trim())) {
+                    fields[7] = "true"; 
+                }
+                writer.write(String.join(",", fields));
+                writer.newLine();
+            }
+
+            // Reemplazamos el archivo original por el nuevo
+            if (!systemUserDataBAse.delete()) {
+                System.out.println("No se pudo eliminar el archivo original.");
+            } else if (!tempFile.renameTo(systemUserDataBAse)) {
+                System.out.println("No se pudo renombrar el archivo temporal.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error modificando privilegios del usuario: " + e.getMessage());
         }
     }
 }

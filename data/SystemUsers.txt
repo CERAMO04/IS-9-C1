@@ -1,2 +1,3 @@
-27564321,estudiante,Ana,Gonzalez,ana@gmail.com,prueba01,123456,false,9.06235,image1
-27654198,empleado,Pedro,Molina,pedro@gmail.com,prueba02,123456,true,88.74819999999998,image2
+27564321,estudiante,Ana,Gonzalez,ana@gmail.com,prueba01,123456,false,false,0,image1
+27654198,empleado,Pedro,Molina,pedro@gmail.com,prueba02,123456,true,false,92.49879999999999,image2
+19347210,empleado,Maria,Lopez,maria@gmail.com,prueba03,123456,true,true,0.0,image3

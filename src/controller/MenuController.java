@@ -1,10 +1,14 @@
 package controller;
 
+import java.io.IOException;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import utils.TextUtils;
 import view.MenuView;
 import view.MenuView.MealCardPanel;
+import view.UserManagementView;
 import model.User;
 import model.persistence.MenuFile;
 
@@ -46,7 +50,14 @@ public class MenuController {
                 view.setEditModeOn(breakfastPanel, lunchPanel);
             });
         }
+
+        if (User.getInstance().getIsSuperSu()){
+            view.getAdminManagementButton().addActionListener(e ->{
+                mainController.showUserManagement();
+            });
+        }
         
+
         if (view.getSaveButton() != null){
             view.getSaveButton().addActionListener(e ->{
                 MealCardPanel breakfastPanel, lunchPanel;   
@@ -62,8 +73,6 @@ public class MenuController {
                         "Entrada inválida", JOptionPane.WARNING_MESSAGE);
                     return; // No guardar si no pasa la validación
                 }
-
-
                 dataFile.SaveDailyMenu(breakfast, lunchText);
 
                 view.setEditmodeOff(breakfastPanel, lunchPanel);

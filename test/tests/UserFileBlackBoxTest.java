@@ -35,14 +35,14 @@ public class UserFileBlackBoxTest {
     @Test
     void testFullUserValidation() {
     // Guarda un usuario de prueba
-    User.init("John", "Doe", "20000009", "jd@gmail.com", "passtest", "Johnny", 50.0, "comensal","image1");
+    User.init("John", "Doe", "20000009", "jd@gmail.com", "passtest", "Johnny", 50.0, "comensal","image1",false,false);
     User testUser = User.getInstance();
     testUser.setIsAdmin(false);
     userFile.saveUser(testUser);
 
     // Creacion del usuario esperado
     User.clearInstance();
-    User.init("John", "Doe", "20000009", "jd@gmail.com", "passtest", "Johnny", 50.0, "comensal","image1");
+    User.init("John", "Doe", "20000009", "jd@gmail.com", "passtest", "Johnny", 50.0, "comensal","image1",false,false);
     User validationUser = User.getInstance();
     validationUser.setIsAdmin(false);
 

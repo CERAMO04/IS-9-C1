@@ -9,11 +9,10 @@ import model.User;
 
 public class MenuView extends JFrame {
 
-    private JButton mainPageButton, costButton, logButton, rechargeButton, editButton, saveButton;
+    private JButton mainPageButton, costButton, logButton, rechargeButton, editButton, saveButton, adminManagementButton;
     private WalletView walletView;
     private MealCardPanel breakfastPanel, lunchPanel;
     private JLabel priceCcb, priceLabel;
-
 
 
     public MenuView(WalletView walletView) {
@@ -49,12 +48,19 @@ public class MenuView extends JFrame {
 
         User user = User.getInstance();
         
-        if (user.getIsAdmin()){
+        if (user.getIsSuperSu()){
+            mainPageButton = createNavButton("Página Principal");
+            costButton = createNavButton("Gestión de costos");
+            adminManagementButton = createNavButton("Administrar Usuarios");
+            rightPanel.add(mainPageButton);
+            rightPanel.add(costButton);
+            rightPanel.add(adminManagementButton);
+        } else if(user.getIsAdmin()){
             mainPageButton = createNavButton("Página Principal");
             costButton = createNavButton("Gestión de costos");
             rightPanel.add(mainPageButton);
             rightPanel.add(costButton);
-        } else {
+        }else{
             mainPageButton = createNavButton("Página Principal");
             rightPanel.add(mainPageButton);
             costButton = null;
@@ -216,9 +222,10 @@ public class MenuView extends JFrame {
             gbcSave.anchor = GridBagConstraints.CENTER;
             add(saveButton, gbcSave);
             saveButton.setVisible(false);
-                }
-            }
+        }
+    } 
 
+        
     public class MealCardPanel extends RoundedPanel {
         private JLabel descriptionLabel;
         private JTextArea editTextArea;
@@ -312,6 +319,7 @@ public class MenuView extends JFrame {
     public MealCardPanel getLunchPanel() { return lunchPanel; }
     public JButton getEditButton() { return editButton;}
     public JButton getSaveButton() { return saveButton; }
+    public JButton getAdminManagementButton() { return adminManagementButton; }
     /*Setters */
     public void setEditModeOn(MealCardPanel breakfastPanel, MealCardPanel lunchPanel){
         priceCcb.setVisible(false);

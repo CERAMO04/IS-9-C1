@@ -42,14 +42,14 @@ public class SecretaryFileBlackBoxTest {
 
     @Test
     void testValidUser() {
-        User.init("Ana", "Gonzalez", "27564321", "ana@gmail.com", "pw", "ana", 0.0, "comensal","image1");
+        User.init("Ana", "Gonzalez", "27564321", "ana@gmail.com", "pw", "ana", 0.0, "comensal","image1",false,false);
         assertTrue(secretaryFile.readSecretaryDataBase(User.getInstance()));
         User.clearInstance();
     }
 
     @Test 
     void testInvalidUser() {
-        User.init("Test", "User", "99999999", "test@test.com", "pw", "testuser", 0.0, "comensal","image1");
+        User.init("Test", "User", "99999999", "test@test.com", "pw", "testuser", 0.0, "comensal","image1",false,false);
         assertFalse(secretaryFile.readSecretaryDataBase(User.getInstance()));
         User.clearInstance();
     }

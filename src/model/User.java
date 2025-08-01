@@ -7,21 +7,23 @@ public class User {
 
     /*Atrib */
     private String name,lastName,userName,password,email,userType,ID, image;
-    private boolean isAdmin, isSuperAdmin;
+    private boolean isAdmin, isSuperSu;
     private Wallet wallet;
 
     /*Builders. */
-    private User(String name, String lastName,String ID, String email,String password, String userName, double value, String userType, String image){
+    private User(String name, String lastName,String ID, String email,
+                String password, String userName, double value, String userType,
+                String image, boolean isSuperSu, boolean isAdmin){
         this.name = name;
         this.lastName = lastName;
         this.ID = ID;
         this.userName = userName;
         this.password = password;
         this.userType = userType;
-        this.isAdmin = false;
+        this.isSuperSu = isSuperSu;
+        this.isAdmin = isAdmin;
         this.wallet = new Wallet(this, value);
         this.image = image;
-
     }
     private User(){
         this.name = " ";
@@ -42,12 +44,16 @@ public class User {
         this.lastName = "";
         this.email = "";
         this.userType = "unknown";
+        this.isSuperSu = false;
         this.isAdmin = false;
         this.wallet = null; // aún no asignamos Wallet
+        this.image = " ";
     }
-    public static synchronized void init(String name, String lastName,String ID, String email, String password, String username, double value,String userType, String image) {
+    public static synchronized void init(String name, String lastName,String ID, String email, String password,
+                                         String username, double value,String userType, String image, boolean isSuperSu,
+                                         boolean isAdmin) {
         if (instance == null) {
-            instance = new User(name,lastName,ID,email,password,username,value,userType,image);
+            instance = new User(name,lastName,ID,email,password,username,value,userType,image, isSuperSu, isAdmin);
         }
     }
     public static synchronized void init(String user, String password, String ID) {
@@ -81,6 +87,7 @@ public class User {
     public void setEmail(String email) {this.email = email;}
     public void setUserType(String userType) {this.userType = userType;}
     public void setIsAdmin(boolean isAdmin) {this.isAdmin = isAdmin;}
+    public void setSuperSu(boolean isSuperSu){this.isSuperSu = isSuperSu;}
     /*Getters. */
     public String getImage() {return this.image;}
     public Wallet getWallet() {return this.wallet;}
@@ -92,6 +99,7 @@ public class User {
     public String getEmail() {return this.email;}
     public String getUserType() {return this.userType;}
     public boolean getIsAdmin() {return this.isAdmin;}
+    public boolean getIsSuperSu() {return this.isSuperSu;}
     /*Functions */
     public void createWallet(){this.wallet = new Wallet(this);}
 }

@@ -47,7 +47,12 @@ public class MainController {
     }
     public void showComparerView() {
         ComparerFaceView view = new ComparerFaceView();
-        ComparerFaceController controller = new ComparerFaceController(view, this);
+        new ComparerFaceController(view, this);
+        view.setVisible(true);
+    }
+    public void showUserManagement(){
+        UserManagementView view = new UserManagementView();
+        new UserManagementController(view,this);
         view.setVisible(true);
     }
     //Funcion para cerrar la ventana que se le pase por parametro. 
