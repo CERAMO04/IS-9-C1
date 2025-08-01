@@ -1,9 +1,11 @@
 package controller;
 
 import javax.swing.JOptionPane;
-import model.User;
+
+import utils.TextUtils;
 import view.MenuView;
 import view.MenuView.MealCardPanel;
+import model.User;
 import model.persistence.MenuFile;
 
 public class MenuController {
@@ -51,10 +53,18 @@ public class MenuController {
                 breakfastPanel = view.getBreakfastPanel();
                 lunchPanel = view.getLunchPanel();
 
-                String breakText = breakfastPanel.getEditedText();
+                String breakfast = breakfastPanel.getEditedText();
                 String lunchText = lunchPanel.getEditedText();
 
-                dataFile.SaveDailyMenu(breakText, lunchText);
+                if (!TextUtils.isValidText(breakfast) || !TextUtils.isValidText(lunchText)) {
+                    JOptionPane.showMessageDialog(view,
+                        "Solo se permiten letras, espacios y puntuación básica.\nEvita números o símbolos especiales.",
+                        "Entrada inválida", JOptionPane.WARNING_MESSAGE);
+                    return; // No guardar si no pasa la validación
+                }
+
+
+                dataFile.SaveDailyMenu(breakfast, lunchText);
 
                 view.setEditmodeOff(breakfastPanel, lunchPanel);
             });
