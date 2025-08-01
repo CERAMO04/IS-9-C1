@@ -12,7 +12,8 @@ public class MenuView extends JFrame {
     private JButton mainPageButton, costButton, logButton, rechargeButton, editButton, saveButton;
     private WalletView walletView;
     private MealCardPanel breakfastPanel, lunchPanel;
-    private JLabel priceCcb;
+    private JLabel priceCcb, priceLabel;
+
 
 
     public MenuView(WalletView walletView) {
@@ -110,7 +111,7 @@ public class MenuView extends JFrame {
             gbc.gridy = 2; gbc.gridx = 0; gbc.gridwidth = 2; gbc.weighty = 0.01; 
             gbc.insets = new Insets(15, 0, 2, 0); 
 
-            JLabel priceLabel = new JLabel("Precio por la bandeja: ", SwingConstants.CENTER); priceLabel.setFont(new Font("SansSerif", Font.BOLD, 28)); priceLabel.setForeground(Color.DARK_GRAY); add(priceLabel, gbc);
+            priceLabel = new JLabel("Precio por la bandeja: ", SwingConstants.CENTER); priceLabel.setFont(new Font("SansSerif", Font.BOLD, 28)); priceLabel.setForeground(Color.DARK_GRAY); add(priceLabel, gbc);
             RoundedPanel valueRoundedPanel = new RoundedPanel(20); valueRoundedPanel.setBackground(new Color(255, 255, 255, 179)); valueRoundedPanel.setLayout(new GridBagLayout()); 
             
             
@@ -314,6 +315,7 @@ public class MenuView extends JFrame {
     /*Setters */
     public void setEditModeOn(MealCardPanel breakfastPanel, MealCardPanel lunchPanel){
         priceCcb.setVisible(false);
+        priceLabel.setVisible(false);
         saveButton.setVisible(true);
         editButton.setVisible(false);
         breakfastPanel.setEditMode(true);
@@ -321,6 +323,7 @@ public class MenuView extends JFrame {
     }
     public void setEditmodeOff(MealCardPanel breakfastPanel, MealCardPanel lunchPanel){
         priceCcb.setVisible(true);
+        priceLabel.setVisible(true);
         saveButton.setVisible(false);
         editButton.setVisible(true);
         breakfastPanel.setEditMode(false);
