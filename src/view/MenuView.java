@@ -144,28 +144,28 @@ public class MenuView extends JFrame {
 
             // Configuración para el botón editar
             editButton = new JButton();
+            if (User.getInstance().getIsAdmin()){
+                try {
+                    Image editImg = new ImageIcon(getClass().getResource("/assets/editar.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                    editButton.setIcon(new ImageIcon(editImg));
+                } catch (Exception e) {
+                    editButton.setText("Edit"); 
+                    e.printStackTrace(); 
+                }
 
-            try {
-                Image editImg = new ImageIcon(getClass().getResource("/assets/editar.png")).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-                editButton.setIcon(new ImageIcon(editImg));
-            } catch (Exception e) {
-                editButton.setText("Edit"); 
-                e.printStackTrace(); 
+                editButton.setOpaque(false);
+                editButton.setContentAreaFilled(false);
+                editButton.setBorderPainted(false);
+                editButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+
+                GridBagConstraints gbcButton = new GridBagConstraints();
+                gbcButton.gridx = 1; 
+                gbcButton.gridy = 0; 
+                gbcButton.anchor = GridBagConstraints.NORTHEAST; 
+                gbcButton.insets = new Insets(10, 0, 0, 10); 
+                add(editButton, gbcButton);
+                editButton.setVisible(true);
             }
-
-            editButton.setOpaque(false);
-            editButton.setContentAreaFilled(false);
-            editButton.setBorderPainted(false);
-            editButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
-
-            GridBagConstraints gbcButton = new GridBagConstraints();
-            gbcButton.gridx = 1; 
-            gbcButton.gridy = 0; 
-            gbcButton.anchor = GridBagConstraints.NORTHEAST; 
-            gbcButton.insets = new Insets(10, 0, 0, 10); 
-            add(editButton, gbcButton);
-            editButton.setVisible(true);
-
             //botón guardar cambios
             saveButton = new JButton("Guardar Cambios") {
                 @Override
@@ -248,6 +248,7 @@ public class MenuView extends JFrame {
             descriptionLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
             descriptionLabel.setForeground(Color.GRAY);
             descriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            add(descriptionLabel,BorderLayout.SOUTH);     
 
             // Campo editable
             editTextArea = new JTextArea();
@@ -261,9 +262,11 @@ public class MenuView extends JFrame {
         }
 
         public void setDescription(String newText) {
-            String html = "<html><div style='text-align: center;'>" + newText + "</div></html>";
-            descriptionLabel.setText(html);
-            editTextArea.setText(newText); // Para prellenar si se activa edición
+            String newTextHtml = "<html><div style='text-align: center;'>" +
+                                newText.replace("\n", "<br>") +
+                                "</div></html>";
+            descriptionLabel.setText(newTextHtml);
+            editTextArea.setText(newText);
             if (!isEditMode) {
                 add(descriptionLabel, BorderLayout.SOUTH);
                 remove(editTextArea);
@@ -315,7 +318,6 @@ public class MenuView extends JFrame {
         editButton.setVisible(false);
         breakfastPanel.setEditMode(true);
         lunchPanel.setEditMode(true);
-
     }
     public void setEditmodeOff(MealCardPanel breakfastPanel, MealCardPanel lunchPanel){
         priceCcb.setVisible(true);

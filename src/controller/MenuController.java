@@ -35,19 +35,27 @@ public class MenuController {
             mainController.exitFrame(menuView);
             mainController.showRecarge();
         });
+
         if (User.getInstance().getIsAdmin()){
-            view.getEditButton().addActionListener(e -> {
-            MealCardPanel breakfastPanel, lunchPanel;   
-            breakfastPanel = view.getBreakfastPanel();
-            lunchPanel = view.getLunchPanel();
-            view.setEditModeOn(breakfastPanel, lunchPanel);
+                view.getEditButton().addActionListener(e -> {
+                MealCardPanel breakfastPanel, lunchPanel;   
+                breakfastPanel = view.getBreakfastPanel();
+                lunchPanel = view.getLunchPanel();
+                view.setEditModeOn(breakfastPanel, lunchPanel);
             });
         }
+        
         if (view.getSaveButton() != null){
             view.getSaveButton().addActionListener(e ->{
                 MealCardPanel breakfastPanel, lunchPanel;   
                 breakfastPanel = view.getBreakfastPanel();
                 lunchPanel = view.getLunchPanel();
+
+                String breakText = breakfastPanel.getEditedText();
+                String lunchText = lunchPanel.getEditedText();
+
+                dataFile.SaveDailyMenu(breakText, lunchText);
+
                 view.setEditmodeOff(breakfastPanel, lunchPanel);
             });
         }

@@ -63,8 +63,7 @@ public class CostController {
             DefaultTableModel model = view.getTableModel();
             model.addRow(new Object[]{selectedCategory, "", "", ""});
         });
-        view.getSaveButton().addActionListener(e -> {   
-                                                                                    //Escuchamos boton para guardar la tabla modificada.
+        view.getSaveButton().addActionListener(e -> {                               //Escuchamos boton para guardar la tabla modificada.
             if (view.getCostTable().isEditing()) {                                  //Funcion para poder guardar aunque el usuario tenga el click en una Celda de la tabla
                 view.getCostTable().getCellEditor().stopCellEditing();
             }

@@ -1,2 +1,8 @@
-Jugo
-Empanada
+Desayuno
+Empanada de carne
+Jugo de naranja
+Refresco
+Almuerzo
+Arroz con pollo
+Jugo de melon
+Helado
