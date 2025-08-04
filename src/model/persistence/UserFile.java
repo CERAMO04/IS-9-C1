@@ -143,10 +143,10 @@ public class UserFile {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",", 10);
-                if (fields.length == 10) {
+                String[] fields = line.split(",", 11);
+                if (fields.length == 11) {
                     if(fields[5].equals(user.getUser()) && fields[6].equals(user.getPassword())){
-                        fields[8] = String.valueOf(amount);
+                        fields[9] = String.valueOf(amount);
                         line = String.join(",", fields);
                     }
                 }
