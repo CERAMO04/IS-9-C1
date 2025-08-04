@@ -501,14 +501,14 @@ public class CostManagementView extends JFrame {
         };
         panel.setOpaque(false);
         
-        panel.setPreferredSize(new Dimension(220, 50));
-        panel.setMinimumSize(new Dimension(220, 50));
-        panel.setMaximumSize(new Dimension(220, 50)); 
+        panel.setPreferredSize(new Dimension(250, 60));
+        panel.setMinimumSize(new Dimension(250, 60));
+        panel.setMaximumSize(new Dimension(250, 60)); 
 
         GridBagConstraints gbcPanel = new GridBagConstraints();
-        gbcPanel.insets = new Insets(0, 5, 0, 5);
+        gbcPanel.insets = new Insets(5, 10, 5, 10);
         gbcPanel.anchor = GridBagConstraints.CENTER;
-        gbcPanel.fill = GridBagConstraints.NONE; 
+        gbcPanel.fill = GridBagConstraints.HORIZONTAL; 
         gbcPanel.weightx = 0; 
         gbcPanel.weighty = 0; 
 
@@ -520,7 +520,9 @@ public class CostManagementView extends JFrame {
 
         JTextField textField = new JTextField(8);
         textField.setFont(new Font("Arial", Font.PLAIN, 14));
-        textField.setPreferredSize(new Dimension(80, 30));
+        textField.setPreferredSize(new Dimension(120, 30));
+        textField.setMinimumSize(new Dimension(120, 30));
+        textField.setMaximumSize(new Dimension(120, 30));
 
         // Sugerencia de formato para las fechas
         if (isDateField) {
@@ -528,6 +530,7 @@ public class CostManagementView extends JFrame {
         }
 
         gbcPanel.gridx = 1;
+        gbcPanel.gridy = 0;
         panel.add(textField, gbcPanel);
         panel.putClientProperty("textField", textField); 
 
