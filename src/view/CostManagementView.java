@@ -325,7 +325,7 @@ public class CostManagementView extends JFrame {
         numberOfTraysField = (JTextField) traysPanel.getClientProperty("textField");
         gbcInput.gridx = 1; 
         gbcInput.gridy = 1; 
-        calcInputPanel.add(traysPanel, gbcInput);
+        calcInputPanel.add(traysPanel, gbcInput);                       
 
         GridBagConstraints gbcCcbContainer = new GridBagConstraints();
         gbcCcbContainer.gridx = 0;
@@ -520,9 +520,9 @@ public class CostManagementView extends JFrame {
 
         JTextField textField = new JTextField(8);
         textField.setFont(new Font("Arial", Font.PLAIN, 14));
-        textField.setPreferredSize(new Dimension(120, 30));
-        textField.setMinimumSize(new Dimension(120, 30));
-        textField.setMaximumSize(new Dimension(120, 30));
+        textField.setPreferredSize(new Dimension(100, 30));
+        textField.setMinimumSize(new Dimension(100, 30));
+        textField.setMaximumSize(new Dimension(100, 30));
 
         // Sugerencia de formato para las fechas
         if (isDateField) {
